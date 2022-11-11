@@ -4,7 +4,10 @@
 
 Clone Project to your IDE
 
-Run `cd rental_project` and then `npm install`
+Run 
+```cd rental_project``` 
+and then 
+```npm install```
 
 ## Test
 ```
