@@ -6,10 +6,8 @@ export default function Index() {
   return (
     <div>
       <Container>
-
-      <HeroSection />
+        <HeroSection />
       </Container>
-
     </div>
   )
 }
