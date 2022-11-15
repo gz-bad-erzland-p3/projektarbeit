@@ -1,6 +1,8 @@
+import Link from "next/link";
+
 export default function Login() {
     return (
-        <div className="grid justify-items-center h-screen items-center">
+        <div className="grid justify-center h-screen items-center">
             <div className="space-y-4">
                 <div>
                     <div className="relative mt-1 rounded-md shadow-sm">
@@ -24,8 +26,13 @@ export default function Login() {
                 </div>
                 <div>
                     <button id="btnLogin" className='w-full text-white px-4 py-2 text-base font-medium rounded-lg bg-green-600 hover:bg-green-500 transition'>
-                        Anmelden &rarr;
+                        Anmelden
                     </button>
+                </div>
+                <div className="text-center">
+                    <Link href="#" className="font-medium text-green-600 hover:text-green-500 transition">
+                        Ich habe noch keinen Account &rarr;
+                    </Link>
                 </div>
             </div>
         </div>

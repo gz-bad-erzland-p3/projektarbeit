@@ -105,7 +105,7 @@ export default function Navbar() {
                           ))}
                         </div>
                         <div className="text-sm py-3 px-5 bg-gray-50 dark:bg-gray-700">
-                          <a href="#" className="font-medium text-green-600 hover:text-green-500">
+                          <a href="#" className="font-medium text-green-600 hover:text-green-500 transition">
                             Projektarbeit auf GitHub
                             <span aria-hidden="true"> &rarr;</span>
                           </a>
