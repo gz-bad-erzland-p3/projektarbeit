@@ -16,7 +16,7 @@ export default function Container(props: { [x: string]: any; children: any; }) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 transition-all duration-200">
+    <div className="">
       <Head>
         <title>{meta.title}</title>
         <meta content={meta.description} name="description" />

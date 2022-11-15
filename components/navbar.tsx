@@ -9,6 +9,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useTheme } from 'next-themes'
+import Link from 'next/link'
 
 const resources = [
   {
@@ -115,9 +116,11 @@ export default function Navbar() {
                 </>
               )}
             </Popover>
-            <button className='ml-2 text-white px-4 py-2 text-base font-medium rounded-lg bg-green-600 hover:bg-green-500 transition'>
-              Jetzt mieten! &rarr;
-            </button>
+            <Link href="/login">
+              <button className='ml-2 text-white px-4 py-2 text-base font-medium rounded-lg bg-green-600 hover:bg-green-500 transition'>
+                Anmelden &rarr;
+              </button>
+            </Link>
             <button aria-label="Toggle Dark Mode" type="button" className="ml-2 px-2 py-2 bg-white dark:bg-gray-900 rounded-md flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-all" onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
               {mounted && (
                 <svg
