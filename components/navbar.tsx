@@ -59,19 +59,34 @@ export default function Navbar() {
             </a>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
-            <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-900 p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 outline-none">
+            <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-900 p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-200 outline-none transition">
               <span className="sr-only">Open menu</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </Popover.Button>
           </div>
-          <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+          <div className="hidden items-center justify-end md:flex-1 md:flex lg:w-0">
+            <Link href='/'>
+              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base text-gray-900 dark:text-white font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none transition'>
+                Startseite
+              </button>
+            </Link>
+            <Link href='#features'>
+              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base text-gray-900 dark:text-white font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none transition'>
+                Features
+              </button>
+            </Link>
+            <Link href='#pricing'>
+              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base text-gray-900 dark:text-white font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none transition'>
+                Preise
+              </button>
+            </Link>
             <Popover className="relative">
               {({ open }) => (
                 <>
                   <Popover.Button
-                    className={'group px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base text-gray-900 dark:text-white font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none transition-all'}
+                    className={'group ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base text-gray-900 dark:text-white font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none transition duration-100'}
                   >
-                    <span>Mehr erfahren</span>
+                    <span>Mehr</span>
                     <ChevronDownIcon
                       className={'ml-2 h-5 w-5'}
                       aria-hidden="true"
@@ -80,7 +95,7 @@ export default function Navbar() {
 
                   <Transition
                     as={Fragment}
-                    enter="transition ease-out duration-200"
+                    enter="transition ease-out duration-500"
                     enterFrom="opacity-0 translate-y-1"
                     enterTo="opacity-100 translate-y-0"
                     leave="transition ease-in duration-150"
@@ -88,13 +103,13 @@ export default function Navbar() {
                     leaveTo="opacity-0 translate-y-1"
                   >
                     <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
-                      <div className="overflow-hidden rounded-lg shadow-2xl">
+                      <div className="overflow-hidden rounded-md shadow-2xl">
                         <div className="relative grid gap-6 bg-white dark:bg-gray-800 px-5 py-6 sm:gap-8 sm:p-8">
                           {resources.map((item) => (
                             <a
                               key={item.name}
                               href={item.href}
-                              className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+                              className="-m-3 flex items-start rounded-md p-3 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
                             >
                               <item.icon className="h-6 w-6 flex-shrink-0 text-green-600" aria-hidden="true" />
                               <div className="ml-4">
@@ -117,8 +132,8 @@ export default function Navbar() {
               )}
             </Popover>
             <Link href="/login">
-              <button className='ml-2 text-white px-4 py-2 text-base font-medium rounded-lg bg-green-600 hover:bg-green-500 transition'>
-                Anmelden &rarr;
+              <button className='ml-2 text-white px-4 py-2 text-base font-medium rounded-md bg-green-600 hover:bg-green-500 transition'>
+                Anmelden
               </button>
             </Link>
             <button aria-label="Toggle Dark Mode" type="button" className="ml-2 px-2 py-2 bg-white dark:bg-gray-900 rounded-md flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-all" onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
@@ -173,7 +188,7 @@ export default function Navbar() {
                   />
                 </div>
                 <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 outline-none">
+                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 outline-none transition">
                     <span className="sr-only">Close menu</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
@@ -185,7 +200,7 @@ export default function Navbar() {
                     <a
                       key={item.name}
                       href={item.href}
-                      className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
+                      className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50 transition"
                     >
                       <item.icon className="h-6 w-6 flex-shrink-0 text-green-600" aria-hidden="true" />
                       <span className="ml-3 text-base font-medium text-gray-900">{item.name}</span>
@@ -197,21 +212,8 @@ export default function Navbar() {
             <div className="space-y-6 py-6 px-5">
               <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                 <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  Pricing
-                </a>
-
-                <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
                   Docs
                 </a>
-                {resources.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
-                  >
-                    {item.name}
-                  </a>
-                ))}
               </div>
               <div>
                 <a
