@@ -4,7 +4,7 @@ import HeroSection from "../components/hero"
 
 export default function Index() {
   return (
-    <div>
+    <div className="">
       <Container>
         <HeroSection />
       </Container>
