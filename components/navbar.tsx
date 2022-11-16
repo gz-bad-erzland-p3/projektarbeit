@@ -10,6 +10,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const resources = [
   {
@@ -49,12 +50,13 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex items-center justify-between py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="#">
+            <a href="/">
               <span className="sr-only">Bad Erzlingen</span>
-              <img
-                className="h-8 w-auto sm:h-10"
-                src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
+              <Image
+                src="/logo.svg"
                 alt=""
+                width={32}
+                height={32}
               />
             </a>
           </div>
@@ -66,25 +68,26 @@ export default function Navbar() {
           </div>
           <div className="hidden items-center justify-end md:flex-1 md:flex lg:w-0">
             <Link href='/'>
-              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base text-gray-900 dark:text-white font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none transition'>
+              <button className='text-gray-900 dark:text-white ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
                 Startseite
               </button>
             </Link>
             <Link href='#features'>
-              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base text-gray-900 dark:text-white font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none transition'>
+              <button className='text-gray-900 dark:text-white ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
                 Features
               </button>
             </Link>
             <Link href='#pricing'>
-              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base text-gray-900 dark:text-white font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none transition'>
+              <button className='text-gray-900 dark:text-white ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
                 Preise
               </button>
             </Link>
+            
             <Popover className="relative">
               {({ open }) => (
                 <>
                   <Popover.Button
-                    className={'group ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base text-gray-900 dark:text-white font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none transition duration-100'}
+                    className={'group text-gray-900 dark:text-white ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'}
                   >
                     <span>Mehr</span>
                     <ChevronDownIcon
@@ -119,10 +122,20 @@ export default function Navbar() {
                             </a>
                           ))}
                         </div>
-                        <div className="text-sm py-3 px-5 bg-gray-50 dark:bg-gray-700">
-                          <a href="#" className="font-medium text-green-600 hover:text-green-500 transition">
+                        <div className="p-5 bg-gray-50 dark:bg-gray-700 sm:p-8">
+                          <a
+                            href="#"
+                            className="-m-3 p-3 flow-root rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition ease-in-out duration-150"
+                          >
+                            <span className="flex items-center">
+                              <span className="text-base font-medium">GitHub</span>
+                              <span className="ml-3 inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-green-100 text-green-800">
+                                New
+                              </span>
+                            </span>
+                            <span className="mt-1 block text-sm">
                             Projektarbeit auf GitHub
-                            <span aria-hidden="true"> &rarr;</span>
+                            </span>
                           </a>
                         </div>
                       </div>

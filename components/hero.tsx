@@ -4,7 +4,7 @@ export default function HeroSection() {
     <div className="isolate">
       <main>
         <div className="px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
+          <div className="mx-auto max-w-3xl">
             <div>
               <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                 <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-200 dark:ring-gray-600 dark:hover:ring-gray-200 hover:ring-gray-600">
@@ -19,7 +19,7 @@ export default function HeroSection() {
               </div>
               <div>
                 <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
-                  Gemeindezentrum Bad Erzland
+                  Gemeindezentrum <br /> Bad Erzland
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
                   Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt

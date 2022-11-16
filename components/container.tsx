@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
+import Footer from './footer';
 import Navbar from './navbar';
 
 export default function Container(props: { [x: string]: any; children: any; }) {
@@ -9,24 +10,18 @@ export default function Container(props: { [x: string]: any; children: any; }) {
   useEffect(() => setMounted(true), []);
 
   const { children, ...customMeta } = props;
-  const meta = {
-    title: 'Projekt',
-    description: `Test`,
-    ...customMeta
-  };
 
   return (
-    <div className="">
-      <Head>
-        <title>{meta.title}</title>
-        <meta content={meta.description} name="description" />
-      </Head>
-      <main id="skip" className="flex flex-col justify-center px-8">
+    <div>
+      <main id="skip" className="flex flex-col justify-center">
         <div className='relative'>
           <Navbar />
         </div>
         <div>
           {children}
+        </div>
+        <div>
+          <Footer />
         </div>
       </main>
     </div>

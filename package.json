@@ -22,8 +22,10 @@
     "next": "13.0.3",
     "next-themes": "^0.2.1",
     "react": "18.2.0",
+    "react-countup": "^6.3.2",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.4",
+    "react-intersection-observer": "^9.4.0",
     "typescript": "4.8.4"
   },
   "devDependencies": {
