@@ -33,14 +33,12 @@ const resources = [
   },
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function Navbar() {
 
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
+
+  const [isMore, setIsMore] = useState(false)
 
   // After mounting, we have access to the theme
   useEffect(() => setMounted(true), []);
@@ -61,33 +59,32 @@ export default function Navbar() {
             </a>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
-            <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-900 p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-200 outline-none transition">
+            <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-200 outline-none transition">
               <span className="sr-only">Open menu</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </Popover.Button>
           </div>
           <div className="hidden items-center justify-end md:flex-1 md:flex lg:w-0">
             <Link href='/'>
-              <button className='text-gray-900 dark:text-white ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
+              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
                 Startseite
               </button>
             </Link>
             <Link href='#features'>
-              <button className='text-gray-900 dark:text-white ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
+              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
                 Features
               </button>
             </Link>
             <Link href='#pricing'>
-              <button className='text-gray-900 dark:text-white ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
+              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
                 Preise
               </button>
             </Link>
-            
-            <Popover className="relative">
+            <Popover className="relative" onMouseEnter={() => setIsMore(true)} onMouseLeave={() => setIsMore(false)}>
               {({ open }) => (
                 <>
                   <Popover.Button
-                    className={'group text-gray-900 dark:text-white ml-2 px-4 py-2 inline-flex items-center rounded-md bg-white dark:bg-gray-900 text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'}
+                    className={'group ml-2 px-4 py-2 inline-flex items-center rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'} 
                   >
                     <span>Mehr</span>
                     <ChevronDownIcon
@@ -104,8 +101,11 @@ export default function Navbar() {
                     leave="transition ease-in duration-150"
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
+                    show={isMore}
                   >
-                    <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
+                    <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0" 
+                    onMouseEnter={() => setIsMore(true)}
+                    onMouseLeave={() => setIsMore(false)}>
                       <div className="overflow-hidden rounded-md shadow-2xl">
                         <div className="relative grid gap-6 bg-white dark:bg-gray-800 px-5 py-6 sm:gap-8 sm:p-8">
                           {resources.map((item) => (

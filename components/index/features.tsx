@@ -3,35 +3,35 @@ import { CheckIcon } from '@heroicons/react/24/outline'
 
 const features = [
   {
-    name: 'Invite team members',
+    name: 'Einfache Skalierbarkeit',
     description: 'Tempor tellus in aliquet eu et sit nulla tellus. Suspendisse est, molestie blandit quis ac. Lacus.',
   },
   {
-    name: 'Notifications',
+    name: 'Technischer Support',
     description: 'Ornare donec rhoncus vitae nisl velit, neque, mauris dictum duis. Nibh urna non parturient.',
   },
   {
-    name: 'List view',
+    name: 'Flexible Zeiten',
     description: 'Etiam cras augue ornare pretium sit malesuada morbi orci, venenatis. Dictum lacus.',
   },
   {
-    name: 'Boards',
+    name: 'Einfache Einrichtung',
     description: 'Interdum quam pulvinar turpis tortor, egestas quis diam amet, natoque. Mauris sagittis.',
   },
   {
-    name: 'Keyboard shortcuts',
+    name: 'Einfacher Buchungsprozess',
     description: 'Ullamcorper in ipsum ac feugiat. Senectus at aliquam vulputate mollis nec. In at risus odio.',
   },
   {
-    name: 'Reporting',
+    name: '24/7 Online buchen',
     description: 'Magna a vel sagittis aliquam eu amet. Et lorem auctor quam nunc odio. Sed bibendum.',
   },
   {
-    name: 'Calendars',
+    name: 'Einfache Übersichtlichkeit',
     description: 'Sed mi, dapibus turpis orci posuere integer. A porta viverra posuere adipiscing turpis.',
   },
   {
-    name: 'Mobile app',
+    name: 'Kein eigenes Gerät benötigt',
     description: 'Quisque sapien nunc nisl eros. Facilisis sagittis maecenas id dignissim tristique proin sed.',
   },
 ]

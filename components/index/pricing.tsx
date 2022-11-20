@@ -9,7 +9,7 @@ const pricing = {
       frequency: '/month',
       description: 'The essentials to provide your best work for clients.',
       features: ['5 products', 'Up to 1,000 subscribers', 'Basic analytics', '48-hour support response time'],
-      cta: 'Monthly billing',
+      cta: 'Jetzt buchen',
       mostPopular: false,
     },
     {
@@ -24,7 +24,7 @@ const pricing = {
         '24-hour support response time',
         'Marketing automations',
       ],
-      cta: 'Monthly billing',
+      cta: 'Jetzt buchen',
       mostPopular: true,
     },
     {
@@ -40,22 +40,22 @@ const pricing = {
         'Marketing automations',
         'Custom integrations',
       ],
-      cta: 'Monthly billing',
+      cta: 'Jetzt buchen',
       mostPopular: false,
     },
   ],
 }
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Pricing() {
   return (
     <div id='pricing' className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 className="text-base font-semibold tracking-wider uppercase">Deploy faster</h2>
+      <h2 className="text-base font-semibold tracking-wider uppercase">Flexibler Arbeiten</h2>
       <h2 className="text-lg text-center font-extrabold sm:leading-none sm:tracking-tight text-5xl">
-        Pricing plans for te ams of all sizes
+        Preispläne angepasst an deine Bedürfnisse
       </h2>
 
       {/* Tiers */}
@@ -69,7 +69,7 @@ export default function Pricing() {
               <h3 className="text-xl font-semibold">{tier.title}</h3>
               {tier.mostPopular ? (
                 <p className="absolute top-0 py-1.5 px-4 bg-green-600 rounded-full text-xs font-semibold uppercase tracking-wide text-white transform -translate-y-1/2">
-                  Most popular
+                  Am beliebtesten
                 </p>
               ) : null}
               <p className="mt-4 flex items-baseline">

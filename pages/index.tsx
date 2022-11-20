@@ -1,16 +1,16 @@
 import Head from "next/head"
-import Container from "../components/container"
-import CallToAction from "../components/callToAction"
-import Features from "../components/features"
-import HeroSection from "../components/hero"
-import LogoCloud from "../components/logo-cloud"
-import Pricing from "../components/pricing"
-import Stats from "../components/stats"
+import Container from "../components/container/container"
+import CallToAction from "../components/index/callToAction"
+import Features from "../components/index/features"
+import HeroSection from "../components/index/hero"
+import LogoCloud from "../components/index/logo-cloud"
+import Pricing from "../components/index/pricing"
+import Stats from "../components/index/stats"
 
 
 export default function Index() {
   const meta = {
-    title: 'Projekt',
+    title: 'Gemeindezentrum Bad Erzland',
     description: `Test`,
   };
 
@@ -28,13 +28,13 @@ export default function Index() {
           <LogoCloud />
         </div>
         <div className="my-32">
-          <Features />
+          <Stats />
         </div>
         <div className="my-32">
           <CallToAction />
         </div>
         <div className="my-32">
-          <Stats />
+          <Features />
         </div>
         <div className="my-32">
           <Pricing />

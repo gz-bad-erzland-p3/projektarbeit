@@ -8,7 +8,7 @@ const Counter = ({ target, title, duration }) => {
 	});
 
 	return (
-		<div ref={ref}>
+		<span ref={ref}>
 			<CountUp
 				start={0}
 				end={inView ? target : 0}
@@ -31,7 +31,7 @@ const Counter = ({ target, title, duration }) => {
 					transform: translate3d(0, 0, 0);
 				}
 			`}</style>
-		</div>
+		</span>
 	);
 };
 
