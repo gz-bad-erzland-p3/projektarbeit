@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { getDatabase, ref, get, onValue } from "firebase/database";
+import DashboardContainer from "../components/container/dashboardContainer";
 
 const DashboardPage = () => {
     const dbRef = ref(getDatabase());
@@ -46,10 +47,9 @@ Todos aho:
 */
     return (
         <ProtectedRoute>
-            <div>
-                <h2>Once:{geb}</h2>
-                <h2>Live:{status}</h2>
-            </div>
+            <DashboardContainer current={0}>
+                
+            </DashboardContainer>
         </ProtectedRoute>
     );
   };
