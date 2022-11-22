@@ -1,5 +1,6 @@
 # Projektarbeit "Buchungssoftware Gemeindezentrum Bad Erzland"
 Diese Buchungssoftware wurde im Rahmen der Projektarbeit des BSZET 2022 erstellt.
+Um mehr Einblicke hinter das Projekt zu erhalten besuche die [Dokumentation zur Projektarbeit](https://gz-bad-erzland-p3.github.io/docs/)
 
 ## Installation
 ### Requirements
