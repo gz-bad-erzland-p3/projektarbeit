@@ -2,7 +2,11 @@
 
 ## Install
 ### Requirements
-- **NodeJS** installed
+- NodeJS installed
 
-Clone Repository
-Run 'npm install'
+### Steps
+1. Clone Repository
+2. Run `npm install`
+
+## Development and Deployment:
+Read [NextJS Docs](https://nextjs.org/docs)
