@@ -1,12 +1,14 @@
-# BSZET Project work
+# Projektarbeit "Buchungssoftware Gemeindezentrum Bad Erzland"
+Diese Buchungssoftware wurde im Rahmen der Projektarbeit des BSZET 2022 erstellt.
 
-## Install
+## Installation
 ### Requirements
-- NodeJS installed
+- NodeJS, GIT installiert
 
-### Steps
-1. Clone Repository
-2. Run `npm install`
+### Schritte zur Installation
+1. Klone dieses Repository oder lade es dir herunter
+2. Lade das Projekt in deine gewünschte IDE
+3. Führe `npm install` im Terminal aus
 
 ## Development and Deployment:
 Read [NextJS Docs](https://nextjs.org/docs)
