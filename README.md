@@ -1,5 +1,5 @@
 [![license](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
-[![GitHub release](https://img.shields.io/github/v/release/gz-bad-erzland-p3/docs)](https://GitHub.com/gz-bad-erzland-p3/projektarbeit/releases/)
+[![GitHub release](https://img.shields.io/github/v/release/gz-bad-erzland-p3/projektarbeit?include_prereleases&sort=date)](https://GitHub.com/gz-bad-erzland-p3/projektarbeit/releases/)
 
 # Projektarbeit
 Diese Buchungssoftware wurde im Rahmen der Projektarbeit des BSZET 2022 erstellt. <br />
