@@ -21,9 +21,6 @@ initializeApp(firebaseConfig);
 export const auth = getAuth();
 setPersistence(auth, browserSessionPersistence)
 
-// Get current user
-export const currentUser = auth.currentUser ;//== null ? "" : auth.currentUser;
-
 // Database
 export const db = getDatabase();
 

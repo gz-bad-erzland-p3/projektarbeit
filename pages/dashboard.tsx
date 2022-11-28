@@ -2,7 +2,7 @@ import { useState } from "react";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { ref, get, set } from "firebase/database";
 import DashboardContainer from "../components/container/dashboardContainer";
-import { currentUser, db } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 
 const DashboardPage = () => {
     const dbRef = ref(db);
@@ -35,12 +35,6 @@ Todos aho:
         console.error(error);
     });
 
-    const uid = currentUser == null ? "" : currentUser.uid;
-    set(ref(db, 'users/' + uid), {
-        username: "name",
-        email: "email@mail.de",
-        profile_picture : "imageurl.de"
-      });
 /*
     useEffect(()=>{
         return onValue(dbRef, (snapshot) => {
@@ -54,7 +48,6 @@ Todos aho:
         <ProtectedRoute>
             <DashboardContainer current={0}>
                 {geb}{status}
-                <input id="tfUsername"></input>
             </DashboardContainer>
         </ProtectedRoute>
     );
