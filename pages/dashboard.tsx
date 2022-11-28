@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ProtectedRoute from "../components/ProtectedRoute";
-import { getDatabase, ref, get, onValue } from "firebase/database";
+import { ref, get, set } from "firebase/database";
 import DashboardContainer from "../components/container/dashboardContainer";
+import { currentUser, db } from "../config/firebase";
 
 const DashboardPage = () => {
-    const dbRef = ref(getDatabase());
+    const dbRef = ref(db);
     const [geb, setGeb] = useState(""); //example how to get a value once from firebase
     const [status, setStatus] = useState(""); //example how to get a value "live" from firebase
 
 /*Todos rpe: 
-    Anmeldung/Registrierung: Cookie setzen und bei login/signup page auf dashboard weiterleiten wenn cookie verfügbar
+    -Anmeldung/Registrierung: Cookie setzen und bei login/signup page auf dashboard weiterleiten wenn cookie verfügbar
     Registrierung: für jeden user beim registrieren ein objekt erstellen und eigenschaften, die bei der registrierung angegeben werden unter diesem objekt speichern (struktur: user/dhu4hz378z3gzu2/name...)
     Formular senden: alle Auswahlen per jquery (oder wie das in react geht) auslesen und im benutzerobjekt speichern
     Validierung: Auswahlmöglichkeiten im Formular, basierend auf den daten aus der firebase einschränken
@@ -26,6 +27,7 @@ Todos aho:
     get(dbRef).then((snapshot) => {
         if (snapshot.exists()) {
             setGeb(snapshot.val().test);
+            setStatus(snapshot.val().test);
         } else {
             console.log("No data available");
         }
@@ -33,6 +35,13 @@ Todos aho:
         console.error(error);
     });
 
+    const uid = currentUser == null ? "" : currentUser.uid;
+    set(ref(db, 'users/' + uid), {
+        username: "name",
+        email: "email@mail.de",
+        profile_picture : "imageurl.de"
+      });
+/*
     useEffect(()=>{
         return onValue(dbRef, (snapshot) => {
             if(snapshot.exists()){
@@ -40,15 +49,12 @@ Todos aho:
             }
         })
     })
-/*
-    onValue(dbRef, (snapshot) => {
-        setStatus(snapshot.val().test);
-    })
 */
     return (
         <ProtectedRoute>
             <DashboardContainer current={0}>
-                
+                {geb}{status}
+                <input id="tfUsername"></input>
             </DashboardContainer>
         </ProtectedRoute>
     );
