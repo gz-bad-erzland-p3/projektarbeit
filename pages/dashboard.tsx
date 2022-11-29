@@ -48,7 +48,6 @@ Todos aho:
     return (
         <ProtectedRoute>
             <DashboardContainer current={0}>
-                <DatePicker />
             </DashboardContainer>
         </ProtectedRoute>
     );

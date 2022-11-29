@@ -1,13 +1,8 @@
-
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { browserSessionPersistence, getAuth, setPersistence } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyChDiUUVRNskRyxp42MrrMwr42FIQZ3OEk",
     authDomain: "react-info-projekt.firebaseapp.com",
@@ -20,9 +15,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
+
+// Set auth cookie
 export const auth = getAuth();
 setPersistence(auth, browserSessionPersistence)
 
+// Database
 export const db = getDatabase();
 

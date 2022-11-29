@@ -5,7 +5,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
+import { ref, set } from "firebase/database";
 
 interface UserType {
   email: string | null;
@@ -37,7 +38,15 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   }, []);
 
   const signUp = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+    createUserWithEmailAndPassword(auth, email, password);
+
+    const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
+    set(ref(db, 'users/' + uid), {
+        username: "Ferdinand",
+        email: "signup@mail.de",
+        profile_picture : "imageurl.de"
+      });
+    return;
   };
 
   const logIn = (email: string, password: string) => {

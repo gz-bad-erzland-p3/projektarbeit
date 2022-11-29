@@ -2,14 +2,14 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
-  PlusIcon,
-  HomeIcon,
   Bars3Icon,
   UsersIcon,
   XMarkIcon,
   UserCircleIcon
 } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/router'
+import { get, ref } from 'firebase/database'
+import { auth, db } from '../../config/firebase'
 
 const navigation = [
     { id: 0, name: 'Buchungen', href: '/dashboard', icon: UsersIcon, current: false},
@@ -23,7 +23,7 @@ function classNames(...classes: string[]) {
 
 export default function DashboardContainer(props: { [x: string]: any; children: any;}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [username, setUsername] = useState('Username');
+  const [username, setUsername] = useState('');
   const { children } = props;
 
   let currentItemName = null;
@@ -38,6 +38,17 @@ export default function DashboardContainer(props: { [x: string]: any; children: 
       else {
         item.current = false;
       }
+  });
+
+  const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
+  get(ref(db, 'users/' + uid + "/username")).then((snapshot) => {
+    if (snapshot.exists()) {
+        setUsername(snapshot.val());
+    } else {
+        console.log("No data available");
+    }
+  }).catch((error) => {
+      console.error(error);
   });
 
   return (
