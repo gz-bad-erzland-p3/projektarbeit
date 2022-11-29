@@ -1,13 +1,12 @@
 import { useState } from "react";
 import ProtectedRoute from "../components/ProtectedRoute";
-import { ref, get, set } from "firebase/database";
+import { ref, get } from "firebase/database";
 import DashboardContainer from "../components/container/dashboardContainer";
-import { auth, db } from "../config/firebase";
+import { db } from "../config/firebase";
 
 const DashboardPage = () => {
     const dbRef = ref(db);
     const [geb, setGeb] = useState(""); //example how to get a value once from firebase
-    const [status, setStatus] = useState(""); //example how to get a value "live" from firebase
 
 /*Todos rpe: 
     -Anmeldung/Registrierung: Cookie setzen und bei login/signup page auf dashboard weiterleiten wenn cookie verfügbar
@@ -27,7 +26,6 @@ Todos aho:
     get(dbRef).then((snapshot) => {
         if (snapshot.exists()) {
             setGeb(snapshot.val().test);
-            setStatus(snapshot.val().test);
         } else {
             console.log("No data available");
         }
@@ -47,7 +45,7 @@ Todos aho:
     return (
         <ProtectedRoute>
             <DashboardContainer current={0}>
-                {geb}{status}
+                {geb}
             </DashboardContainer>
         </ProtectedRoute>
     );
