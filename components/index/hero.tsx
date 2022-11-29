@@ -1,6 +1,8 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline'
 import { Fragment, useState } from 'react'
+import DatePicker from "react-datepicker"
+
 
 const people = [
   { id: 1, name: 'Durward Reynolds', unavailable: false },
@@ -13,6 +15,7 @@ const people = [
 export default function HeroSection() {
   let [isOpen, setIsOpen] = useState(true)
   const [selected, setSelected] = useState(people[0])
+  const [startDate, setStartDate] = useState(new Date());
 
 
   function closeModal() {
@@ -117,6 +120,8 @@ export default function HeroSection() {
                   >
                     Payment successful
                   </Dialog.Title>
+                  <DatePicker selected={startDate} onChange={(date:Date) => setStartDate(date)} />
+
                   <div className="top-16 w-72">
                     <Listbox value={selected} onChange={setSelected}>
                       <div className="relative mt-1">
