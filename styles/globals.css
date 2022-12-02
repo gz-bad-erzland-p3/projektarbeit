@@ -7,12 +7,13 @@ html {
 }
 
 body {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-200;
+    @apply bg-white dark: bg-gray-900 text-gray-900 dark:text-white transition-all duration-200;
 }
 
-.form-input{
-    @apply rounded-none focus:ring-0 focus:ring-offset-0 focus:border-green-600 border-0 border-b-2 border-gray-500 text-gray-900 text-base focus:border-b-2 outline-none;
+.form-input {
+    @apply rounded-none focus: ring-0 focus:ring-offset-0 focus:border-green-600 border-0 border-b-2 border-gray-500 text-gray-900 text-base focus:border-b-2 outline-none;
     --tw-ring-shadow: none !important;
     --tw-ring-offset-shadow: none !important;
-  }
-  
+}
+
+.form-dropdown {}

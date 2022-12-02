@@ -12,7 +12,7 @@ export default function NewBooking() {
                     <div>
                         <StepsForBooking />
                         <div className="flex">
-                            <div className="flex-1 w-1/2">
+                            <div className="flex-auto w-96">
                                 <DateTimeRangePicker />
                             </div>
                             <div className="flex-auto">
