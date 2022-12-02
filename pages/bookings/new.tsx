@@ -11,7 +11,7 @@ export default function NewBooking() {
                 <div className="grow max-w-7xl px-4 sm:px-6 ">
                     <div>
                         <StepsForBooking />
-                        <div className="flex">
+                        <div className="flex py-5">
                             <div className="flex-auto w-96">
                                 <DateTimeRangePicker />
                             </div>

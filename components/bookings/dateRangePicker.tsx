@@ -14,7 +14,7 @@ export default function DateTimeRangePicker() {
 
     return (
         <div>
-            <Datepicker value={value} onChange={handleValueChange} primaryColor="green" language="de" separator="-"/>
+            <Datepicker value={value} onChange={handleValueChange} primaryColor="green" language="de" />
         </div>
     );
 }
