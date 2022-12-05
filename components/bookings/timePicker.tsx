@@ -16,9 +16,9 @@ export default function TimePicker() {
     }
 
     return (
-        <Menu as="div" className="relative inline-block text-left w-full form-input">
+        <Menu as="div" className="relative inline-block text-left w-full">
             <div>
-                <Menu.Button className="inline-flex w-full justify-center rounded-md bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 outline-none">
+                <Menu.Button className="inline-flex w-full justify-center rounded-md bg-white text-sm font-medium text-gray-700 shadow-sm outline-none form-input form-input-dropdown ">
                     {title}
                     <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
                 </Menu.Button>
@@ -26,12 +26,12 @@ export default function TimePicker() {
 
             <Transition
                 as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
+                enter="transition ease-out duration-300"
+                enterFrom="transform opacity-0 translate-y-4"
+                enterTo="transform opacity-100 translate-y-0"
                 leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
+                leaveFrom="transform opacity-100 translate-y-0"
+                leaveTo="transform opacity-0 translate-y-4"
             >
                 <Menu.Items className="overflow-scroll h-96 absolute text-center z-10 w-full mt-2 origin-center rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div>
@@ -40,7 +40,7 @@ export default function TimePicker() {
                                 {({ active }) => (
                                     <button onClick={() => handleTitleChange(item)}className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block w-full px-4 py-2 text-sm'
+                                            'block w-full px-4 py-4 text-base'
                                         )}
                                     >
                                         {item}

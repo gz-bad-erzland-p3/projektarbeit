@@ -1,7 +1,9 @@
 export const bookingSteps = [
-    { id: 'Step 1', name: 'Job details', href: '#', status: 'complete' },
-    { id: 'Step 2', name: 'Application form', href: '#', status: 'current' },
-    { id: 'Step 3', name: 'Preview', href: '#', status: 'upcoming' },
+    { id: '1', name: 'Zeitraum', href: '#' },
+    { id: '2', name: 'Konfiguration', href: '#' },
+    { id: '3', name: 'Übersicht', href: '#' },
+    { id: '4', name: 'Ihre Daten', href: '#' },
+    { id: '5', name: 'Zahlung', href: '#' },
 ]
 
 export const bookingTimes = getTimeInSteps(new Date("1970-01-01T08:00:00.00"), new Date("1970-01-01T17:30:00.00"), 15)

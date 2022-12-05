@@ -19,7 +19,7 @@ export default function DropDown(props: any) {
     return (
         <Menu as="div" className="relative inline-block text-left w-full form-input">
             <div>
-                <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 outline-none form-dropdown">
+                <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm outline-none form-dropdown">
                     {title}
                     <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
                 </Menu.Button>
@@ -27,14 +27,14 @@ export default function DropDown(props: any) {
 
             <Transition
                 as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
+                enter="transition ease-out duration-300"
+                enterFrom="transform opacity-0 translate-y-4"
+                enterTo="transform opacity-100 translate-y-0"
                 leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
+                leaveFrom="transform opacity-100 translate-y-0"
+                leaveTo="transform opacity-0 translate-y-4"
             >
-                <Menu.Items className="overflow-scroll h-96 absolute text-center z-10 w-full mt-2 origin-center rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="overflow-scroll h-96 absolute text-center z-10 w-full mt-2 origin-center rounded-md bg-white shadow-lg outline-none">
                     <div className="py-1">
                         {items.map((item, index) => (
                             <Menu.Item key={index}>

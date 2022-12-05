@@ -11,11 +11,34 @@ body {
 }
 
 .form-input {
-    @apply rounded-none focus:ring-0 focus:ring-offset-0 focus:border-green-600 border-0 border-b-2 border-gray-500 text-gray-900 text-base focus:border-b-2 outline-none p-0 m-0;
+    @apply rounded-md focus:ring-0 focus:ring-offset-0 focus:border-green-600 bg-gray-100 dark:bg-gray-800 dark:text-white hover:border-green-600 border-0 border-b-2 border-gray-500 text-gray-900 text-base focus:border-b-2 outline-none py-2 px-4 m-0;
     --tw-ring-shadow: none !important;
     --tw-ring-offset-shadow: none !important;
+}
+
+.form-input-dropdown {
+    @apply transition;
 }
 
 .form-dropdown {
     @apply mb-2;
 }
+
+.button-select{
+    @apply w-full text-center p-4 rounded-md;
+    transition: background 200ms ease;
+}
+
+.background-green {
+    @apply bg-green-600 hover:bg-green-700 text-white;
+}
+
+.button-secondary {
+   @apply bg-transparent rounded-md hover:bg-gray-200 py-2 px-4;
+   transition: background 200ms ease;
+}
+
+.button-primary {
+    @apply bg-green-600 text-white rounded-md hover:bg-green-700 py-2 px-4;
+    transition: background 200ms ease;
+ }
