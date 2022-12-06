@@ -7,6 +7,24 @@ export const bookingSteps = [
     { id: '6', name: 'Zahlung', href: '#' },
 ]
 
+export const geraete = [
+  "Laptop",
+  "Desktop",
+  "Barebone"
+]
+
+export const betriebssysteme = [
+  "Windows 10",
+  "Windows 11",
+  "Ubuntu"
+]
+
+export const browser = [
+  "Chrome",
+  "Firefox",
+  "Edge"
+]
+
 export const bookingTimes = getTimeInSteps(new Date("1970-01-01T08:00:00.00"), new Date("1970-01-01T17:30:00.00"), 15)
 
 function getTimeInSteps(startTime: Date, endTime: Date, steps: number){

@@ -5,10 +5,11 @@ import StepsForBooking from "../../components/bookings/steps";
 import MainContainer from "../../components/container/container";
 import FormContainer from "../../components/form/formContainer";
 import FormSection from "../../components/form/formSection";
-import { bookingTimes } from "../../components/data/data";
+import { betriebssysteme, bookingTimes, browser, geraete } from "../../components/data/data";
 import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
+import CheckBoxes from "../../components/bookings/checkboxes";
 
 export default function NewBooking() {
 
@@ -70,6 +71,34 @@ export default function NewBooking() {
                                     </FormItem>
                                     <FormItem width="1/2">
                                         <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                    </FormItem>
+                                </FormSection>
+                                <FormContainerEnd>
+                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                </FormContainerEnd>
+                            </FormContainer>
+
+                            //3 Checkboxen für Browser
+                            // 3 Checkboxen für Kommunikationsapplikationen
+                        }
+
+{
+                            currentStep == 3 &&
+                            <FormContainer title="Arbeitsplatztyp wählen">
+                                <FormSection>
+                                    <FormItem width="1/2">
+                                        <DropDown items={geraete}/>
+                                    </FormItem>
+                                    <FormItem width="1/2">
+                                        <DropDown items={betriebssysteme}/>
+                                    </FormItem>
+                                </FormSection>
+                                <FormSection>
+                                    <FormItem width="1/2">
+                                        <CheckBoxes title="Browser" items={browser}/>
+                                    </FormItem>
+                                    <FormItem width="1/2">
+                                        <CheckBoxes items={betriebssysteme}/>
                                     </FormItem>
                                 </FormSection>
                                 <FormContainerEnd>
