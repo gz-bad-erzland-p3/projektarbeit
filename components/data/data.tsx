@@ -16,11 +16,8 @@ function getTimeInSteps(startTime: Date, endTime: Date, steps: number){
 
     for(let i = 0; i < (timeDiff / steps); i++){
       finalTime = new Date(finalTime.getTime() + (steps * 60 * 1000));
-      //times.push((finalTime.getHours() < 10 ? '0' : '') + finalTime.getHours() + ":" + (finalTime.getMinutes() < 10 ? '0' : '') + finalTime.getMinutes());
       times.push(finalTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
     }
-
-    console.log(times)
 
     return times;
 }

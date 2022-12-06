@@ -1,10 +1,12 @@
 import { useState } from "react";
 import DateTimeRangePicker from "../../components/bookings/dateRangePicker";
 import DropDown from "../../components/bookings/dropDown";
-import SelectButtons from "../../components/bookings/selectButtons";
 import StepsForBooking from "../../components/bookings/steps";
-import TimePicker from "../../components/bookings/timePicker";
+import TextInput from "../../components/bookings/textInput";
 import MainContainer from "../../components/container/container";
+import FormContainer from "../../components/container/formContainer";
+import FormSection from "../../components/container/formSection";
+import {bookingTimes} from "../../components/data/data";
 
 export default function NewBooking() {
 
@@ -39,9 +41,8 @@ export default function NewBooking() {
                         <StepsForBooking currentId={currentStep} />
                         {
                             currentStep == 1 &&
-                            <div className="pt-16">
-                                <h1 className="text-3xl font-bold">Zeitraum auswählen</h1>
-                                <div className="flex pt-5 pb-2 space-x-4">
+                            <FormContainer title="Zeitraum wählen">
+                                <FormSection>
                                     <div className="flex-1">
                                         <p className="text-base font-bold">Zeitraum</p>
                                     </div>
@@ -53,36 +54,34 @@ export default function NewBooking() {
                                             <p className="text-base font-bold">Zeit bis</p>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="flex pb-5 space-x-4">
+                                </FormSection>
+                                <FormSection>
                                     <div className="flex-1">
                                         <DateTimeRangePicker />
                                     </div>
                                     <div className="flex-1 flex space-x-4">
                                         <div className="flex-1">
-                                            <TimePicker />
-
+                                            <DropDown title="Startzeit" items={bookingTimes} />
                                         </div>
                                         <div className="flex-1">
-                                            <TimePicker />
-
+                                            <DropDown title="Endzeit" items={bookingTimes} />
                                         </div>
                                     </div>
-                                </div>
-                                <div className="flex space-x-4 py-8">
+                                </FormSection>
+                                <FormSection title="Arbeitsplatztyp auswählen">
                                     <div className="flex-1">
                                         <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
                                     </div>
                                     <div className="flex-1">
                                         <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
                                     </div>
-                                </div>
+                                </FormSection>
                                 <div className="flex justify-end">
                                     <div>
                                         { workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
                                     </div>
                                 </div>
-                            </div>
+                            </FormContainer>
 
                         }
                         {
@@ -90,7 +89,7 @@ export default function NewBooking() {
                             <div>
                                 <div className="flex">
                                     <div className="flex-1">
-                                        <DropDown title="Gerät" items={["Test", "Test2"]} />
+                                        <TextInput title="Name" />
                                     </div>
                                     <div className="flex-1">
                                         <DropDown title="Betriebssystem" items={["Windows 10", "Windows 11"]} />
