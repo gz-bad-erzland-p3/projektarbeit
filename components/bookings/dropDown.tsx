@@ -15,10 +15,10 @@ export default function Example(props: any) {
         <Listbox value={selected} onChange={setSelected}>
             {({ open }) => (
                 <>
-                    <div className="relative">
-                        <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white px-4 py-2 text-left outline-none form-dropdown form-input">
+                    <div className="relative w-full">
+                        <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white text-left outline-none form-dropdown form-input">
                             <span className="flex items-center">
-                                <span className="ml-3 block truncate">{selected}</span>
+                                <span className="block truncate">{selected}</span>
                             </span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                                 <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -42,7 +42,7 @@ export default function Example(props: any) {
                                         className={({ active }) =>
                                             classNames(
                                                 active ? 'text-white bg-green-600' : 'text-gray-900',
-                                                'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                'relative cursor-default select-none rounded-md py-2 pl-3 pr-9'
                                             )
                                         }
                                         value={item}

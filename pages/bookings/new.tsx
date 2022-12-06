@@ -2,11 +2,13 @@ import { useState } from "react";
 import DateTimeRangePicker from "../../components/bookings/dateRangePicker";
 import DropDown from "../../components/bookings/dropDown";
 import StepsForBooking from "../../components/bookings/steps";
-import TextInput from "../../components/bookings/textInput";
 import MainContainer from "../../components/container/container";
-import FormContainer from "../../components/container/formContainer";
-import FormSection from "../../components/container/formSection";
-import {bookingTimes} from "../../components/data/data";
+import FormContainer from "../../components/form/formContainer";
+import FormSection from "../../components/form/formSection";
+import { bookingTimes } from "../../components/data/data";
+import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
+import FormItem from "../../components/form/formItem";
+import FormContainerEnd from "../../components/form/formContainerEnd";
 
 export default function NewBooking() {
 
@@ -43,59 +45,37 @@ export default function NewBooking() {
                             currentStep == 1 &&
                             <FormContainer title="Zeitraum wählen">
                                 <FormSection>
-                                    <div className="flex-1">
-                                        <p className="text-base font-bold">Zeitraum</p>
-                                    </div>
-                                    <div className="flex-1 flex space-x-4">
-                                        <div className="flex-1">
-                                            <p className="text-base font-bold">Zeit von</p>
-                                        </div>
-                                        <div className="flex-1">
-                                            <p className="text-base font-bold">Zeit bis</p>
-                                        </div>
-                                    </div>
-                                </FormSection>
-                                <FormSection>
-                                    <div className="flex-1">
+                                    <FormItem width="1/2" title="Zeitraum" icon={CalendarIcon}>
                                         <DateTimeRangePicker />
-                                    </div>
-                                    <div className="flex-1 flex space-x-4">
-                                        <div className="flex-1">
-                                            <DropDown title="Startzeit" items={bookingTimes} />
-                                        </div>
-                                        <div className="flex-1">
-                                            <DropDown title="Endzeit" items={bookingTimes} />
-                                        </div>
-                                    </div>
+                                    </FormItem>
+                                    <FormItem width="1/4" title="Zeit von" icon={ClockIcon}>
+                                        <DropDown title="Startzeit" items={bookingTimes} />
+                                    </FormItem>
+                                    <FormItem width="1/4" title="Zeit bis" icon={ClockIcon}>
+                                        <DropDown title="Endzeit" items={bookingTimes} />
+                                    </FormItem>
+                                    <FormItem width="1/4">
+                                        <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
+                                    </FormItem>
                                 </FormSection>
-                                <FormSection title="Arbeitsplatztyp auswählen">
-                                    <div className="flex-1">
-                                        <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
-                                    </div>
-                                    <div className="flex-1">
-                                        <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
-                                    </div>
-                                </FormSection>
-                                <div className="flex justify-end">
-                                    <div>
-                                        { workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                    </div>
-                                </div>
                             </FormContainer>
 
                         }
                         {
                             currentStep == 2 &&
-                            <div>
-                                <div className="flex">
-                                    <div className="flex-1">
-                                        <TextInput title="Name" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <DropDown title="Betriebssystem" items={["Windows 10", "Windows 11"]} />
-                                    </div>
-                                </div>
-                            </div>
+                            <FormContainer title="Arbeitsplatztyp wählen">
+                                <FormSection>
+                                    <FormItem width="1/2">
+                                        <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
+                                    </FormItem>
+                                    <FormItem width="1/2">
+                                        <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                    </FormItem>
+                                </FormSection>
+                                <FormContainerEnd>
+                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                </FormContainerEnd>
+                            </FormContainer>
 
                             //3 Checkboxen für Browser
                             // 3 Checkboxen für Kommunikationsapplikationen
