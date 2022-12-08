@@ -33,7 +33,7 @@ export default function NewBooking() {
         }
     }
 
-    function send(){
+    function send() {
 
     }
 
@@ -113,28 +113,43 @@ export default function NewBooking() {
                             //3 Checkboxen für Browser
                             // 3 Checkboxen für Kommunikationsapplikationen
                         }
-                        
                         {
-                            currentStep == 6 &&
+                            currentStep == 4 &&
                             <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <DropDown items={geraete} />
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <button onClick={send}>Senden &rarr;</button>
-                                    </FormItem>
-                                </FormSection>
+
                                 <FormContainerEnd>
-                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
 
                             //3 Checkboxen für Browser
                             // 3 Checkboxen für Kommunikationsapplikationen
                         }
-                        
-                        
+                        {
+                            currentStep == 5 &&
+                            <FormContainer title="Arbeitsplatztyp wählen">
+
+                                <FormContainerEnd>
+                                    <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                </FormContainerEnd>
+                            </FormContainer>
+
+                            //3 Checkboxen für Browser
+                            // 3 Checkboxen für Kommunikationsapplikationen
+                        }
+                        {
+                            currentStep == 6 &&
+                            <FormContainer title="Arbeitsplatztyp wählen">
+                                <FormContainerEnd>
+                                    <button className="button-primary" onClick={send}>Senden &rarr;</button>
+                                </FormContainerEnd>
+                            </FormContainer>
+
+                            //3 Checkboxen für Browser
+                            // 3 Checkboxen für Kommunikationsapplikationen
+                        }
+
+
 
                     </div>
                 </div>
