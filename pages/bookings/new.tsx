@@ -33,6 +33,10 @@ export default function NewBooking() {
         }
     }
 
+    function send(){
+
+    }
+
     return (
         <MainContainer>
             <div className="flex justify-center mx-auto">
@@ -82,23 +86,23 @@ export default function NewBooking() {
                             // 3 Checkboxen für Kommunikationsapplikationen
                         }
 
-{
+                        {
                             currentStep == 3 &&
                             <FormContainer title="Arbeitsplatztyp wählen">
                                 <FormSection>
                                     <FormItem width="1/2">
-                                        <DropDown items={geraete}/>
+                                        <DropDown items={geraete} />
                                     </FormItem>
                                     <FormItem width="1/2">
-                                        <DropDown items={betriebssysteme}/>
+                                        <DropDown items={betriebssysteme} />
                                     </FormItem>
                                 </FormSection>
                                 <FormSection>
                                     <FormItem width="1/2">
-                                        <CheckBoxes title="Browser" items={browser}/>
+                                        <CheckBoxes title="Browser" items={browser} />
                                     </FormItem>
                                     <FormItem width="1/2">
-                                        <CheckBoxes items={betriebssysteme}/>
+                                        <CheckBoxes items={betriebssysteme} />
                                     </FormItem>
                                 </FormSection>
                                 <FormContainerEnd>
@@ -109,6 +113,29 @@ export default function NewBooking() {
                             //3 Checkboxen für Browser
                             // 3 Checkboxen für Kommunikationsapplikationen
                         }
+                        
+                        {
+                            currentStep == 3 &&
+                            <FormContainer title="Arbeitsplatztyp wählen">
+                                <FormSection>
+                                    <FormItem width="1/2">
+                                        <DropDown items={geraete} />
+                                    </FormItem>
+                                    <FormItem width="1/2">
+                                        <button onClick={send}>Senden &rarr;</button>
+                                    </FormItem>
+                                </FormSection>
+                                <FormContainerEnd>
+                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                </FormContainerEnd>
+                            </FormContainer>
+
+                            //3 Checkboxen für Browser
+                            // 3 Checkboxen für Kommunikationsapplikationen
+                        }
+                        
+                        
+
                     </div>
                 </div>
             </div>
