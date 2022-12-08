@@ -10,11 +10,21 @@ import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
 import CheckBoxes from "../../components/bookings/checkboxes";
+import { get, ref, set } from 'firebase/database'
+import { auth, db } from '../../config/firebase'
 
 export default function NewBooking() {
 
     const [currentStep, setCurrentStep] = useState(1);
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
+    const [endTime, setEndTime] = useState('');
+    const [startTime, setStartTime] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [device, setDevice] = useState('');
+    const [browserSel, setBrowserSel] = useState('');
+    const [communicationSel, setCommunicationSel] = useState('');
+    const [os, setOs] = useState('');
 
     function handleSetCurrentStep(operator: string) {
         if (operator == "+")
@@ -33,8 +43,13 @@ export default function NewBooking() {
         }
     }
 
-    function send(){
-
+    function send() {
+        const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
+        set(ref(db, 'users/' + uid + '/bookings'), {
+            startDate: startDate,
+            email: "signup@mail.de",
+            profile_picture: "imageurl.de"
+        });
     }
 
     return (
@@ -46,95 +61,104 @@ export default function NewBooking() {
                             <button className="button-secondary" onClick={() => handleSetCurrentStep("-")} >&larr; Zurück</button>
                         </div>
                         <StepsForBooking currentId={currentStep} />
-                        {
-                            currentStep == 1 &&
-                            <FormContainer title="Zeitraum wählen">
-                                <FormSection>
-                                    <FormItem width="1/2" title="Zeitraum" icon={CalendarIcon}>
-                                        <DateTimeRangePicker />
-                                    </FormItem>
-                                    <FormItem width="1/4" title="Zeit von" icon={ClockIcon}>
-                                        <DropDown title="Startzeit" items={bookingTimes} />
-                                    </FormItem>
-                                    <FormItem width="1/4" title="Zeit bis" icon={ClockIcon}>
-                                        <DropDown title="Endzeit" items={bookingTimes} />
-                                    </FormItem>
-                                    <FormItem width="1/4">
-                                        <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
-                                    </FormItem>
-                                </FormSection>
-                            </FormContainer>
+                        <form onSubmit={(e: React.SyntheticEvent) => {
+                            e.preventDefault();
+                            const target = e.target as typeof e.target & {
+                                endTime: { value: string };
+                            };
+                            const endTime = target.endTime.value; // typechecks!
+                        }}>
 
-                        }
-                        {
-                            currentStep == 2 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
-                                    </FormItem>
-                                </FormSection>
-                                <FormContainerEnd>
-                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                </FormContainerEnd>
-                            </FormContainer>
+                            {
+                                currentStep == 1 &&
+                                <FormContainer title="Zeitraum wählen">
+                                    <FormSection>
+                                        <FormItem width="1/2" title="Zeitraum" icon={CalendarIcon}>
+                                            <DateTimeRangePicker />
+                                        </FormItem>
+                                        <FormItem width="1/4" title="Zeit von" icon={ClockIcon}>
+                                            <DropDown title="Startzeit" items={bookingTimes} />
+                                        </FormItem>
+                                        <FormItem width="1/4" title="Zeit bis" icon={ClockIcon}>
+                                            <DropDown type="endTime" title="Endzeit" items={bookingTimes} />
+                                        </FormItem>
+                                        <FormItem width="1/4">
+                                            <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
+                                        </FormItem>
+                                    </FormSection>
+                                </FormContainer>
 
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
-                        }
+                            }
+                            {
+                                currentStep == 2 &&
+                                <FormContainer title="Arbeitsplatztyp wählen">
+                                    <FormSection>
+                                        <FormItem width="1/2">
+                                            <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
+                                        </FormItem>
+                                        <FormItem width="1/2">
+                                            <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                        </FormItem>
+                                    </FormSection>
+                                    <FormContainerEnd>
+                                        {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    </FormContainerEnd>
+                                </FormContainer>
 
-                        {
-                            currentStep == 3 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <DropDown items={geraete} />
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <DropDown items={betriebssysteme} />
-                                    </FormItem>
-                                </FormSection>
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <CheckBoxes title="Browser" items={browser} />
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <CheckBoxes items={betriebssysteme} />
-                                    </FormItem>
-                                </FormSection>
-                                <FormContainerEnd>
-                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                </FormContainerEnd>
-                            </FormContainer>
+                                //3 Checkboxen für Browser
+                                // 3 Checkboxen für Kommunikationsapplikationen
+                            }
 
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
-                        }
-                        
-                        {
-                            currentStep == 6 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <DropDown items={geraete} />
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <button onClick={send}>Senden &rarr;</button>
-                                    </FormItem>
-                                </FormSection>
-                                <FormContainerEnd>
-                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                </FormContainerEnd>
-                            </FormContainer>
+                            {
+                                currentStep == 3 &&
+                                <FormContainer title="Arbeitsplatztyp wählen">
+                                    <FormSection>
+                                        <FormItem width="1/2">
+                                            <DropDown items={geraete} />
+                                        </FormItem>
+                                        <FormItem width="1/2">
+                                            <DropDown items={betriebssysteme} />
+                                        </FormItem>
+                                    </FormSection>
+                                    <FormSection>
+                                        <FormItem width="1/2">
+                                            <CheckBoxes title="Browser" items={browser} />
+                                        </FormItem>
+                                        <FormItem width="1/2">
+                                            <CheckBoxes items={betriebssysteme} />
+                                        </FormItem>
+                                    </FormSection>
+                                    <FormContainerEnd>
+                                        {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    </FormContainerEnd>
+                                </FormContainer>
 
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
-                        }
-                        
-                        
+                                //3 Checkboxen für Browser
+                                // 3 Checkboxen für Kommunikationsapplikationen
+                            }
+
+                            {
+                                currentStep == 6 &&
+                                <FormContainer title="Arbeitsplatztyp wählen">
+                                    <FormSection>
+                                        <FormItem width="1/2">
+                                            <DropDown items={geraete} />
+                                        </FormItem>
+                                        <FormItem width="1/2">
+                                            <button type="submit" onClick={send}>Senden &rarr;</button>
+                                        </FormItem>
+                                    </FormSection>
+                                    <FormContainerEnd>
+                                        {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    </FormContainerEnd>
+                                </FormContainer>
+
+                                //3 Checkboxen für Browser
+                                // 3 Checkboxen für Kommunikationsapplikationen
+                            }
+
+                        </form>
+
 
                     </div>
                 </div>
