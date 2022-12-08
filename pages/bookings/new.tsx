@@ -115,7 +115,7 @@ export default function NewBooking() {
                         }
                         
                         {
-                            currentStep == 3 &&
+                            currentStep == 6 &&
                             <FormContainer title="Arbeitsplatztyp wählen">
                                 <FormSection>
                                     <FormItem width="1/2">
