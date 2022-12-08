@@ -8,15 +8,15 @@ export const bookingSteps = [
 ]
 
 export const geraete = [
-  "Laptop",
-  "Desktop",
-  "Barebone"
+  {id: '1', title: "Laptop", description: "Test",price: "1"},
+  {id: '2', title: "Desktop PC", description: "Test",price: "1"},
+  {id: '3', title: "Barebone", description: "Test", price: "1"}
 ]
 
 export const betriebssysteme = [
-  "Windows 10",
-  "Windows 11",
-  "Ubuntu"
+  {id: '1', title: "Windows 11", description: "Windows 11"},
+  {id: '2', title: "Windows 10", description: "Windows 10"},
+  {id: '3', title: "Ubuntu", description: "Ubuntu"}
 ]
 
 export const browser = [
@@ -29,6 +29,12 @@ export const kommunikationsapplikationen = [
   "Chrome",
   "Firefox",
   "Edge"
+]
+
+export const paymentMethods = [
+  {id: '1', title: "Test", description: "Test"},
+  {id: '2', title: "Test", description: "Test"},
+  {id: '3', title: "Test", description: "Test"}
 ]
 
 export const bookingTimes = getTimeInSteps(new Date("1970-01-01T08:00:00.00"), new Date("1970-01-01T17:30:00.00"), 15)

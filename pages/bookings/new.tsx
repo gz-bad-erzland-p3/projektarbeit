@@ -5,11 +5,12 @@ import StepsForBooking from "../../components/bookings/steps";
 import MainContainer from "../../components/container/container";
 import FormContainer from "../../components/form/formContainer";
 import FormSection from "../../components/form/formSection";
-import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikationen } from "../../components/data/data";
+import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikationen, paymentMethods } from "../../components/data/data";
 import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
 import CheckBoxes from "../../components/bookings/checkboxes";
+import RadioButtons from "../../components/bookings/radioButtons";
 
 export default function NewBooking() {
 
@@ -42,10 +43,10 @@ export default function NewBooking() {
             <div className="flex justify-center mx-auto">
                 <div className="grow max-w-7xl px-4 sm:px-6 ">
                     <div>
-                        <div className="py-4 ">
-                            <button className="button-secondary" onClick={() => handleSetCurrentStep("-")} >&larr; Zurück</button>
+                        <div className="py-4">
+                            <button className="button-secondary mb-4" onClick={() => handleSetCurrentStep("-")} >&larr; Zurück</button>
+                            <StepsForBooking currentId={currentStep} />
                         </div>
-                        <StepsForBooking currentId={currentStep} />
                         {
                             currentStep == 1 &&
                             <FormContainer title="Zeitraum wählen">
@@ -60,7 +61,7 @@ export default function NewBooking() {
                                         <DropDown title="Endzeit" items={bookingTimes} />
                                     </FormItem>
                                     <FormItem width="1/4">
-                                        <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
+                                        <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
                                     </FormItem>
                                 </FormSection>
                             </FormContainer>
@@ -78,7 +79,7 @@ export default function NewBooking() {
                                     </FormItem>
                                 </FormSection>
                                 <FormContainerEnd>
-                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    {workingPlaceType > 0 ? <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
                                 </FormContainerEnd>
                             </FormContainer>
 
@@ -89,11 +90,13 @@ export default function NewBooking() {
                             currentStep == 3 &&
                             <FormContainer title="Arbeitsplatztyp wählen">
                                 <FormSection title="Arbeitsplatz 1">
-                                    <FormItem width="1/2">
-                                        <DropDown items={geraete} />
+                                    <FormItem title="Gerät wählen">
+                                        <RadioButtons items={geraete} />
                                     </FormItem>
-                                    <FormItem width="1/2">
-                                        <DropDown items={betriebssysteme} />
+                                </FormSection>
+                                <FormSection>
+                                    <FormItem title="Betriebssystem">
+                                        <RadioButtons items={betriebssysteme} />
                                     </FormItem>
                                 </FormSection>
                                 <FormSection>
@@ -111,10 +114,10 @@ export default function NewBooking() {
                             <FormContainer>
                                 <FormSection title="Arbeitsplatz 2">
                                     <FormItem width="1/2">
-                                        <DropDown items={geraete} />
+                                        <RadioButtons items={geraete} />
                                     </FormItem>
                                     <FormItem width="1/2">
-                                        <DropDown items={betriebssysteme} />
+                                        <RadioButtons items={betriebssysteme} />
                                     </FormItem>
                                 </FormSection>
                                 <FormSection>
@@ -128,8 +131,8 @@ export default function NewBooking() {
                             </FormContainer>
                         }
                         {currentStep == 3 &&
-                            <div className="py-3">
-                                <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                            <div className="py-3 flex justify-end">
+                                <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                             </div>
                         }
                         {
@@ -137,7 +140,7 @@ export default function NewBooking() {
                             <FormContainer title="Arbeitsplatztyp wählen">
 
                                 <FormContainerEnd>
-                                    <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                    <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }
@@ -146,15 +149,20 @@ export default function NewBooking() {
                             <FormContainer title="Arbeitsplatztyp wählen">
 
                                 <FormContainerEnd>
-                                    <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                    <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }
                         {
                             currentStep == 6 &&
                             <FormContainer title="Arbeitsplatztyp wählen">
+                                <FormSection>
+                                    <FormItem>
+                                        <RadioButtons items={paymentMethods} />
+                                    </FormItem>
+                                </FormSection>
                                 <FormContainerEnd>
-                                    <button className="button-primary" onClick={send}>Senden &rarr;</button>
+                                    <button className="button-primary next-button" onClick={send}>Senden &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }

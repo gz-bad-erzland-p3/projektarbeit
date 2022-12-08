@@ -25,6 +25,7 @@ body {
     cursor: pointer;
 }
 
+
 .button-select{
     @apply w-full text-center py-12 rounded-md border-2 border-gray-200 hover:border-gray-300;
     transition: background 200ms ease, border 200ms ease;
@@ -40,6 +41,15 @@ body {
 }
 
 .button-primary {
-    @apply bg-green-600 w-full text-white rounded-md hover:bg-green-700 py-2 px-4;
+    @apply bg-green-600 w-full text-white rounded-md hover:bg-green-500 py-2 px-4;
     transition: background 200ms ease;
  }
+
+.next-button {
+    @apply w-fit;  
+}
+
+.radio-button {
+    @apply hover:ring-green-500 hover:ring-2 transition;
+    transition: 200ms ease;
+}

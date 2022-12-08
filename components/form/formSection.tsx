@@ -3,8 +3,8 @@ export default function FormSection(props: { [x: string]: any; children: any; })
 
     return (
         <div>
-            { props.title ? <div className="py-2 text-xl font-bold">{props.title}</div> : ""}
-            <div className="flex py-2 space-x-4">
+            { props.title ? <div className="text-xl font-bold">{props.title}</div> : ""}
+            <div className="flex space-x-4">
                 {children}
             </div>
         </div>
