@@ -10,12 +10,19 @@ import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
 import CheckBoxes from "../../components/bookings/checkboxes";
-import RadioButtons from "../../components/bookings/radioButtons";
 
 export default function NewBooking() {
 
     const [currentStep, setCurrentStep] = useState(1);
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
+    const [endTime, setEndTime] = useState('');
+    const [startTime, setStartTime] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [device, setDevice] = useState('');
+    const [browserSel, setBrowserSel] = useState('');
+    const [communicationSel, setCommunicationSel] = useState('');
+    const [os, setOs] = useState('');
 
     function handleSetCurrentStep(operator: string) {
         if (operator == "+")
@@ -35,7 +42,12 @@ export default function NewBooking() {
     }
 
     function send() {
-
+        const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
+        set(ref(db, 'users/' + uid + '/bookings'), {
+            startDate: startDate,
+            email: "signup@mail.de",
+            profile_picture: "imageurl.de"
+        });
     }
 
     return (
@@ -66,22 +78,22 @@ export default function NewBooking() {
                                 </FormSection>
                             </FormContainer>
 
-                        }
-                        {
-                            currentStep == 2 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
-                                    </FormItem>
-                                </FormSection>
-                                <FormContainerEnd>
-                                    {workingPlaceType > 0 ? <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                </FormContainerEnd>
-                            </FormContainer>
+                            }
+                            {
+                                currentStep == 2 &&
+                                <FormContainer title="Arbeitsplatztyp wählen">
+                                    <FormSection>
+                                        <FormItem width="1/2">
+                                            <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
+                                        </FormItem>
+                                        <FormItem width="1/2">
+                                            <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                        </FormItem>
+                                    </FormSection>
+                                    <FormContainerEnd>
+                                        {workingPlaceType > 0 ? <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    </FormContainerEnd>
+                                </FormContainer>
 
                             //3 Checkboxen für Browser
                             // 3 Checkboxen für Kommunikationsapplikationen
