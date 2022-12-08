@@ -61,14 +61,6 @@ export default function NewBooking() {
                             <button className="button-secondary" onClick={() => handleSetCurrentStep("-")} >&larr; Zurück</button>
                         </div>
                         <StepsForBooking currentId={currentStep} />
-                        <form onSubmit={(e: React.SyntheticEvent) => {
-                            e.preventDefault();
-                            const target = e.target as typeof e.target & {
-                                endTime: { value: string };
-                            };
-                            const endTime = target.endTime.value; // typechecks!
-                        }}>
-
                             {
                                 currentStep == 1 &&
                                 <FormContainer title="Zeitraum wählen">
@@ -105,60 +97,57 @@ export default function NewBooking() {
                                     </FormContainerEnd>
                                 </FormContainer>
 
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
-                        }
+                                //3 Checkboxen für Browser
+                                // 3 Checkboxen für Kommunikationsapplikationen
+                            }
 
-                        {
-                            currentStep == 3 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <DropDown items={geraete} />
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <DropDown items={betriebssysteme} />
-                                    </FormItem>
-                                </FormSection>
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <CheckBoxes title="Browser" items={browser} />
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <CheckBoxes items={betriebssysteme} />
-                                    </FormItem>
-                                </FormSection>
-                                <FormContainerEnd>
-                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                </FormContainerEnd>
-                            </FormContainer>
+                            {
+                                currentStep == 3 &&
+                                <FormContainer title="Arbeitsplatztyp wählen">
+                                    <FormSection>
+                                        <FormItem width="1/2">
+                                            <DropDown items={geraete} />
+                                        </FormItem>
+                                        <FormItem width="1/2">
+                                            <DropDown items={betriebssysteme} />
+                                        </FormItem>
+                                    </FormSection>
+                                    <FormSection>
+                                        <FormItem width="1/2">
+                                            <CheckBoxes title="Browser" items={browser} />
+                                        </FormItem>
+                                        <FormItem width="1/2">
+                                            <CheckBoxes items={betriebssysteme} />
+                                        </FormItem>
+                                    </FormSection>
+                                    <FormContainerEnd>
+                                        {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    </FormContainerEnd>
+                                </FormContainer>
 
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
-                        }
-                        
-                        {
-                            currentStep == 6 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <DropDown items={geraete} />
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <button onClick={send}>Senden &rarr;</button>
-                                    </FormItem>
-                                </FormSection>
-                                <FormContainerEnd>
-                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                </FormContainerEnd>
-                            </FormContainer>
+                                //3 Checkboxen für Browser
+                                // 3 Checkboxen für Kommunikationsapplikationen
+                            }
 
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
-                        }
-                        
-                        
+                            {
+                                currentStep == 6 &&
+                                <FormContainer title="Arbeitsplatztyp wählen">
+                                    <FormSection>
+                                        <FormItem width="1/2">
+                                            <DropDown items={geraete} />
+                                        </FormItem>
+                                        <FormItem width="1/2">
+                                            <button onClick={send}>Senden &rarr;</button>
+                                        </FormItem>
+                                    </FormSection>
+                                    <FormContainerEnd>
+                                        {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    </FormContainerEnd>
+                                </FormContainer>
 
+                                //3 Checkboxen für Browser
+                                // 3 Checkboxen für Kommunikationsapplikationen
+                            }
                     </div>
                 </div>
             </div>
