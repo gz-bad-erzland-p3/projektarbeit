@@ -5,7 +5,7 @@ import StepsForBooking from "../../components/bookings/steps";
 import MainContainer from "../../components/container/container";
 import FormContainer from "../../components/form/formContainer";
 import FormSection from "../../components/form/formSection";
-import { betriebssysteme, bookingTimes, browser, geraete } from "../../components/data/data";
+import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikationen } from "../../components/data/data";
 import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
@@ -85,11 +85,10 @@ export default function NewBooking() {
                             //3 Checkboxen für Browser
                             // 3 Checkboxen für Kommunikationsapplikationen
                         }
-
                         {
                             currentStep == 3 &&
                             <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
+                                <FormSection title="Arbeitsplatz 1">
                                     <FormItem width="1/2">
                                         <DropDown items={geraete} />
                                     </FormItem>
@@ -98,20 +97,40 @@ export default function NewBooking() {
                                     </FormItem>
                                 </FormSection>
                                 <FormSection>
-                                    <FormItem width="1/2">
-                                        <CheckBoxes title="Browser" items={browser} />
+                                    <FormItem title="Browser" width="1/2">
+                                        <CheckBoxes items={browser} />
                                     </FormItem>
-                                    <FormItem width="1/2">
-                                        <CheckBoxes items={betriebssysteme} />
+                                    <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                        <CheckBoxes items={kommunikationsapplikationen} />
                                     </FormItem>
                                 </FormSection>
-                                <FormContainerEnd>
-                                    {workingPlaceType > 0 ? <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                </FormContainerEnd>
                             </FormContainer>
-
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
+                        }
+                        {
+                            workingPlaceType == 2 && currentStep == 3 &&
+                            <FormContainer>
+                                <FormSection title="Arbeitsplatz 2">
+                                    <FormItem width="1/2">
+                                        <DropDown items={geraete} />
+                                    </FormItem>
+                                    <FormItem width="1/2">
+                                        <DropDown items={betriebssysteme} />
+                                    </FormItem>
+                                </FormSection>
+                                <FormSection>
+                                    <FormItem title="Browser" width="1/2">
+                                        <CheckBoxes items={browser} />
+                                    </FormItem>
+                                    <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                        <CheckBoxes items={kommunikationsapplikationen} />
+                                    </FormItem>
+                                </FormSection>
+                            </FormContainer>
+                        }
+                        {currentStep == 3 &&
+                            <div className="py-3">
+                                <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                            </div>
                         }
                         {
                             currentStep == 4 &&
@@ -121,9 +140,6 @@ export default function NewBooking() {
                                     <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
-
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
                         }
                         {
                             currentStep == 5 &&
@@ -133,9 +149,6 @@ export default function NewBooking() {
                                     <button className="button-primary" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
-
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
                         }
                         {
                             currentStep == 6 &&
@@ -144,17 +157,10 @@ export default function NewBooking() {
                                     <button className="button-primary" onClick={send}>Senden &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
-
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
                         }
-
-
-
                     </div>
                 </div>
             </div>
-
         </MainContainer>
     )
 }

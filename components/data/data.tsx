@@ -25,6 +25,12 @@ export const browser = [
   "Edge"
 ]
 
+export const kommunikationsapplikationen = [
+  "Chrome",
+  "Firefox",
+  "Edge"
+]
+
 export const bookingTimes = getTimeInSteps(new Date("1970-01-01T08:00:00.00"), new Date("1970-01-01T17:30:00.00"), 15)
 
 function getTimeInSteps(startTime: Date, endTime: Date, steps: number){

@@ -2,8 +2,7 @@ export default function CheckBoxes(props: any) {
     const items: string[] = props.items;
 
     return (
-        <fieldset className="space-y-5">
-            <legend>{props.title}</legend>
+        <fieldset className="space-y-3">
             {items.map((item, index) => (
                 <div key={index} className="text-gray-900 relative flex items-start">
                     <div className="flex items-center h-5">
