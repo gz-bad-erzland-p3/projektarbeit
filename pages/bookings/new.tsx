@@ -9,22 +9,21 @@ import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikat
 import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
-import CheckBoxes from "../../components/bookings/checkboxGroup";
-import RadioButtons from "../../components/bookings/radioButtons";
-import CheckboxGroup from "../../components/bookings/checkboxGroup";
+import CheckBoxes from "../../components/bookings/checkboxes";
+import { auth, db } from "../../config/firebase";
+import { ref, set } from "firebase/database";
+
+type Obj = {[key: string] : string}
+const booking: Obj = {}
+export const setBookingValue = (value:any, prop:any) => {
+    booking[prop] = value
+    console.log(booking)
+}
 
 export default function NewBooking() {
 
     const [currentStep, setCurrentStep] = useState(1);
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
-    const [endTime, setEndTime] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [device, setDevice] = useState('');
-    const [browserSel, setBrowserSel] = useState('');
-    const [communicationSel, setCommunicationSel] = useState('');
-    const [os, setOs] = useState('');
 
     function handleSetCurrentStep(operator: string) {
         if (operator == "+")
@@ -44,12 +43,9 @@ export default function NewBooking() {
     }
 
     function send() {
+        console.log(booking)
         const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
-        set(ref(db, 'users/' + uid + '/bookings'), {
-            startDate: startDate,
-            email: "signup@mail.de",
-            profile_picture: "imageurl.de"
-        });
+        set(ref(db, 'users/' + uid + '/bookings'), booking);
     }
 
     return (
@@ -72,7 +68,7 @@ export default function NewBooking() {
                                         <DropDown title="Startzeit" items={bookingTimes} />
                                     </FormItem>
                                     <FormItem width="1/4" title="Zeit bis" icon={ClockIcon}>
-                                        <DropDown title="Endzeit" items={bookingTimes} />
+                                        <DropDown title="Endzeit" items={bookingTimes}/>
                                     </FormItem>
                                     <FormItem width="1/4">
                                         <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>

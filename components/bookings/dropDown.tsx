@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { setBookingValue } from '../../pages/bookings/new';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -10,6 +11,7 @@ export default function Example(props: any) {
 
     const items: string[] = props.items;
     const [selected, setSelected] = useState(items[0])
+    setBookingValue(selected, props.title)
 
     return (
         <Listbox value={selected} onChange={setSelected}>
