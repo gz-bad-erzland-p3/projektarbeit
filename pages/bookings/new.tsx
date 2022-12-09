@@ -9,7 +9,9 @@ import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikat
 import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
-import CheckBoxes from "../../components/bookings/checkboxes";
+import CheckBoxes from "../../components/bookings/checkboxGroup";
+import RadioButtons from "../../components/bookings/radioButtons";
+import CheckboxGroup from "../../components/bookings/checkboxGroup";
 
 export default function NewBooking() {
 
@@ -100,7 +102,7 @@ export default function NewBooking() {
                         }
                         {
                             currentStep == 3 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
+                            <FormContainer title="Arbeitsplätze konfigurieren">
                                 <FormSection title="Arbeitsplatz 1">
                                     <FormItem title="Gerät wählen">
                                         <RadioButtons items={geraete} />
@@ -113,10 +115,10 @@ export default function NewBooking() {
                                 </FormSection>
                                 <FormSection>
                                     <FormItem title="Browser" width="1/2">
-                                        <CheckBoxes items={browser} />
+                                        <CheckboxGroup items={browser} />
                                     </FormItem>
                                     <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                        <CheckBoxes items={kommunikationsapplikationen} />
+                                        <CheckboxGroup items={kommunikationsapplikationen} />
                                     </FormItem>
                                 </FormSection>
                             </FormContainer>
@@ -134,10 +136,10 @@ export default function NewBooking() {
                                 </FormSection>
                                 <FormSection>
                                     <FormItem title="Browser" width="1/2">
-                                        <CheckBoxes items={browser} />
+                                        <CheckboxGroup items={browser} />
                                     </FormItem>
                                     <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                        <CheckBoxes items={kommunikationsapplikationen} />
+                                        <CheckboxGroup items={kommunikationsapplikationen} />
                                     </FormItem>
                                 </FormSection>
                             </FormContainer>

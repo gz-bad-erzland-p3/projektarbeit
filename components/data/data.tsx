@@ -26,9 +26,9 @@ export const browser = [
 ]
 
 export const kommunikationsapplikationen = [
-  "Chrome",
-  "Firefox",
-  "Edge"
+  "Teams",
+  "Discord",
+  "Slack"
 ]
 
 export const paymentMethods = [
