@@ -12,6 +12,8 @@ import FormContainerEnd from "../../components/form/formContainerEnd";
 import CheckBoxes from "../../components/bookings/checkboxes";
 import { auth, db } from "../../config/firebase";
 import { ref, set } from "firebase/database";
+import CheckboxGroup from "../../components/bookings/checkboxGroup";
+import RadioButtons from "../../components/bookings/radioButtons";
 
 type Obj = {[key: string] : string}
 const booking: Obj = {}
