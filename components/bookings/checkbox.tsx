@@ -1,7 +1,13 @@
 import { ChangeEvent, useState } from "react";
+import { setBookingValue } from "../../pages/bookings/new";
+type Obj = {[key: string] : boolean}
+let valueObj:Obj = {};
 
 export default function Checkbox(props: any) {
     const [value, setValue] = useState(false)
+
+    valueObj[props.title] = value
+    setBookingValue(valueObj, "Applikationen")
 
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')

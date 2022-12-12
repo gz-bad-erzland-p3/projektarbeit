@@ -9,7 +9,6 @@ import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikat
 import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
-import CheckBoxes from "../../components/bookings/checkboxes";
 import { auth, db } from "../../config/firebase";
 import { ref, set } from "firebase/database";
 import CheckboxGroup from "../../components/bookings/checkboxGroup";
@@ -25,7 +24,8 @@ export const setBookingValue = (value:any, prop:any) => {
 export default function NewBooking() {
 
     const [currentStep, setCurrentStep] = useState(1);
-    const [workingPlaceType, setWorkingPlaceType] = useState(0);
+    const [workingPlaceType, setWorkingPlaceType] = useState();
+    setBookingValue(workingPlaceType, "Arbeitsplatztyp")
 
     function handleSetCurrentStep(operator: string) {
         if (operator == "+")
@@ -36,12 +36,7 @@ export default function NewBooking() {
     }
 
     function handleSetWorkingPlaceType(type: number) {
-        if (workingPlaceType == type) {
-            setWorkingPlaceType(0)
-        }
-        else {
-            setWorkingPlaceType(type);
-        }
+        setWorkingPlaceType(type);
     }
 
     function validateWorkPlaceType(){
@@ -101,32 +96,29 @@ export default function NewBooking() {
                                         </FormItem>
                                     </FormSection>
                                     <FormContainerEnd>
-                                        {workingPlaceType > 0 ? <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                        {workingPlaceType !== undefined ? <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
                                     </FormContainerEnd>
                                 </FormContainer>
-
-                            //3 Checkboxen für Browser
-                            // 3 Checkboxen für Kommunikationsapplikationen
                         }
                         {
                             currentStep == 3 &&
                             <FormContainer title="Arbeitsplätze konfigurieren">
                                 <FormSection title="Arbeitsplatz 1">
                                     <FormItem title="Gerät wählen">
-                                        <RadioButtons items={geraete} />
+                                        <RadioButtons items={geraete} title="Gerät" />
                                     </FormItem>
                                 </FormSection>
                                 <FormSection>
                                     <FormItem title="Betriebssystem">
-                                        <RadioButtons items={betriebssysteme} />
+                                        <RadioButtons items={betriebssysteme} title="Betriebssystem" />
                                     </FormItem>
                                 </FormSection>
                                 <FormSection>
                                     <FormItem title="Browser" width="1/2">
-                                        <CheckboxGroup items={browser} />
+                                        <CheckboxGroup items={browser} title="Browser" />
                                     </FormItem>
                                     <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                        <CheckboxGroup items={kommunikationsapplikationen} />
+                                        <CheckboxGroup items={kommunikationsapplikationen} title="Kommunikationsapplikationen"/>
                                     </FormItem>
                                 </FormSection>
                             </FormContainer>
