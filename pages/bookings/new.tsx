@@ -42,6 +42,16 @@ export default function NewBooking() {
         }
     }
 
+    function validateWorkPlaceType(){
+        //check if 
+        /*if(data.workplacetype == "Doppelarbeitsplatz"){
+            return false
+        }else{
+            return true
+        }*/
+        return true
+    }
+
     function send() {
         console.log(booking)
         const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
@@ -85,7 +95,7 @@ export default function NewBooking() {
                                             <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
                                         </FormItem>
                                         <FormItem width="1/2">
-                                            <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                            <button disabled={validateWorkPlaceType()} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
                                         </FormItem>
                                     </FormSection>
                                     <FormContainerEnd>
