@@ -12,6 +12,8 @@ import FormContainerEnd from "../../components/form/formContainerEnd";
 import CheckBoxes from "../../components/bookings/checkboxes";
 import { auth, db } from "../../config/firebase";
 import { ref, set } from "firebase/database";
+import CheckboxGroup from "../../components/bookings/checkboxGroup";
+import RadioButtons from "../../components/bookings/radioButtons";
 
 type Obj = {[key: string] : string}
 const booking: Obj = {}
@@ -108,7 +110,7 @@ export default function NewBooking() {
                         }
                         {
                             currentStep == 3 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
+                            <FormContainer title="Arbeitsplätze konfigurieren">
                                 <FormSection title="Arbeitsplatz 1">
                                     <FormItem title="Gerät wählen">
                                         <RadioButtons items={geraete} />
@@ -121,10 +123,10 @@ export default function NewBooking() {
                                 </FormSection>
                                 <FormSection>
                                     <FormItem title="Browser" width="1/2">
-                                        <CheckBoxes items={browser} />
+                                        <CheckboxGroup items={browser} />
                                     </FormItem>
                                     <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                        <CheckBoxes items={kommunikationsapplikationen} />
+                                        <CheckboxGroup items={kommunikationsapplikationen} />
                                     </FormItem>
                                 </FormSection>
                             </FormContainer>
@@ -142,10 +144,10 @@ export default function NewBooking() {
                                 </FormSection>
                                 <FormSection>
                                     <FormItem title="Browser" width="1/2">
-                                        <CheckBoxes items={browser} />
+                                        <CheckboxGroup items={browser} />
                                     </FormItem>
                                     <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                        <CheckBoxes items={kommunikationsapplikationen} />
+                                        <CheckboxGroup items={kommunikationsapplikationen} />
                                     </FormItem>
                                 </FormSection>
                             </FormContainer>

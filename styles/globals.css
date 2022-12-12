@@ -50,6 +50,11 @@ body {
 }
 
 .radio-button {
-    @apply hover:ring-green-500 hover:ring-2 transition;
-    transition: 200ms ease;
+    @apply w-full text-center py-5 rounded-md border border-gray-200 hover:border-gray-300 hover:bg-gray-100 outline-none ring-0 cursor-pointer;
+    transition: background 200ms ease, border 200ms ease;
+}
+
+.primary-checkbox {
+    @apply w-full text-center py-5 rounded-md border hover:border-gray-300 hover:bg-gray-100 outline-none cursor-pointer;
+    transition: background 200ms ease, border 200ms ease;
 }

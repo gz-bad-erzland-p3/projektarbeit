@@ -22,7 +22,7 @@ export default function RadioButtons(props: any) {
                             classNames(
                                 checked ? 'border-transparent' : 'border-gray-300',
                                 active ? 'ring-2 ring-green-500' : '',
-                                'relative bg-white border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none radio-button'
+                                'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none radio-button'
                             )
                         }
                     >
@@ -38,7 +38,7 @@ export default function RadioButtons(props: any) {
                                         </RadioGroup.Description>
                                         {item.price ?
                                             <RadioGroup.Description as="span" className="mt-6 text-sm font-medium text-gray-900">
-                                                + {item.price}€
+                                                + {item.price}€ / Tag
                                             </RadioGroup.Description> : ""}
                                     </div>
                                 </div>
@@ -48,9 +48,9 @@ export default function RadioButtons(props: any) {
                                 />
                                 <div
                                     className={classNames(
-                                        active ? 'border' : 'border-2',
+                                        active ? 'border-2' : 'border-2',
                                         checked ? 'border-green-500' : 'border-transparent',
-                                        'absolute -inset-px rounded-lg pointer-events-none'
+                                        'absolute -inset-px rounded-md pointer-events-none'
                                     )}
                                     aria-hidden="true"
                                 />
