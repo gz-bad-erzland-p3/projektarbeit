@@ -159,8 +159,17 @@ export default function NewBooking() {
                         }
                         {
                             currentStep == 4 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
+                            <FormContainer title="Übersicht">
+                                <FormSection title="Zeitraum">
+                                    <div className="flex w-full item-center">
+                                        <div>
+                                            <p className="font-base">Zeitraum</p>
+                                            <p className="font-base">Von</p>
+                                            <p className="font-base">Bis</p>
 
+                                        </div>
+                                    </div>
+                                </FormSection>
                                 <FormContainerEnd>
                                     <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
