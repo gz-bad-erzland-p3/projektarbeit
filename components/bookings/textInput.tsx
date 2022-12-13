@@ -6,7 +6,7 @@ export default function TextInput(props: any) {
                     type="text"
                     name="price"
                     id="price"
-                    className="block w-full rounded-md border-gray-300 pl-7 pr-12 form-input"
+                    className="block w-full rounded-none border-gray-300 pl-7 pr-12 form-input"
                     placeholder={props.title}
                 />
             </div>

@@ -2,7 +2,7 @@ export const bookingSteps = [
     { id: '1', name: 'Zeitraum', href: '#' },
     { id: '2', name: 'Arbeitsplatztyp', href: '#' },
     { id: '3', name: 'Konfiguration', href: '#' },
-    { id: '4', name: 'Übersicht', href: '#' },
+    { id: '4', name: 'Login', href: '#' },
     { id: '5', name: 'Ihre Daten', href: '#' },
     { id: '6', name: 'Zahlung', href: '#' },
 ]

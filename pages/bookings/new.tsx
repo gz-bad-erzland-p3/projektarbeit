@@ -59,10 +59,10 @@ export default function NewBooking() {
         set(ref(db, 'users/' + uid + '/bookings'), booking);
     }
 
-    function validateWorkPlaceType(){
-        if(allBookings.workplacetype == "Doppelarbeitsplatz"){
+    function validateWorkPlaceType() {
+        if (allBookings.workplacetype == "Doppelarbeitsplatz") {
             return false
-        }else{
+        } else {
             return true
         }
         return true
@@ -74,7 +74,10 @@ export default function NewBooking() {
                 <div className="grow max-w-7xl px-4 sm:px-6 ">
                     <div>
                         <div className="py-4">
-                            <button className="button-secondary mb-4" onClick={() => handleSetCurrentStep("-")} >&larr; Zurück</button>
+                            {
+                                currentStep > 1 ?
+                                    <button className="button-secondary mb-4" onClick={() => handleSetCurrentStep("-")} >&larr; Zurück</button> : ""
+                            }
                             <StepsForBooking currentId={currentStep} />
                         </div>
                         {
@@ -91,27 +94,27 @@ export default function NewBooking() {
                                         <DropDown title="Endzeit" items={bookingTimes} />
                                     </FormItem>
                                     <FormItem width="1/4">
-                                        <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
+                                        <button className="button-primary next-button mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
                                     </FormItem>
                                 </FormSection>
                             </FormContainer>
 
-                            }
-                            {
-                                currentStep == 2 &&
-                                <FormContainer title="Arbeitsplatztyp wählen">
-                                    <FormSection>
-                                        <FormItem width="1/2">
-                                            <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
-                                        </FormItem>
-                                        <FormItem width="1/2">
-                                            <button disabled={validateWorkPlaceType()} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
-                                        </FormItem>
-                                    </FormSection>
-                                    <FormContainerEnd>
-                                        {workingPlaceType !== undefined ? <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                    </FormContainerEnd>
-                                </FormContainer>
+                        }
+                        {
+                            currentStep == 2 &&
+                            <FormContainer title="Arbeitsplatztyp wählen">
+                                <FormSection>
+                                    <FormItem width="1/2">
+                                        <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
+                                    </FormItem>
+                                    <FormItem width="1/2">
+                                        <button disabled={validateWorkPlaceType()} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                    </FormItem>
+                                </FormSection>
+                                <FormContainerEnd>
+                                    {workingPlaceType !== undefined ? <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                </FormContainerEnd>
+                            </FormContainer>
                         }
                         {
                             currentStep == 3 &&
@@ -142,7 +145,6 @@ export default function NewBooking() {
                                     <div className="shadow-md p-5">
                                         <p className="text-lg">Zusammenfassung</p>
                                         <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
-
                                     </div>
                                 </div>
                             </div>

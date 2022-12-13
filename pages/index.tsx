@@ -25,19 +25,10 @@ export default function Index() {
           <HeroSection />
         </div>
         <div className="my-32">
-          <LogoCloud />
-        </div>
-        <div className="my-32">
           <Stats />
         </div>
         <div className="my-32">
-          <CallToAction />
-        </div>
-        <div className="my-32">
           <Features />
-        </div>
-        <div className="my-32">
-          <Pricing />
         </div>
       </Container>
     </div>

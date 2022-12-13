@@ -11,7 +11,7 @@ body {
 }
 
 .form-input {
-    @apply rounded-md focus:ring-0 focus:ring-offset-0 focus:border-green-600 bg-gray-100 dark:bg-gray-800 dark:text-white hover:border-green-600 border-0 border-b-2 border-gray-500 text-gray-900 text-base focus:border-b-2 outline-none py-2 px-4 m-0;
+    @apply rounded-none focus:ring-0 focus:ring-offset-0 focus:border-green-600 bg-gray-100 dark:bg-gray-800 dark:text-white hover:border-green-600 border-0 border-b-2 border-gray-500 text-gray-900 text-base focus:border-b-2 outline-none py-2 px-4 m-0;
     --tw-ring-shadow: none !important;
     --tw-ring-offset-shadow: none !important;
 }
@@ -25,10 +25,12 @@ body {
     cursor: pointer;
 }
 
+button {
+    transition: background 200ms ease, border 200ms ease;
+}
 
 .button-select{
-    @apply w-full text-center py-12 rounded-md border-2 border-gray-200 hover:border-gray-300;
-    transition: background 200ms ease, border 200ms ease;
+    @apply w-full text-center py-12 rounded-none border-2 border-gray-200 hover:border-gray-300;
 }
 
 .background-green {
@@ -36,13 +38,11 @@ body {
 }
 
 .button-secondary {
-   @apply bg-transparent rounded-md hover:bg-gray-200 py-2 px-4;
-   transition: background 200ms ease;
+   @apply bg-transparent rounded-none hover:bg-gray-200 py-2 px-4;
 }
 
 .button-primary {
-    @apply bg-green-600 w-full text-white rounded-md hover:bg-green-500 py-2 px-4;
-    transition: background 200ms ease;
+    @apply bg-green-600 w-full text-white rounded-none hover:bg-green-500 py-2 px-4;
  }
 
 .next-button {
@@ -50,11 +50,21 @@ body {
 }
 
 .radio-button {
-    @apply w-full text-center py-5 rounded-md border border-gray-200 hover:border-gray-300 hover:bg-gray-100 outline-none ring-0 cursor-pointer;
+    @apply w-full text-center py-5 rounded-none border border-gray-200 hover:border-gray-300 hover:bg-gray-100 outline-none ring-0 cursor-pointer;
     transition: background 200ms ease, border 200ms ease;
 }
 
 .primary-checkbox {
-    @apply w-full text-center py-5 rounded-md border hover:border-gray-300 hover:bg-gray-100 outline-none cursor-pointer;
+    @apply w-full text-center py-5 rounded-none border hover:border-gray-300 hover:bg-gray-100 outline-none cursor-pointer;
     transition: background 200ms ease, border 200ms ease;
+}
+
+.link-primary{
+    background: linear-gradient(currentColor 0 0) 0 100% /var(--d, 0) 2px no-repeat;
+    transition: background .2s ease-in;
+    text-decoration: none !important
+}
+
+.link-primary:hover {
+    --d: 100%
 }

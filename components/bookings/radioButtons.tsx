@@ -52,7 +52,7 @@ export default function RadioButtons(props: any) {
                                     className={classNames(
                                         active ? 'border-2' : 'border-2',
                                         checked ? 'border-green-500' : 'border-transparent',
-                                        'absolute -inset-px rounded-md pointer-events-none'
+                                        'absolute -inset-px rounded-none pointer-events-none'
                                     )}
                                     aria-hidden="true"
                                 />

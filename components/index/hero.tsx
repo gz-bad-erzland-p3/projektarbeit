@@ -1,4 +1,11 @@
+import Router from "next/router"
+
 export default function HeroSection() {
+
+  const handleClick = () => {
+    Router.push("/bookings/new")
+  }
+
   return (
     <div className="isolate">
       <main>
@@ -25,7 +32,7 @@ export default function HeroSection() {
                   amet fugiat veniam occaecat fugiat aliqua.
                 </p>
                 <div className="mt-8 flex gap-x-4 sm:justify-center">
-                  <button className='ml-2 text-white px-4 py-2 text-base font-medium rounded-lg bg-green-600 hover:bg-green-500 transition'>
+                  <button onClick={handleClick} className='ml-2 text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
                     Jetzt mieten! &rarr;
                   </button>
                 </div>

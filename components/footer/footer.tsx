@@ -17,7 +17,7 @@ const navigation = {
           <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             {navigation.main.map((item) => (
               <div key={item.name} className="px-5 py-2">
-                <a href={item.href} className="text-base hover:text-gray-700 dark:hover:text-gray-200">
+                <a href={item.href} className="text-base link-primary hover:text-gray-700 dark:hover:text-gray-200">
                   {item.name}
                 </a>
               </div>

@@ -18,7 +18,7 @@ export default function Example(props: any) {
             {({ open }) => (
                 <>
                     <div className="relative w-full">
-                        <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white text-left outline-none form-dropdown form-input">
+                        <Listbox.Button className="relative w-full cursor-default rounded-none border border-gray-300 bg-white text-left outline-none form-dropdown form-input">
                             <span className="flex items-center">
                                 <span className="block truncate">{selected}</span>
                             </span>
@@ -37,14 +37,14 @@ export default function Example(props: any) {
                             leaveFrom="transform opacity-100 translate-y-0"
                             leaveTo="transform opacity-0 translate-y-4"
                         >
-                            <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-none bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                 {items.map((item, index) => (
                                     <Listbox.Option
                                         key={index}
                                         className={({ active }) =>
                                             classNames(
                                                 active ? 'text-white bg-green-600' : 'text-gray-900',
-                                                'relative cursor-default select-none rounded-md py-2 pl-3 pr-9'
+                                                'relative cursor-default select-none rounded-none py-2 pl-3 pr-9'
                                             )
                                         }
                                         value={item}
