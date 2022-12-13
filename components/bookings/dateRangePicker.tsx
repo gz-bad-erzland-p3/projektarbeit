@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Datepicker from '@nichtmetall/react-tailwindcss-datepicker'
+import { setBookingValue } from "../../pages/bookings/new";
 
 export default function DateTimeRangePicker() {
     const [value, setValue] = useState({
-        startDate: new Date(),
-        endDate: new Date().setMonth(11)
+        startDate: new Date().toISOString().split('T')[0],
+        endDate: new Date().toISOString().split('T')[0]
     });
+    setBookingValue(value, "Datumsauswahl")
 
     const handleValueChange = (newValue: React.SetStateAction<{ startDate: Date; endDate: number; }>) => {
-        console.log("newValue:", newValue);
         setValue(newValue);
     }
 

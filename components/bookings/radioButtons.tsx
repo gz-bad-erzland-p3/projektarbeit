@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
+import { setBookingValue } from '../../pages/bookings/new';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -9,7 +10,8 @@ function classNames(...classes: string[]) {
 
 export default function RadioButtons(props: any) {
     const items: any[] = props.items;
-    const [selectedMailingLists, setSelectedMailingLists] = useState(items[0])
+    const [selectedMailingLists, setSelectedMailingLists] = useState()
+    setBookingValue(selectedMailingLists, props.title)
 
     return (
         <RadioGroup value={selectedMailingLists} onChange={setSelectedMailingLists}>
@@ -17,7 +19,7 @@ export default function RadioButtons(props: any) {
                 {items.map((item) => (
                     <RadioGroup.Option
                         key={item.id}
-                        value={item.id}
+                        value={item.title}
                         className={({ checked, active }) =>
                             classNames(
                                 checked ? 'border-transparent' : 'border-gray-300',
