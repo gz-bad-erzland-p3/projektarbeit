@@ -10,7 +10,7 @@ import { ClockIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
 import { auth, db } from "../../config/firebase";
-import { ref, set } from "firebase/database";
+import { get, getDatabase, ref, set } from "firebase/database";
 import CheckboxGroup from "../../components/bookings/checkboxGroup";
 import RadioButtons from "../../components/bookings/radioButtons";
 
@@ -22,11 +22,24 @@ export const setBookingValue = (value:any, prop:any) => {
 }
 
 export default function NewBooking() {
-
+    const [allBookings, setAllBookings] = useState(Object);
     const [currentStep, setCurrentStep] = useState(1);
-    const [workingPlaceType, setWorkingPlaceType] = useState();
+    const [workingPlaceType, setWorkingPlaceType] = useState(0);
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
 
+    //get all bookings
+    const dbRef = ref(db, 'users/');
+    get(dbRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            setAllBookings(snapshot.val().test);
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
+
+    //next/back step
     function handleSetCurrentStep(operator: string) {
         if (operator == "+")
             setCurrentStep(currentStep + 1)
@@ -35,24 +48,24 @@ export default function NewBooking() {
         }
     }
 
+
     function handleSetWorkingPlaceType(type: number) {
         setWorkingPlaceType(type);
-    }
-
-    function validateWorkPlaceType(){
-        //check if 
-        /*if(data.workplacetype == "Doppelarbeitsplatz"){
-            return false
-        }else{
-            return true
-        }*/
-        return true
     }
 
     function send() {
         console.log(booking)
         const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
         set(ref(db, 'users/' + uid + '/bookings'), booking);
+    }
+
+    function validateWorkPlaceType(){
+        if(allBookings.workplacetype == "Doppelarbeitsplatz"){
+            return false
+        }else{
+            return true
+        }
+        return true
     }
 
     return (
