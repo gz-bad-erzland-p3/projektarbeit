@@ -14,9 +14,9 @@ import { get, getDatabase, ref, set } from "firebase/database";
 import CheckboxGroup from "../../components/bookings/checkboxGroup";
 import RadioButtons from "../../components/bookings/radioButtons";
 
-type Obj = {[key: string] : string}
+type Obj = { [key: string]: string }
 const booking: Obj = {}
-export const setBookingValue = (value:any, prop:any) => {
+export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
     console.log(booking)
 }
@@ -88,7 +88,7 @@ export default function NewBooking() {
                                         <DropDown title="Startzeit" items={bookingTimes} />
                                     </FormItem>
                                     <FormItem width="1/4" title="Zeit bis" icon={ClockIcon}>
-                                        <DropDown title="Endzeit" items={bookingTimes}/>
+                                        <DropDown title="Endzeit" items={bookingTimes} />
                                     </FormItem>
                                     <FormItem width="1/4">
                                         <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
@@ -115,26 +115,37 @@ export default function NewBooking() {
                         }
                         {
                             currentStep == 3 &&
-                            <FormContainer title="Arbeitsplätze konfigurieren">
-                                <FormSection title="Arbeitsplatz 1">
-                                    <FormItem title="Gerät wählen">
-                                        <RadioButtons items={geraete} title="Gerät" />
-                                    </FormItem>
-                                </FormSection>
-                                <FormSection>
-                                    <FormItem title="Betriebssystem">
-                                        <RadioButtons items={betriebssysteme} title="Betriebssystem" />
-                                    </FormItem>
-                                </FormSection>
-                                <FormSection>
-                                    <FormItem title="Browser" width="1/2">
-                                        <CheckboxGroup items={browser} title="Browser" />
-                                    </FormItem>
-                                    <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                        <CheckboxGroup items={kommunikationsapplikationen} title="Kommunikationsapplikationen"/>
-                                    </FormItem>
-                                </FormSection>
-                            </FormContainer>
+                            <div className="flex">
+                                <div className="w-9/12">
+                                    <FormContainer title="Arbeitsplätze konfigurieren">
+                                        <FormSection title="Arbeitsplatz 1">
+                                            <FormItem title="Gerät wählen">
+                                                <RadioButtons items={geraete} />
+                                            </FormItem>
+                                        </FormSection>
+                                        <FormSection>
+                                            <FormItem title="Betriebssystem">
+                                                <RadioButtons items={betriebssysteme} />
+                                            </FormItem>
+                                        </FormSection>
+                                        <FormSection>
+                                            <FormItem title="Browser" width="1/2">
+                                                <CheckboxGroup items={browser} />
+                                            </FormItem>
+                                            <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                                <CheckboxGroup items={kommunikationsapplikationen} />
+                                            </FormItem>
+                                        </FormSection>
+                                    </FormContainer>
+                                </div>
+                                <div className="w-3/12 ml-5">
+                                    <div className="shadow-md p-5">
+                                        <p className="text-lg">Zusammenfassung</p>
+                                        <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+
+                                    </div>
+                                </div>
+                            </div>
                         }
                         {
                             workingPlaceType == 2 && currentStep == 3 &&
@@ -159,13 +170,24 @@ export default function NewBooking() {
                         }
                         {currentStep == 3 &&
                             <div className="py-3 flex justify-end">
-                                <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                             </div>
                         }
                         {
                             currentStep == 4 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
-
+                            <FormContainer title="Übersicht">
+                                <FormSection>
+                                    <FormItem width="1/2">
+                                        <p className=""></p>
+                                        <p className="font-base">Zeitraum</p>
+                                        <p className="font-base">Von</p>
+                                        <p className="font-base">Bis</p>
+                                    </FormItem>
+                                    <FormItem width="1/2">
+                                        <p className="font-base">Zeitraum</p>
+                                        <p className="font-base">Von</p>
+                                        <p className="font-base">Bis</p>
+                                    </FormItem>
+                                </FormSection>
                                 <FormContainerEnd>
                                     <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
