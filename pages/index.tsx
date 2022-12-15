@@ -1,10 +1,7 @@
 import Head from "next/head"
 import Container from "../components/container/container"
-import CallToAction from "../components/index/callToAction"
 import Features from "../components/index/features"
 import HeroSection from "../components/index/hero"
-import LogoCloud from "../components/index/logo-cloud"
-import Pricing from "../components/index/pricing"
 import Stats from "../components/index/stats"
 
 

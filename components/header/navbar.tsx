@@ -37,14 +37,36 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
-  const [isMore, setIsMore] = useState(false)
-
   // After mounting, we have access to the theme
   useEffect(() => setMounted(true), []);
 
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    // just trigger this so that the initial state 
+    // is updated as soon as the component is mounted
+    // related: https://stackoverflow.com/a/63408216
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+}
+
   return (
-    <Popover className="relative z-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+    <Popover className={classNames(scrollY > 0 ? "navbar-sl" : "navbar-tr", "navbar")}>
+      <div className="mx-auto px-4 sm:px-6 max-w-7xl">
         <div className="flex items-center justify-between py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">
