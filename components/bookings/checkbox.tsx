@@ -24,7 +24,7 @@ export default function Checkbox(props: any) {
     }
 
     return (
-        <div className={classNames(value ? 'ring-2 ring-green-600' : 'border-gray-200', 'text-gray-900 relative flex items-start p-4 primary-checkbox')} onClick={handleClick}>
+        <div className={classNames(value ? "ring-2 ring-green-500" : "border-gray-900", 'relative bg-white border shadow-sm p-4 flex focus:outline-none radio-button')} onClick={handleClick}>
             <div className="flex items-center h-5">
                 <input
                     id={props.id.toString()}
@@ -32,11 +32,12 @@ export default function Checkbox(props: any) {
                     type="checkbox"
                     onChange={e => handleChange(e)}
                     checked={value}
-                    className="outline-none focus:ring-0 focus:ring-white h-5 w-5 text-green-600 border-gray-300 rounded-full"
+                    disabled={true}
+                    className="border-gray-200 h-5 w-5 text-green-600 rounded-none checkmark"
                 />
             </div>
             <div className="ml-3 text-sm">
-                <span id="comments-description" className="text-gray-500">
+                <span id="comments-description" className="text-gray-900">
                     <span>{props.title}</span>
                 </span>
             </div>

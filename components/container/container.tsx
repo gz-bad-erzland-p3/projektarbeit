@@ -5,9 +5,9 @@ export default function MainContainer(props: { [x: string]: any; children: any; 
   const { children } = props;
 
   return (
-    <body className='relative min-h-screen'>
+    <body>
       <main id="skip" className="flex flex-col">
-        <div className='relative'>
+        <div className='sticky top-0 w-full z-50'>
           <Navbar />
         </div>
         <div className='py-20'>

@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
-import { CheckCircleIcon } from '@heroicons/react/24/solid'
+import { CheckBadgeIcon } from '@heroicons/react/24/outline'
 import { setBookingValue } from '../../pages/bookings/new';
 
 function classNames(...classes: string[]) {
@@ -21,12 +21,7 @@ export default function RadioButtons(props: any) {
                         key={item.id}
                         value={item.title}
                         className={({ checked, active }) =>
-                            classNames(
-                                checked ? 'border-transparent' : 'border-gray-300',
-                                active ? 'ring-2 ring-green-500' : '',
-                                'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none radio-button'
-                            )
-                        }
+                            classNames(checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-green-500' : '','relative bg-white border shadow-sm p-4 flex focus:outline-none radio-button')}
                     >
                         {({ checked, active }) => (
                             <>
@@ -44,8 +39,8 @@ export default function RadioButtons(props: any) {
                                             </RadioGroup.Description> : ""}
                                     </div>
                                 </div>
-                                <CheckCircleIcon
-                                    className={classNames(!checked ? 'invisible' : '', 'h-5 w-5 text-green-600')}
+                                <CheckBadgeIcon
+                                    className={classNames(!checked ? 'invisible' : '', 'h-5 w-5')}
                                     aria-hidden="true"
                                 />
                                 <div
