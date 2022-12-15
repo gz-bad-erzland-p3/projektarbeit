@@ -22,7 +22,7 @@ type Obj = { [key: string]: [key: [key: string]|string]|string }
 const booking: Obj = {}
 export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
-    console.log(booking)
+    //console.log(booking)
 }
 
 export default function NewBooking() {
@@ -35,16 +35,18 @@ export default function NewBooking() {
     setBookingValue(uid, "UserID")
 
     //get all bookings
-    const dbRef = ref(db, 'bookings/');
-    get(dbRef).then((snapshot) => {
-        if (snapshot.exists()) {
-            setAllBookings(snapshot.val().test);
-        } else {
-            console.log("No data available");
-        }
-    }).catch((error) => {
-        console.error(error);
-    });
+    function getAllBookings(){
+        get(ref(db, 'bookings/')).then((snapshot) => {
+            if (snapshot.exists()) {
+                setAllBookings(snapshot.val());
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+    
 
     //next/back step
     function handleSetCurrentStep(operator: string) {
@@ -66,13 +68,27 @@ export default function NewBooking() {
         set(ref(db, 'bookings/' + bookingId ), booking);
     }
 
+    function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string){        
+        const [year, month, day] = dateComponents.split('-');
+        const [hours, minutes] = timeComponents.split(':');
+        const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
+        const timestamp = date.getTime();
+        return timestamp
+    }
+
     function validateWorkPlaceType() {
         //console.log(booking["Applikationen"]["Chrome"])
+        getAllBookings()
+        console.log("allBookings")
         for (const key in allBookings) {
             if (allBookings.hasOwnProperty(key)) {
-                const booking = allBookings[key]
+                const startTime = convertDateAndTimeToUnix(allBookings[key]["Datumsauswahl"]["startDate"], allBookings[key]["Startzeit"])
+                const endTime = convertDateAndTimeToUnix(allBookings[key]["Datumsauswahl"]["endDate"], allBookings[key]["Endzeit"])
+                //console.log(allBookings[key])
+                return true
             }
         }
+        return true
     }
 
     return (
@@ -108,8 +124,6 @@ export default function NewBooking() {
 
                         }
                         {
-                            //disabled={validateWorkPlaceType()}
-
                             currentStep == 2 &&
                             <FormContainer title="Arbeitsplatztyp wählen">
                                 <FormSection>
@@ -117,7 +131,7 @@ export default function NewBooking() {
                                         <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
                                     </FormItem>
                                     <FormItem width="1/2">
-                                        <button disabled={true} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                        <button disabled={validateWorkPlaceType()} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
                                     </FormItem>
                                 </FormSection>
                                 <FormContainerEnd>
@@ -151,7 +165,7 @@ export default function NewBooking() {
                                     </FormContainer>
                                 </div>
                                 <div className="w-3/12 ml-5">
-                                    <div className="shadow-md p-5" onClick={validateWorkPlaceType}>
+                                    <div className="shadow-md p-5">
                                         <p className="text-lg">Zusammenfassung</p>
                                         <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                     </div>
