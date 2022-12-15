@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { useState } from 'react'
+import { Key, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
-import { CheckBadgeIcon } from '@heroicons/react/24/outline'
+import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { setBookingValue } from '../../pages/bookings/new';
 
 function classNames(...classes: string[]) {
@@ -20,27 +20,40 @@ export default function RadioButtons(props: any) {
                     <RadioGroup.Option
                         key={item.id}
                         value={item.title}
-                        className={({ checked, active }) =>
-                            classNames(checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-green-500' : '','relative bg-white border shadow-sm p-4 flex focus:outline-none radio-button')}
-                    >
+                        className={({ checked, active }) => classNames(checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex focus:outline-none radio-button')}>
                         {({ checked, active }) => (
                             <>
                                 <div className="flex-1 flex">
                                     <div className="flex flex-col">
-                                        <RadioGroup.Label as="span" className="block text-sm font-medium text-gray-900">
+                                        <RadioGroup.Label as="p" className="block text-left font-medium text-gray-900">
                                             {item.title}
                                         </RadioGroup.Label>
-                                        <RadioGroup.Description as="span" className="mt-1 flex items-center text-sm text-gray-500">
-                                            {item.description}
-                                        </RadioGroup.Description>
+                                        <div className='py-2'>
+                                            {item.specifications ?
+                                                <div>{
+                                                    item.specifications.map((specification: any, index: Key | null | undefined) => (
+                                                        <div key={index}>
+                                                            {specification ?
+                                                                <RadioGroup.Description as="span" className="mt-1 flex text-left items-center text-sm text-gray-500">
+                                                                    <ChevronRightIcon className='h-4 w-4 mr-1' /> {specification}
+                                                                </RadioGroup.Description> : ""}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                : ""
+                                            }
+                                            <RadioGroup.Description as="span" className="mt-1 flex text-left items-center text-sm text-gray-500">
+                                                {item.description}
+                                            </RadioGroup.Description>
+                                        </div>
                                         {item.price ?
-                                            <RadioGroup.Description as="span" className="mt-6 text-sm font-medium text-gray-900">
+                                            <RadioGroup.Description as="p" className="mt-6 text-left text-sm font-medium text-gray-900">
                                                 + {item.price}€ / Tag
                                             </RadioGroup.Description> : ""}
                                     </div>
                                 </div>
-                                <CheckBadgeIcon
-                                    className={classNames(!checked ? 'invisible' : '', 'h-5 w-5')}
+                                <CheckIcon
+                                    className={classNames(!checked ? 'invisible' : '', 'h-5 w-5 text-green-500')}
                                     aria-hidden="true"
                                 />
                                 <div

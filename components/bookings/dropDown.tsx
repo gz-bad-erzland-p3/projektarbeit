@@ -44,7 +44,7 @@ export default function Example(props: any) {
                                         className={({ active }) =>
                                             classNames(
                                                 active ? 'text-white bg-green-600' : 'text-gray-900',
-                                                'relative cursor-default select-none rounded-none py-2 pl-3 pr-9'
+                                                'relative cursor-pointer select-none rounded-none py-2 pl-3 pr-9'
                                             )
                                         }
                                         value={item}

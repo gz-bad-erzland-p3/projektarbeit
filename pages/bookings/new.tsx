@@ -16,6 +16,7 @@ import RadioButtons from "../../components/bookings/radioButtons";
 import BookingContainer from "../../components/container/bookingContainer";
 import Login from "../../components/login";
 import Textarea from "../../components/bookings/textarea";
+import { standard } from "../../components/data/data";
 
 type Obj = { [key: string]: string }
 const booking: Obj = {}
@@ -127,6 +128,17 @@ export default function NewBooking() {
                                 <div className="flex flex-col w-full">
                                     <div>
                                         <FormContainer title="Arbeitsplätze konfigurieren">
+                                            <FormSection>
+
+                                                <FormItem title="Standardmäßig inbegriffen">
+                                                    {standard.map((item, index) => (
+                                                        <div key={index}>
+                                                            {item}
+                                                        </div>
+                                                    ))}
+
+                                                </FormItem>
+                                            </FormSection>
                                             <FormSection title="Arbeitsplatz 1">
                                                 <FormItem title="Gerät wählen">
                                                     <RadioButtons items={geraete} />
@@ -143,6 +155,11 @@ export default function NewBooking() {
                                                 </FormItem>
                                                 <FormItem title="Kommunikationsapplikationen" width="1/2">
                                                     <CheckboxGroup items={kommunikationsapplikationen} />
+                                                </FormItem>
+                                            </FormSection>
+                                            <FormSection>
+                                                <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
+                                                    <Textarea />
                                                 </FormItem>
                                             </FormSection>
                                         </FormContainer>
@@ -170,7 +187,7 @@ export default function NewBooking() {
                                                     </FormItem>
                                                 </FormSection>
                                                 <FormSection>
-                                                    <FormItem title="Bemerkungen" width="full">
+                                                    <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
                                                         <Textarea />
                                                     </FormItem>
                                                 </FormSection>

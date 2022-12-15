@@ -8,10 +8,12 @@ export const bookingSteps = [
 ]
 
 export const geraete = [
-  {id: '1', title: "Laptop", description: "Test",price: "1"},
-  {id: '2', title: "Desktop PC", description: "Test",price: "1"},
-  {id: '3', title: "Barebone", description: "Test", price: "1"}
+  {id: '1', title: "Laptop ", specifications: ["Intel Pentium Gold G5400", "16GB DDR4", "256GB SSD"],  description: " ",price: "1"},
+  {id: '2', title: "Desktop PC", specifications: ["Hel", "o", "asd"], description: "Test",price: "1"},
+  {id: '3', title: "Barebone", specifications: ["Hel", "o", "asd"], description: "Test", price: "1"}
 ]
+
+export const standard = ["1 Gig LAN oder WLAN", "Bildschirm", "Maus", "Tastatur"]
 
 export const betriebssysteme = [
   {id: '1', title: "Windows 11", description: "Windows 11"},
