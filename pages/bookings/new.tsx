@@ -10,38 +10,44 @@ import { ClockIcon, CalendarIcon, CheckIcon } from "@heroicons/react/24/outline"
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
 import { auth, db } from "../../config/firebase";
-import { get, getDatabase, ref, set } from "firebase/database";
+import { get, ref, set } from "firebase/database";
 import CheckboxGroup from "../../components/bookings/checkboxGroup";
 import RadioButtons from "../../components/bookings/radioButtons";
 import BookingContainer from "../../components/container/bookingContainer";
 import Login from "../../components/login";
 import Textarea from "../../components/bookings/textarea";
 import { standard } from "../../components/data/data";
+import { uuidv4 } from "@firebase/util";
 
-type Obj = { [key: string]: string }
+type Obj = { [key: string]: [key: [key: string]|string]|string }
 const booking: Obj = {}
 export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
-    console.log(booking)
+    //console.log(booking)
 }
 
 export default function NewBooking() {
     const [allBookings, setAllBookings] = useState(Object);
     const [currentStep, setCurrentStep] = useState(1);
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
+    const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
+
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
+    setBookingValue(uid, "UserID")
 
     //get all bookings
-    const dbRef = ref(db, 'users/');
-    get(dbRef).then((snapshot) => {
-        if (snapshot.exists()) {
-            setAllBookings(snapshot.val().test);
-        } else {
-            console.log("No data available");
-        }
-    }).catch((error) => {
-        console.error(error);
-    });
+    function getAllBookings(){
+        get(ref(db, 'bookings/')).then((snapshot) => {
+            if (snapshot.exists()) {
+                setAllBookings(snapshot.val());
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+    
 
     //next/back step
     function handleSetCurrentStep(operator: string) {
@@ -59,18 +65,32 @@ export default function NewBooking() {
 
     function send() {
         console.log(booking)
-        const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
-        set(ref(db, 'users/' + uid + '/bookings'), booking);
+        const bookingId = uuidv4()
+        set(ref(db, 'bookings/' + bookingId ), booking);
     }
 
-    // function validateWorkPlaceType() {
-    //     if (allBookings.workplacetype == "Doppelarbeitsplatz") {
-    //         return false
-    //     } else {
-    //         return true
-    //     }
-    //     return true
-    // }
+    function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string){        
+        const [year, month, day] = dateComponents.split('-');
+        const [hours, minutes] = timeComponents.split(':');
+        const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
+        const timestamp = date.getTime();
+        return timestamp
+    }
+
+    function validateWorkPlaceType() {
+        //console.log(booking["Applikationen"]["Chrome"])
+        getAllBookings()
+        console.log("allBookings")
+        for (const key in allBookings) {
+            if (allBookings.hasOwnProperty(key)) {
+                const startTime = convertDateAndTimeToUnix(allBookings[key]["Datumsauswahl"]["startDate"], allBookings[key]["Startzeit"])
+                const endTime = convertDateAndTimeToUnix(allBookings[key]["Datumsauswahl"]["endDate"], allBookings[key]["Endzeit"])
+                //console.log(allBookings[key])
+                return true
+            }
+        }
+        return true
+    }
 
     return (
         <BookingContainer>
@@ -105,8 +125,6 @@ export default function NewBooking() {
 
                         }
                         {
-                            //disabled={validateWorkPlaceType()}
-
                             currentStep == 2 &&
                             <FormContainer title="Arbeitsplatztyp wählen">
                                 <FormSection>
@@ -114,7 +132,7 @@ export default function NewBooking() {
                                         <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
                                     </FormItem>
                                     <FormItem width="1/2">
-                                        <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                        <button disabled={validateWorkPlaceType()} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
                                     </FormItem>
                                 </FormSection>
                                 <FormContainerEnd>
@@ -233,7 +251,7 @@ export default function NewBooking() {
                         }
                         {
                             currentStep == 5 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
+                            <FormContainer title="Login">
 
                                 <FormContainerEnd>
                                     <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
@@ -242,12 +260,8 @@ export default function NewBooking() {
                         }
                         {
                             currentStep == 6 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
-                                    <FormItem>
-                                        <RadioButtons items={paymentMethods} />
-                                    </FormItem>
-                                </FormSection>
+                            <FormContainer title="Zahlung">
+                                
                                 <FormContainerEnd>
                                     <button className="button-primary next-button" onClick={send}>Senden &rarr;</button>
                                 </FormContainerEnd>
