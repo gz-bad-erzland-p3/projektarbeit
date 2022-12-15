@@ -11,7 +11,7 @@ function classNames(...classes: string[]) {
 export default function RadioButtons(props: any) {
     const items: any[] = props.items;
     const [selectedMailingLists, setSelectedMailingLists] = useState()
-    setBookingValue(selectedMailingLists, props.title)
+    setBookingValue(selectedMailingLists, props.FirebaseKey)
 
     return (
         <RadioGroup value={selectedMailingLists} onChange={setSelectedMailingLists}>
