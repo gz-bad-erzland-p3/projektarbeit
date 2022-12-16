@@ -118,7 +118,7 @@ export default function NewBooking() {
                                         <DropDown title="Endzeit" items={bookingTimes} />
                                     </FormItem>
                                     <FormItem width="1/4">
-                                        <button className="button-primary next-button mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
+                                        <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
                                     </FormItem>
                                 </FormSection>
                             </FormContainer>
@@ -136,7 +136,7 @@ export default function NewBooking() {
                                     </FormItem>
                                 </FormSection>
                                 <FormContainerEnd>
-                                    {workingPlaceType !== undefined ? <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    {workingPlaceType !== undefined ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
                                 </FormContainerEnd>
                             </FormContainer>
                         }
@@ -245,7 +245,7 @@ export default function NewBooking() {
                                     <Login />
                                 </FormSection>
                                 <FormContainerEnd>
-                                    <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                    <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }
@@ -254,7 +254,7 @@ export default function NewBooking() {
                             <FormContainer title="Login">
 
                                 <FormContainerEnd>
-                                    <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                    <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }
@@ -263,7 +263,7 @@ export default function NewBooking() {
                             <FormContainer title="Zahlung">
                                 
                                 <FormContainerEnd>
-                                    <button className="button-primary next-button" onClick={send}>Senden &rarr;</button>
+                                    <button className="button-primary w-full" onClick={send}>Senden &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }
