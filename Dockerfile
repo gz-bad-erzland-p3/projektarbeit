@@ -1,39 +1,32 @@
+FROM node:16.17.0-alpine3.15
 
-# Test
-FROM node:12.8-alpine as test-target
-ENV NODE_ENV=development
-ENV PATH $PATH:/usr/src/app/node_modules/.bin
+RUN apk add --no-cache libc6-compat
+RUN npm i -g npm
 
-WORKDIR /usr/src/app
+EXPOSE 3000
 
-COPY package*.json ./
+ENV PORT 3000
+ENV NODE_ENV production
 
-# CI and release builds should use npm ci to fully respect the lockfile.
-# Local development may use npm install for opportunistic package updates.
-ARG npm_install_command=ci
-RUN npm $npm_install_command
+WORKDIR /projektarbeit/app
+
+COPY package.json .
+COPY package-lock.json .
+
+RUN npm install --omit=optional
+RUN npx browserslist@latest --update-db
+RUN npx next telemetry disable
+
+# need to install linux specific swc builds
+RUN npm install -D @swc/cli @swc/core
 
 COPY . .
 
-# Build
-FROM test-target as build-target
-ENV NODE_ENV=production
-
-# Use build tools, installed as development packages, to produce a release build.
 RUN npm run build
 
-# Reduce installed packages to production-only.
-RUN npm prune --production
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
 
-# Archive
-FROM node:12.8-alpine as archive-target
-ENV NODE_ENV=production
-ENV PATH $PATH:/usr/src/app/node_modules/.bin
+USER nextjs
 
-WORKDIR /usr/src/app
-
-# Include only the release build and production packages.
-COPY --from=build-target /usr/src/app/node_modules node_modules
-COPY --from=build-target /usr/src/app/.next .next
-
-CMD ["next", "start"]
+CMD [ "npm", "start" ]
