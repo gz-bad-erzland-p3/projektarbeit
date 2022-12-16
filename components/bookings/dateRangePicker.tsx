@@ -9,13 +9,13 @@ export default function DateTimeRangePicker() {
     });
     setBookingValue(value, "Datumsauswahl")
 
-    const handleValueChange = (newValue: React.SetStateAction<{ startDate: Date; endDate: number; }>) => {
+    const handleValueChange = (newValue: React.SetStateAction<{ startDate: string; endDate: string; }>) => {
         setValue(newValue);
     }
 
     return (
         <div>
-            <Datepicker value={value} onChange={handleValueChange} primaryColor="green" language="de" />
+            <Datepicker value={value} onChange={(e) => handleValueChange} primaryColor="green" />
         </div>
     );
 }
