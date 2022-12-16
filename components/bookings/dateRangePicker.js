@@ -4,18 +4,18 @@ import { setBookingValue } from "../../pages/bookings/new";
 
 export default function DateTimeRangePicker() {
     const [value, setValue] = useState({
-        startDate: new Date().toISOString().split('T')[0],
-        endDate: new Date().toISOString().split('T')[0]
+        startDate: new Date(),
+        endDate: new Date()
     });
     setBookingValue(value, "Datumsauswahl")
 
-    const handleValueChange = (newValue: React.SetStateAction<{ startDate: string; endDate: string; }>) => {
+    function handleValueChange (newValue) {
         setValue(newValue);
     }
 
     return (
         <div>
-            <Datepicker value={value} onChange={(e) => handleValueChange} primaryColor="green" />
+            <Datepicker value={value} onChange={handleValueChange} primaryColor="green" />
         </div>
     );
 }

@@ -2,7 +2,6 @@ import Head from "next/head"
 import Container from "../components/container/container"
 import Features from "../components/index/features"
 import HeroSection from "../components/index/hero"
-import Stats from "../components/index/stats"
 
 
 export default function Index() {
@@ -20,9 +19,6 @@ export default function Index() {
       <Container>
         <div className="my-48">
           <HeroSection />
-        </div>
-        <div className="my-32">
-          <Stats />
         </div>
         <div className="my-32">
           <Features />

@@ -92,6 +92,9 @@ export default function NewBooking() {
         return true
     }
 
+    //<small>Von {booking.Datumsauswahl.startDate)} {booking.Startzeit}</small>
+    //<small>Bis {booking.Datumsauswahl.endDate} {booking.Endzeit}</small>
+
     return (
         <BookingContainer>
             <div className="flex justify-center mx-auto">
@@ -221,8 +224,6 @@ export default function NewBooking() {
                                         </div>
                                         <hr />
                                         <div className="flex flex-col py-2">
-                                            <small>Von {booking.Datumsauswahl.startDate} {booking.Startzeit}</small>
-                                            <small>Bis {booking.Datumsauswahl.endDate} {booking.Endzeit}</small>
                                         </div>
                                         <hr />
                                         <div className="flex flex-col space-y-2 text-sm py-2">
