@@ -3,6 +3,7 @@ import { Key, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { setBookingValue } from '../../pages/bookings/new';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -25,9 +26,16 @@ export default function RadioButtons(props: any) {
                             <>
                                 <div className="flex-1 flex">
                                     <div className="flex flex-col">
-                                        <RadioGroup.Label as="p" className="block text-left font-medium text-gray-900">
-                                            {item.title}
-                                        </RadioGroup.Label>
+                                        <div className='flex'>
+                                            {item.icon ?
+                                                <div>
+                                                    <FontAwesomeIcon width={24} height={24} icon={item.icon} className="mr-2" />
+                                                </div> : ""
+                                            }
+                                            <RadioGroup.Label as="p" className="block w-full text-left font-medium text-gray-900">
+                                                {item.title}
+                                            </RadioGroup.Label>
+                                        </div>
                                         <div className='py-2'>
                                             {item.specifications ?
                                                 <div>{

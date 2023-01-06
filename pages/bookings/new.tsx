@@ -19,7 +19,7 @@ import Textarea from "../../components/bookings/textarea";
 import { standard } from "../../components/data/data";
 import { uuidv4 } from "@firebase/util";
 
-type Obj = { [key: string]: [key: [key: string]|string]|string }
+type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
 export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
@@ -36,7 +36,7 @@ export default function NewBooking() {
     setBookingValue(uid, "UserID")
 
     //get all bookings
-    function getAllBookings(){
+    function getAllBookings() {
         get(ref(db, 'bookings/')).then((snapshot) => {
             if (snapshot.exists()) {
                 setAllBookings(snapshot.val());
@@ -47,7 +47,7 @@ export default function NewBooking() {
             console.error(error);
         });
     }
-    
+
 
     //next/back step
     function handleSetCurrentStep(operator: string) {
@@ -66,10 +66,10 @@ export default function NewBooking() {
     function send() {
         console.log(booking)
         const bookingId = uuidv4()
-        set(ref(db, 'bookings/' + bookingId ), booking);
+        set(ref(db, 'bookings/' + bookingId), booking);
     }
 
-    function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string){        
+    function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string) {
         const [year, month, day] = dateComponents.split('-');
         const [hours, minutes] = timeComponents.split(':');
         const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
@@ -262,9 +262,14 @@ export default function NewBooking() {
                         {
                             currentStep == 6 &&
                             <FormContainer title="Zahlung">
-                                
+                                <FormSection>
+                                    <FormItem title="Zahlungsmittel">
+                                        <RadioButtons items={paymentMethods} />
+                                    </FormItem>
+                                </FormSection>
+
                                 <FormContainerEnd>
-                                    <button className="button-primary w-full" onClick={send}>Senden &rarr;</button>
+                                    <button className="button-primary w-full" onClick={send}>Jetzt bezahlen &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }
