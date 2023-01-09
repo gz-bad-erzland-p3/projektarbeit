@@ -13,18 +13,13 @@ export const bookingSteps = [
     { id: '6', name: 'Zahlung', href: '#' },
 ]
 
-export const footerLinks = [
-  { id: '1', name: 'Impressum', href: 'impressum' },
-  { id: '2', name: 'Arbeitsplatztyp', href: '#' },
-]
-
 export const geraete = [
-  {id: '1', title: "Laptop ", specifications: ["Intel Pentium Gold G5400", "16GB DDR4", "256GB SSD"],  description: " ",price: "7,50", icon: faLaptop },
-  {id: '2', title: "Desktop PC", specifications: ["Hel", "o", "asd"], description: "Test",price: "7,50€", icon: faDesktop},
-  {id: '3', title: "Barebone", specifications: ["Hel", "o", "asd"], description: "Test", price: "7,50", icon: faServer}
+  {id: '1', title: "Laptop ", specifications: ["1920 x 1080 Pixel Display", "8GB DDR4 SODIMM", "256GB SSD", "VGA, HDMI, DP, USB 3.0 (3x)", "Audio In / Out", "HD Webcam"],  description: " ",price: "4.50", icon: faLaptop },
+  {id: '2', title: "Desktop PC", specifications: ["Intel Pentium Gold G5400", "Intel UHD 610", "16GB DDR4", "256GB SSD", "VGA, HDMI, DP, USB 3.0 (6x) usb 2.0 (4X)", "Audio In / Out"],price: "4,50", icon: faDesktop},
+  {id: '3', title: "Barebone", specifications: ["Intel® Pentium G4400T", "Intel UHD 610", "8GB DDR4", "256GB SSD", "VGA, HDMI, DP, USB 3.0 (3x) usb 2.0 (3X)", "Audio In / Out",], price: "4,50", icon: faServer}
 ]
 
-export const standard = ["1 Gig LAN oder WLAN", "Bildschirm", "Maus", "Tastatur"]
+export const standard = ["1 Gig LAN oder WLAN", "Fujitsu Bildschirm", "Fujitsu Maus", "Fujitsu Tastatur"]
 
 export const betriebssysteme = [
   {id: '1', title: "Windows 11", description: "Version 22H2", icon: faWindows},

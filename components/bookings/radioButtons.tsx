@@ -54,10 +54,12 @@ export default function RadioButtons(props: any) {
                                                 {item.description}
                                             </RadioGroup.Description>
                                         </div>
-                                        {item.price ?
-                                            <RadioGroup.Description as="p" className="mt-6 text-left text-sm font-medium text-gray-900">
-                                                + {item.price}€ / Tag
-                                            </RadioGroup.Description> : ""}
+                                        <div className='flex h-full items-end'>
+                                            {item.price ?
+                                                <RadioGroup.Description as="p" className="mt-6 text-left text-sm font-medium text-gray-900">
+                                                    + {item.price}€ / Tag
+                                                </RadioGroup.Description> : ""}
+                                        </div>
                                     </div>
                                 </div>
                                 <CheckIcon

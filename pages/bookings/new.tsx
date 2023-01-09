@@ -221,7 +221,7 @@ export default function NewBooking() {
                                             workingPlaceType == 2 &&
                                             <div>
                                                 <FormContainer title="Arbeitsplätze konfigurieren">
-                                                    <FormSection title="Arbeitsplatz 1">
+                                                    <FormSection title="Arbeitsplatz 2">
                                                         <FormItem title="Gerät wählen">
                                                             <RadioButtons items={geraete} />
                                                         </FormItem>
