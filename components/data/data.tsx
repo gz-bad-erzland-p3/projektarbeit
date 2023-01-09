@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaypal, faUbuntu, faWindows } from "@fortawesome/free-brands-svg-icons";
 import { faBuildingColumns, faCreditCard, faDesktop, faLaptop, faMoneyBill, faServer } from "@fortawesome/free-solid-svg-icons"
 
+export const suffix = "| Bad Erzland GZ"
+
 export const bookingSteps = [
     { id: '1', name: 'Zeitraum', href: '#' },
     { id: '2', name: 'Arbeitsplatztyp', href: '#' },
@@ -44,7 +46,7 @@ export const paymentMethods = [
   {id: '4', title: "Überweisung", description: "Test",}
 ]
 
-export const bookingTimes = getTimeInSteps(new Date("1970-01-01T08:00:00.00"), new Date("1970-01-01T17:30:00.00"), 15)
+export const bookingTimes = getTimeInSteps(new Date("1970-01-01T08:00:00.00"), new Date("1970-01-01T20:00:00.00"), 15)
 
 function getTimeInSteps(startTime: Date, endTime: Date, steps: number){
 
