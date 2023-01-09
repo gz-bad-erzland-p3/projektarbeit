@@ -12,7 +12,6 @@ export default function BookingContainer(props: { [x: string]: any; children: an
                 </div>
             </main>
             <p className="mt-8 text-center text-base text-gray-400">&copy; 2022 Gemeindezentrum Bad Erzland</p>
-
         </body>
     );
 }

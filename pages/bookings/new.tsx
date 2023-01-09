@@ -16,9 +16,10 @@ import RadioButtons from "../../components/bookings/radioButtons";
 import BookingContainer from "../../components/container/bookingContainer";
 import Login from "../../components/login";
 import Textarea from "../../components/bookings/textarea";
+import { standard } from "../../components/data/data";
 import { uuidv4 } from "@firebase/util";
 
-type Obj = { [key: string]: [key: [key: string]|string]|string }
+type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
 export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
@@ -34,7 +35,7 @@ export default function NewBooking() {
     setBookingValue(uid, "UserID")
 
     //get all bookings
-    function getAllBookings(){
+    function getAllBookings() {
         get(ref(db, 'bookings/')).then((snapshot) => {
             if (snapshot.exists()) {
                 setAllBookings(snapshot.val());
@@ -45,7 +46,7 @@ export default function NewBooking() {
             console.error(error);
         });
     }
-    
+
 
     //next/back step
     function handleSetCurrentStep(operator: string) {
@@ -64,10 +65,10 @@ export default function NewBooking() {
     function send() {
         console.log(booking)
         const bookingId = uuidv4()
-        set(ref(db, 'bookings/' + bookingId ), booking);
+        set(ref(db, 'bookings/' + bookingId), booking);
     }
 
-    function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string){        
+    function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string) {
         const [year, month, day] = dateComponents.split('-');
         const [hours, minutes] = timeComponents.split(':');
         const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
@@ -114,6 +115,9 @@ export default function NewBooking() {
         }
     }
 
+    //<small>Von {booking.Datumsauswahl.startDate)} {booking.Startzeit}</small>
+    //<small>Bis {booking.Datumsauswahl.endDate} {booking.Endzeit}</small>
+
     return (
         <BookingContainer>
             <div className="flex justify-center mx-auto">
@@ -140,7 +144,7 @@ export default function NewBooking() {
                                         <DropDown title="Endzeit" items={bookingTimes} />
                                     </FormItem>
                                     <FormItem width="1/4">
-                                        <button className="button-primary next-button mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
+                                        <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
                                     </FormItem>
                                 </FormSection>
                             </FormContainer>
@@ -158,39 +162,51 @@ export default function NewBooking() {
                                     </FormItem>
                                 </FormSection>
                                 <FormContainerEnd>
-                                    {workingPlaceType !== undefined ? <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    {workingPlaceType !== undefined ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
                                 </FormContainerEnd>
                             </FormContainer>
                         }
                         {
                             currentStep == 3 &&
                             <div className="flex">
-                                <div className="w-9/12">
-                                    <FormContainer title="Arbeitsplätze konfigurieren">
-                                        <FormSection title="Arbeitsplatz 1">
-                                            <FormItem title="Gerät wählen">
-                                                <RadioButtons items={geraete} FirebaseKey="Gerät"/>
-                                            </FormItem>
-                                        </FormSection>
-                                        <FormSection>
-                                            <FormItem title="Betriebssystem">
-                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem"/>
-                                            </FormItem>
-                                        </FormSection>
-                                        <FormSection>
-                                            <FormItem title="Browser" width="1/2">
-                                                <CheckboxGroup items={browser} />
-                                            </FormItem>
-                                            <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                                <CheckboxGroup items={kommunikationsapplikationen} />
-                                            </FormItem>
-                                        </FormSection>
-                                    </FormContainer>
-                                </div>
-                                <div className="w-3/12 ml-5">
-                                    <div className="shadow-md p-5">
-                                        <p className="text-lg">Zusammenfassung</p>
-                                        <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                <div className="flex flex-col w-full">
+                                    <div>
+                                        <FormContainer title="Arbeitsplätze konfigurieren">
+                                            <FormSection>
+
+                                                <FormItem title="Standardmäßig inbegriffen">
+                                                    {standard.map((item, index) => (
+                                                        <div key={index}>
+                                                            {item}
+                                                        </div>
+                                                    ))}
+
+                                                </FormItem>
+                                            </FormSection>
+                                            <FormSection title="Arbeitsplatz 1">
+                                                <FormItem title="Gerät wählen">
+                                                    <RadioButtons items={geraete} />
+                                                </FormItem>
+                                            </FormSection>
+                                            <FormSection>
+                                                <FormItem title="Betriebssystem">
+                                                    <RadioButtons items={betriebssysteme} />
+                                                </FormItem>
+                                            </FormSection>
+                                            <FormSection>
+                                                <FormItem title="Browser" width="1/2">
+                                                    <CheckboxGroup items={browser} />
+                                                </FormItem>
+                                                <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                                    <CheckboxGroup items={kommunikationsapplikationen} />
+                                                </FormItem>
+                                            </FormSection>
+                                            <FormSection>
+                                                <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
+                                                    <Textarea />
+                                                </FormItem>
+                                            </FormSection>
+                                        </FormContainer>
                                     </div>
                                     {
                                         workingPlaceType == 2 &&
@@ -215,7 +231,7 @@ export default function NewBooking() {
                                                     </FormItem>
                                                 </FormSection>
                                                 <FormSection>
-                                                    <FormItem title="Bemerkungen" width="full">
+                                                    <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
                                                         <Textarea />
                                                     </FormItem>
                                                 </FormSection>
@@ -231,8 +247,6 @@ export default function NewBooking() {
                                         </div>
                                         <hr />
                                         <div className="flex flex-col py-2">
-                                            <small>Von {booking.Datumsauswahl.startDate} {booking.Startzeit}</small>
-                                            <small>Bis {booking.Datumsauswahl.endDate} {booking.Endzeit}</small>
                                         </div>
                                         <hr />
                                         <div className="flex flex-col space-y-2 text-sm py-2">
@@ -255,7 +269,7 @@ export default function NewBooking() {
                                     <Login />
                                 </FormSection>
                                 <FormContainerEnd>
-                                    <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                    <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }
@@ -264,16 +278,21 @@ export default function NewBooking() {
                             <FormContainer title="Login">
 
                                 <FormContainerEnd>
-                                    <button className="button-primary next-button" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                    <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }
                         {
                             currentStep == 6 &&
                             <FormContainer title="Zahlung">
-                                
+                                <FormSection>
+                                    <FormItem title="Zahlungsmittel">
+                                        <RadioButtons items={paymentMethods} />
+                                    </FormItem>
+                                </FormSection>
+
                                 <FormContainerEnd>
-                                    <button className="button-primary next-button" onClick={send}>Senden &rarr;</button>
+                                    <button className="button-primary w-full" onClick={send}>Jetzt bezahlen &rarr;</button>
                                 </FormContainerEnd>
                             </FormContainer>
                         }

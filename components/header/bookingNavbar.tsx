@@ -1,11 +1,7 @@
-import { Fragment, useEffect, useState } from 'react'
-import { Popover, Transition } from '@headlessui/react'
+import { useEffect, useState } from 'react'
+import { Popover } from '@headlessui/react'
 import {
-  Bars3Icon,
-  BookmarkSquareIcon,
-  CalendarIcon,
-  LifebuoyIcon,
-  XMarkIcon,
+  Bars3Icon
 } from '@heroicons/react/24/outline'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'

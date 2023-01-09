@@ -62,6 +62,7 @@ body {
     @apply rounded-none focus:ring-0 focus:ring-offset-0 focus:border-green-600 bg-gray-100 dark:bg-gray-800 dark:text-white hover:border-green-600 border-0 border-b-2 border-gray-500 text-gray-900 text-base focus:border-b-2 outline-none py-2 px-4 m-0;
     --tw-ring-shadow: none !important;
     --tw-ring-offset-shadow: none !important;
+    transition: background 200ms ease, border 200ms ease;
 }
 
 .form-input-dropdown {
@@ -93,12 +94,8 @@ button {
     @apply bg-green-600 w-full text-white rounded-none hover:bg-green-500 py-2 px-4;
  }
 
-.next-button {
-    @apply w-fit;  
-}
-
 .radio-button {
-    @apply w-full text-center py-5 rounded-none border border-gray-200 hover:border-gray-300 hover:bg-gray-100 outline-none ring-0 cursor-pointer;
+    @apply text-center py-5 rounded-none border border-gray-200 hover:border-gray-300 hover:bg-gray-100 outline-none ring-0 cursor-pointer;
     transition: background 200ms ease, border 200ms ease, box-shadow 300ms ease;
 }
 

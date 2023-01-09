@@ -21,15 +21,15 @@
     "jsx": "preserve",
     "baseUrl": "src",
     "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "incremental": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/bookings/dateRangePicker.js", "components/bookings/dateRangePicker.js"  ],
   "exclude": [
     "node_modules"
   ]
