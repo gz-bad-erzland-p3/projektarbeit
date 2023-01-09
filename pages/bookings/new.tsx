@@ -22,7 +22,6 @@ type Obj = { [key: string]: [key: [key: string]|string]|string }
 const booking: Obj = {}
 export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
-    //console.log(booking)
 }
 
 export default function NewBooking() {
@@ -76,19 +75,43 @@ export default function NewBooking() {
         return timestamp
     }
 
-    function validateWorkPlaceType() {
+    function validateWorkPlaceType(type: number) {
         //console.log(booking["Applikationen"]["Chrome"])
+        const startTimeCurrent = convertDateAndTimeToUnix(booking["Datumsauswahl"]["startDate"], booking["Startzeit"])
+        const endTimeCurrent = convertDateAndTimeToUnix(booking["Datumsauswahl"]["endDate"], booking["Endzeit"])
+        let numOfWorkingplaces = 0
+
         getAllBookings()
         console.log("allBookings")
         for (const key in allBookings) {
             if (allBookings.hasOwnProperty(key)) {
                 const startTime = convertDateAndTimeToUnix(allBookings[key]["Datumsauswahl"]["startDate"], allBookings[key]["Startzeit"])
                 const endTime = convertDateAndTimeToUnix(allBookings[key]["Datumsauswahl"]["endDate"], allBookings[key]["Endzeit"])
-                //console.log(allBookings[key])
-                return true
+                //Wenn die aktuelle auswahl in der Zeitspanne einer bereits gespeicherten Buchung liegt, ...
+                if(startTimeCurrent <= endTime && endTimeCurrent <= startTime){
+                    //Sollen die Arbeitsplätze addiert werden
+                    numOfWorkingplaces = numOfWorkingplaces + Number(allBookings[key]["Arbeitsplatztyp"])
+                }
             }
         }
-        return true
+        if(type == 2){
+            //Wenn alle Doppelarbeitsplätze ausgebucht sind, ...
+            if((numOfWorkingplaces >= 7)){
+                //Soll der Button "Doppelarbeitsplatz" disabled werden
+                return true
+            }else{
+                return false
+            }
+        }
+        if(type == 1){
+            //Wenn alle Arbeitsplätze ausgebucht sind, ...
+            if(numOfWorkingplaces == 8){
+                //Sollen beide buttons disabled sein
+                return true
+            }else{
+                return false
+            }
+        }
     }
 
     return (
@@ -128,10 +151,10 @@ export default function NewBooking() {
                             <FormContainer title="Arbeitsplatztyp wählen">
                                 <FormSection>
                                     <FormItem width="1/2">
-                                        <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
+                                        <button disabled={validateWorkPlaceType(1)} className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
                                     </FormItem>
                                     <FormItem width="1/2">
-                                        <button disabled={validateWorkPlaceType()} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                        <button disabled={validateWorkPlaceType(2)} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
                                     </FormItem>
                                 </FormSection>
                                 <FormContainerEnd>
