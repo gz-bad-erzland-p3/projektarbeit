@@ -73,14 +73,14 @@ export default function NewBooking() {
     }
 
     function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string) {
-        const [year, month, day] = dateComponents.split('-');
+        const datee = new Date(dateComponents)
         const [hours, minutes] = timeComponents.split(':');
-        const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
+        const date = new Date(+datee.getFullYear, Number(datee.getMonth) - 1, +datee.getDate, +hours, +minutes);
         const timestamp = date.getTime();
         return timestamp
     }
 
-    function validateWorkPlaceType(type: number) {
+    /*function validateWorkPlaceType(type: number) {
         //console.log(booking["Applikationen"]["Chrome"])
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Datumsauswahl"]["startDate"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Datumsauswahl"]["endDate"], booking["Endzeit"])
@@ -117,7 +117,7 @@ export default function NewBooking() {
                 return false
             }
         }
-    }
+    } */
 
     //<small>Von {booking.Datumsauswahl.startDate)} {booking.Startzeit}</small>
     //<small>Bis {booking.Datumsauswahl.endDate} {booking.Endzeit}</small>
@@ -164,10 +164,10 @@ export default function NewBooking() {
                                 <FormContainer title="Arbeitsplatztyp wählen">
                                     <FormSection>
                                         <FormItem width="1/2">
-                                            <button disabled={validateWorkPlaceType(1)} className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
+                                            <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
                                         </FormItem>
                                         <FormItem width="1/2">
-                                            <button disabled={validateWorkPlaceType(2)} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                            <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
                                         </FormItem>
                                     </FormSection>
                                     <FormContainerEnd>

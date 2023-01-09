@@ -13,10 +13,15 @@ export const bookingSteps = [
     { id: '6', name: 'Zahlung', href: '#' },
 ]
 
+export const footerLinks = [
+  { id: '1', name: 'Impressum', href: 'impressum' },
+  { id: '2', name: 'Arbeitsplatztyp', href: '#' },
+]
+
 export const geraete = [
-  {id: '1', title: "Laptop ", specifications: ["Intel Pentium Gold G5400", "16GB DDR4", "256GB SSD"],  description: " ",price: "0", icon: faLaptop },
-  {id: '2', title: "Desktop PC", specifications: ["Hel", "o", "asd"], description: "Test",price: "1", icon: faDesktop},
-  {id: '3', title: "Barebone", specifications: ["Hel", "o", "asd"], description: "Test", price: "1", icon: faServer}
+  {id: '1', title: "Laptop ", specifications: ["Intel Pentium Gold G5400", "16GB DDR4", "256GB SSD"],  description: " ",price: "7,50", icon: faLaptop },
+  {id: '2', title: "Desktop PC", specifications: ["Hel", "o", "asd"], description: "Test",price: "7,50€", icon: faDesktop},
+  {id: '3', title: "Barebone", specifications: ["Hel", "o", "asd"], description: "Test", price: "7,50", icon: faServer}
 ]
 
 export const standard = ["1 Gig LAN oder WLAN", "Bildschirm", "Maus", "Tastatur"]
