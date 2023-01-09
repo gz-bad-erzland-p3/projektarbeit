@@ -1,4 +1,3 @@
-import { ArrowsRightLeftIcon, BanknotesIcon, Battery100Icon, BuildingLibraryIcon, ComputerDesktopIcon, CpuChipIcon, CreditCardIcon, CubeIcon, CurrencyEuroIcon, ServerIcon } from "@heroicons/react/24/outline"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaypal, faUbuntu, faWindows } from "@fortawesome/free-brands-svg-icons";
 import { faBuildingColumns, faCreditCard, faDesktop, faLaptop, faMoneyBill, faServer } from "@fortawesome/free-solid-svg-icons"
@@ -13,7 +12,7 @@ export const bookingSteps = [
 ]
 
 export const geraete = [
-  {id: '1', title: "Laptop ", specifications: ["Intel Pentium Gold G5400", "16GB DDR4", "256GB SSD"],  description: " ",price: "1", icon: faLaptop },
+  {id: '1', title: "Laptop ", specifications: ["Intel Pentium Gold G5400", "16GB DDR4", "256GB SSD"],  description: " ",price: "0", icon: faLaptop },
   {id: '2', title: "Desktop PC", specifications: ["Hel", "o", "asd"], description: "Test",price: "1", icon: faDesktop},
   {id: '3', title: "Barebone", specifications: ["Hel", "o", "asd"], description: "Test", price: "1", icon: faServer}
 ]
@@ -21,9 +20,9 @@ export const geraete = [
 export const standard = ["1 Gig LAN oder WLAN", "Bildschirm", "Maus", "Tastatur"]
 
 export const betriebssysteme = [
-  {id: '1', title: "Windows 11", description: "Windows 11", icon: faWindows},
-  {id: '2', title: "Windows 10", description: "Windows 10", icon: faWindows},
-  {id: '3', title: "Ubuntu", description: "Ubuntu", icon: faUbuntu}
+  {id: '1', title: "Windows 11", description: "Version 22H2", icon: faWindows},
+  {id: '2', title: "Windows 10", description: "Version 22H2", icon: faWindows},
+  {id: '3', title: "Ubuntu", description: "Version 22.10 (Kinetic Kudu)", icon: faUbuntu}
 ]
 
 export const browser = [
@@ -42,7 +41,7 @@ export const paymentMethods = [
   {id: '1', title: "PayPal", description: "Test", icon: faPaypal},
   {id: '2', title: "Kreditkarte", description: "Test", icon: faCreditCard},
   {id: '3', title: "Barzahlung", description: "Test", icon: faMoneyBill},
-  {id: '4', title: "Überweisung", description: "Test", icon: faBuildingColumns}
+  {id: '4', title: "Überweisung", description: "Test",}
 ]
 
 export const bookingTimes = getTimeInSteps(new Date("1970-01-01T08:00:00.00"), new Date("1970-01-01T17:30:00.00"), 15)

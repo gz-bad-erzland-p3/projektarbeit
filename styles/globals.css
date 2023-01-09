@@ -79,7 +79,15 @@ button {
 }
 
 .button-select{
-    @apply w-full text-center py-12 rounded-none border-2 border-gray-200 hover:border-gray-300;
+    @apply w-full text-center py-12 rounded-none border-2 bg-gray-100 border-gray-200 hover:border-gray-200;
+}
+
+.button-select:disabled{
+    @apply bg-gray-100 text-gray-300 border-gray-100;
+}
+
+.button-select:disabled:hover {
+    @apply bg-gray-100 cursor-not-allowed;
 }
 
 .background-green {

@@ -18,6 +18,7 @@ import Login from "../../components/login";
 import Textarea from "../../components/bookings/textarea";
 import { standard } from "../../components/data/data";
 import { uuidv4 } from "@firebase/util";
+import { faCalendarWeek, faClock } from "@fortawesome/free-solid-svg-icons";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -111,13 +112,13 @@ export default function NewBooking() {
                             currentStep == 1 &&
                             <FormContainer title="Zeitraum wählen">
                                 <FormSection>
-                                    <FormItem width="1/2" title="Zeitraum" icon={CalendarIcon}>
+                                    <FormItem width="1/2" title="Zeitraum" icon={faCalendarWeek}>
                                         <DateTimeRangePicker />
                                     </FormItem>
-                                    <FormItem width="1/4" title="Zeit von" icon={ClockIcon}>
+                                    <FormItem width="1/4" title="Zeit von" icon={faClock}>
                                         <DropDown title="Startzeit" items={bookingTimes} />
                                     </FormItem>
-                                    <FormItem width="1/4" title="Zeit bis" icon={ClockIcon}>
+                                    <FormItem width="1/4" title="Zeit bis" icon={faClock}>
                                         <DropDown title="Endzeit" items={bookingTimes} />
                                     </FormItem>
                                     <FormItem width="1/4">
@@ -139,7 +140,7 @@ export default function NewBooking() {
                                     </FormItem>
                                 </FormSection>
                                 <FormContainerEnd>
-                                    {workingPlaceType !== undefined ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    {workingPlaceType != null ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
                                 </FormContainerEnd>
                             </FormContainer>
                         }
