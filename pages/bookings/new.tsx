@@ -48,9 +48,9 @@ export default function NewBooking() {
         if (workingPlaceType == 1 && byod1 == 0) return true;
         else if (workingPlaceType == 2 && byod1 == 0 && byod2 == 0) return true;
         else if (workingPlaceType == 1 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined) return true;
-        else if (workingPlaceType == 1 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined && byod2 == 0) return true;
-        else if (workingPlaceType == 1 && byod1 == 0 && byod2 == 1 && booking["Geraet2"] != undefined && booking["Betriebssystem2"] != undefined) return true;
-        else if (workingPlaceType == 1 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined && byod2 == 1 && booking["Geraet2"] != undefined && booking["Betriebssystem2"] != undefined)  return true;
+        else if (workingPlaceType == 2 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined && byod2 == 0) return true;
+        else if (workingPlaceType == 2 && byod1 == 0 && byod2 == 1 && booking["Geraet2"] != undefined && booking["Betriebssystem2"] != undefined) return true;
+        else if (workingPlaceType == 2 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined && byod2 == 1 && booking["Geraet2"] != undefined && booking["Betriebssystem2"] != undefined)  return true;
         else return false;
     }
 
