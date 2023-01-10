@@ -71,12 +71,7 @@ export default function Navbar() {
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">
               <span className="sr-only">Bad Erzlingen</span>
-              <Image
-                src="/logo.svg"
-                alt=""
-                width={32}
-                height={32}
-              />
+              <Image src="/logo.svg" alt="" width={32} height={32}/>
             </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
@@ -146,11 +141,7 @@ export default function Navbar() {
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <Image
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
-                    alt="Your Company"
-                  />
+                  <Image className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600" alt="Your Company" />
                 </div>
                 <div className="-mr-2">
                   <Popover.Button className="inline-flex items-center justify-center rounded-none bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 outline-none transition">

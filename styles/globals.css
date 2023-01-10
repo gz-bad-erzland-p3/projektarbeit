@@ -79,7 +79,11 @@ button {
 }
 
 .button-select{
-    @apply w-full text-center py-12 rounded-none border-2 bg-gray-100 border-gray-200 hover:border-gray-200;
+    @apply flex flex-col items-center w-full h-full text-center py-12 rounded-none border-2 bg-gray-100 border-gray-200 hover:border-gray-200;
+}
+
+.button-select img{
+    @apply w-48 pb-5
 }
 
 .button-select:disabled{

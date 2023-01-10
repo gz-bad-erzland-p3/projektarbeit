@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DateTimeRangePicker from "../../components/bookings/dateRangePicker";
 import DropDown from "../../components/bookings/dropDown";
 import StepsForBooking from "../../components/bookings/steps";
-import MainContainer from "../../components/container/container";
 import FormContainer from "../../components/form/formContainer";
 import FormSection from "../../components/form/formSection";
 import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikationen, paymentMethods, suffix } from "../../components/data/data";
-import { ClockIcon, CalendarIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
 import { auth, db } from "../../config/firebase";
@@ -21,8 +20,8 @@ import { uuidv4 } from "@firebase/util";
 import { faCalendarWeek, faClock } from "@fortawesome/free-solid-svg-icons";
 import Head from "next/head";
 import BringYourOwnDevice from "../../components/bookings/byod";
-
-
+import { Transition } from "@headlessui/react";
+import Image from "next/image";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -37,6 +36,8 @@ export default function NewBooking() {
     const [byod1, setByod1] = useState(null);
     const [byod2, setByod2] = useState(null);
 
+    const [isShowing1, setIsShowing1] = useState(false)
+
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
 
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
@@ -50,7 +51,7 @@ export default function NewBooking() {
         else if (workingPlaceType == 1 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined) return true;
         else if (workingPlaceType == 2 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined && byod2 == 0) return true;
         else if (workingPlaceType == 2 && byod1 == 0 && byod2 == 1 && booking["Geraet2"] != undefined && booking["Betriebssystem2"] != undefined) return true;
-        else if (workingPlaceType == 2 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined && byod2 == 1 && booking["Geraet2"] != undefined && booking["Betriebssystem2"] != undefined)  return true;
+        else if (workingPlaceType == 2 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined && byod2 == 1 && booking["Geraet2"] != undefined && booking["Betriebssystem2"] != undefined) return true;
         else return false;
     }
 
@@ -153,10 +154,10 @@ export default function NewBooking() {
                                             <DateTimeRangePicker />
                                         </FormItem>
                                         <FormItem width="1/4" title="Zeit von" icon={faClock}>
-                                            <DropDown title="Startzeit" items={bookingTimes} FirebaseKey="Startzeit"/>
+                                            <DropDown title="Startzeit" items={bookingTimes} FirebaseKey="Startzeit" />
                                         </FormItem>
                                         <FormItem width="1/4" title="Zeit bis" icon={faClock}>
-                                            <DropDown title="Endzeit" items={bookingTimes} FirebaseKey="Endzeit"/>
+                                            <DropDown title="Endzeit" items={bookingTimes} FirebaseKey="Endzeit" />
                                         </FormItem>
                                         <FormItem width="1/4">
                                             <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
@@ -170,10 +171,10 @@ export default function NewBooking() {
                                 <FormContainer title="Arbeitsplatztyp wählen">
                                     <FormSection>
                                         <FormItem width="1/2">
-                                            <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
+                                            <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}><Image src="/singleWorkplace.svg" alt="" width={32} height={32}/>Einzelarbeitsplatz</button>
                                         </FormItem>
                                         <FormItem width="1/2">
-                                            <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                            <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}><Image src="/doubleWorkplace.svg" alt="" width={32} height={32}/>Doppelarbeitsplatz</button>
                                         </FormItem>
                                     </FormSection>
                                     <FormContainerEnd>
@@ -192,7 +193,7 @@ export default function NewBooking() {
                                                         <BringYourOwnDevice byod={byod1} setByod={setByod1} />
                                                     </FormItem>
                                                 </FormSection>
-                                                {byod1 == 1 ?
+                                                <Transition show={byod1 == 1} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
                                                     <div>
                                                         <FormSection>
                                                             <FormItem title="Standardmäßig inbegriffen">
@@ -224,8 +225,8 @@ export default function NewBooking() {
                                                                 <Textarea />
                                                             </FormItem>
                                                         </FormSection>
-                                                    </div> : ""
-                                                }
+                                                    </div>
+                                                </Transition>
 
                                             </FormContainer>
                                         </div>
@@ -238,41 +239,39 @@ export default function NewBooking() {
                                                             <BringYourOwnDevice byod={byod2} setByod={setByod2} />
                                                         </FormItem>
                                                     </FormSection>
-                                                    {byod2 == 1 ?
-                                                        <div>
-                                                            <FormSection>
-                                                                <FormItem title="Standardmäßig inbegriffen">
-                                                                    {standard.map((item, index) => (
-                                                                        <div key={index}>
-                                                                            {item}
-                                                                        </div>
-                                                                    ))}
+                                                    <Transition show={byod2 == 1} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
 
-                                                                </FormItem>
-                                                            </FormSection>
-                                                            <FormSection title="Konfiguriere dein Gerät">
-                                                                <FormItem title="Gerät wählen">
-                                                                    <RadioButtons items={geraete} FirebaseKey="Geraet2" />
-                                                                </FormItem>
-                                                            </FormSection><FormSection>
-                                                                <FormItem title="Betriebssystem">
-                                                                    <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem2" />
-                                                                </FormItem>
-                                                            </FormSection><FormSection>
-                                                                <FormItem title="Browser" width="1/2">
-                                                                    <CheckboxGroup items={browser} />
-                                                                </FormItem>
-                                                                <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                                                    <CheckboxGroup items={kommunikationsapplikationen} />
-                                                                </FormItem>
-                                                            </FormSection><FormSection>
-                                                                <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
-                                                                    <Textarea />
-                                                                </FormItem>
-                                                            </FormSection>
-                                                        </div> : ""
-                                                    }
+                                                        <FormSection>
+                                                            <FormItem title="Standardmäßig inbegriffen">
+                                                                {standard.map((item, index) => (
+                                                                    <div key={index}>
+                                                                        {item}
+                                                                    </div>
+                                                                ))}
 
+                                                            </FormItem>
+                                                        </FormSection>
+                                                        <FormSection title="Konfiguriere dein Gerät">
+                                                            <FormItem title="Gerät wählen">
+                                                                <RadioButtons items={geraete} FirebaseKey="Geraet2" />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Betriebssystem">
+                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem2" />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Browser" width="1/2">
+                                                                <CheckboxGroup items={browser} />
+                                                            </FormItem>
+                                                            <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                                                <CheckboxGroup items={kommunikationsapplikationen} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
+                                                                <Textarea />
+                                                            </FormItem>
+                                                        </FormSection>
+                                                    </Transition>
                                                 </FormContainer>
                                             </div>
                                         }
@@ -293,7 +292,9 @@ export default function NewBooking() {
                                                 <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Teams</div>
                                             </div>
                                             <div className="py-2 mt-4">
-                                                {showNextButton() ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                                <Transition show={showNextButton()} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                                    <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                                </Transition>
                                             </div>
                                         </div>
                                     </div>
