@@ -14,7 +14,8 @@ export default function BringYourOwnDevice(props: any) {
     const byod = props.byod;
     const setByod = props.setByod;
 
-    console.log(byod)
+    setBookingValue(byod, "Byod")
+
 
     return (
         <RadioGroup value={byod} onChange={setByod}>
