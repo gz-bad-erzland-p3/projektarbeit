@@ -80,7 +80,7 @@ export default function NewBooking() {
         set(ref(db, 'bookings/' + bookingId), booking);
     }
 
-    function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string) {
+    function convertDateAndTimeToUnix(dateComponents: any, timeComponents: any) {
         const [day, month, year] = dateComponents?.split('-');
         const [hours, minutes] = timeComponents?.split(':');
         const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
