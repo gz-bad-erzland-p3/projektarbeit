@@ -149,10 +149,10 @@ export default function NewBooking() {
                                             <DateTimeRangePicker />
                                         </FormItem>
                                         <FormItem width="1/4" title="Zeit von" icon={faClock}>
-                                            <DropDown title="Startzeit" items={bookingTimes} />
+                                            <DropDown title="Startzeit" items={bookingTimes} FirebaseKey="Startzeit"/>
                                         </FormItem>
                                         <FormItem width="1/4" title="Zeit bis" icon={faClock}>
-                                            <DropDown title="Endzeit" items={bookingTimes} />
+                                            <DropDown title="Endzeit" items={bookingTimes} FirebaseKey="Endzeit"/>
                                         </FormItem>
                                         <FormItem width="1/4">
                                             <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
@@ -207,7 +207,7 @@ export default function NewBooking() {
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Betriebssystem">
-                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssytsem"/>
+                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem"/>
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Browser" width="1/2">
@@ -239,11 +239,11 @@ export default function NewBooking() {
                                                     <div>
                                                         <FormSection>
                                                             <FormItem title="Gerät wählen">
-                                                                <RadioButtons items={geraete} FirebaseKey="Geraet" />
+                                                                <RadioButtons items={geraete} FirebaseKey="Geraet2" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Betriebssystem">
-                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssytsem" />
+                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem2" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Browser" width="1/2">
