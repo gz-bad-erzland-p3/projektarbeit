@@ -45,21 +45,21 @@ export default function NewBooking() {
 
     //Frontend Logik
     const showNextButton = () => {
-        if(workingPlaceType == 1 && byod1 != null) return true;
-        else if(workingPlaceType == 2 && byod1 != null && byod2 != null) return true;
+        if (workingPlaceType == 1 && byod1 != null) return true;
+        else if (workingPlaceType == 2 && byod1 != null && byod2 != null) return true;
         else return false;
     }
 
     //get all bookings
     get(ref(db, 'bookings/')).then((snapshot) => {
-            if (snapshot.exists()) {
-                setAllBookings(snapshot.val());
-            } else {
-                console.log("No data available");
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
+        if (snapshot.exists()) {
+            setAllBookings(snapshot.val());
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
 
     //next/back step
     function handleSetCurrentStep(operator: string) {
@@ -80,7 +80,7 @@ export default function NewBooking() {
         set(ref(db, 'bookings/' + bookingId), booking);
     }
 
-    function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string) {
+    function convertDateAndTimeToUnix(dateComponents: any, timeComponents: any) {
         const [day, month, year] = dateComponents?.split('-');
         const [hours, minutes] = timeComponents?.split(':');
         const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
@@ -92,13 +92,13 @@ export default function NewBooking() {
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
         let numOfWorkingplaces = 0
-        
+
         for (const key in allBookings) {
             if (allBookings.hasOwnProperty(key)) {
                 const startTime = convertDateAndTimeToUnix(allBookings[key]["Startdatum"], allBookings[key]["Startzeit"])
                 const endTime = convertDateAndTimeToUnix(allBookings[key]["Enddatum"], allBookings[key]["Endzeit"])
                 //Wenn die aktuelle auswahl in der Zeitspanne einer bereits gespeicherten Buchung liegt, ...
-                if(startTimeCurrent <= endTime && endTimeCurrent >= startTime){
+                if (startTimeCurrent <= endTime && endTimeCurrent >= startTime) {
                     //Sollen die Arbeitsplätze addiert werden
                     numOfWorkingplaces = numOfWorkingplaces + Number(allBookings[key]["Arbeitsplatztyp"])
                 }
@@ -183,17 +183,6 @@ export default function NewBooking() {
                                     <div className="flex flex-col w-full">
                                         <div>
                                             <FormContainer title="Arbeitsplätze konfigurieren">
-                                                <FormSection>
-
-                                                    <FormItem title="Standardmäßig inbegriffen">
-                                                        {standard.map((item, index) => (
-                                                            <div key={index}>
-                                                                {item}
-                                                            </div>
-                                                        ))}
-
-                                                    </FormItem>
-                                                </FormSection>
                                                 <FormSection title="Arbeitsplatz 1">
                                                     <FormItem>
                                                         <BringYourOwnDevice byod={byod1} setByod={setByod1} />
@@ -202,8 +191,18 @@ export default function NewBooking() {
                                                 {byod1 == 1 ?
                                                     <div>
                                                         <FormSection>
+                                                            <FormItem title="Standardmäßig inbegriffen">
+                                                                {standard.map((item, index) => (
+                                                                    <div key={index}>
+                                                                        {item}
+                                                                    </div>
+                                                                ))}
+
+                                                            </FormItem>
+                                                        </FormSection>
+                                                        <FormSection>
                                                             <FormItem title="Gerät wählen">
-                                                                <RadioButtons items={geraete} FirebaseKey="Geraet"/>
+                                                                <RadioButtons items={geraete} FirebaseKey="Geraet" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Betriebssystem">
@@ -230,37 +229,47 @@ export default function NewBooking() {
                                             workingPlaceType == 2 &&
                                             <div>
                                                 <FormContainer>
-                                                <FormSection title="Arbeitsplatz 2">
-                                                    <FormItem>
-                                                        <BringYourOwnDevice byod={byod2} setByod={setByod2} />
-                                                    </FormItem>
-                                                </FormSection>
-                                                {byod2 == 1 ?
-                                                    <div>
-                                                        <FormSection>
-                                                            <FormItem title="Gerät wählen">
-                                                                <RadioButtons items={geraete} FirebaseKey="Geraet2" />
-                                                            </FormItem>
-                                                        </FormSection><FormSection>
-                                                            <FormItem title="Betriebssystem">
-                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem2" />
-                                                            </FormItem>
-                                                        </FormSection><FormSection>
-                                                            <FormItem title="Browser" width="1/2">
-                                                                <CheckboxGroup items={browser} />
-                                                            </FormItem>
-                                                            <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                                                <CheckboxGroup items={kommunikationsapplikationen} />
-                                                            </FormItem>
-                                                        </FormSection><FormSection>
-                                                            <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
-                                                                <Textarea />
-                                                            </FormItem>
-                                                        </FormSection>
-                                                    </div> : ""
-                                                }
+                                                    <FormSection title="Arbeitsplatz 2">
+                                                        <FormItem>
+                                                            <BringYourOwnDevice byod={byod2} setByod={setByod2} />
+                                                        </FormItem>
+                                                    </FormSection>
+                                                    {byod2 == 1 ?
+                                                        <div>
+                                                            <FormSection>
+                                                                <FormItem title="Standardmäßig inbegriffen">
+                                                                    {standard.map((item, index) => (
+                                                                        <div key={index}>
+                                                                            {item}
+                                                                        </div>
+                                                                    ))}
 
-                                            </FormContainer>
+                                                                </FormItem>
+                                                            </FormSection>
+                                                            <FormSection>
+                                                                <FormItem title="Gerät wählen">
+                                                                    <RadioButtons items={geraete} FirebaseKey="Geraet" />
+                                                                </FormItem>
+                                                            </FormSection><FormSection>
+                                                                <FormItem title="Betriebssystem">
+                                                                    <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssytsem" />
+                                                                </FormItem>
+                                                            </FormSection><FormSection>
+                                                                <FormItem title="Browser" width="1/2">
+                                                                    <CheckboxGroup items={browser} />
+                                                                </FormItem>
+                                                                <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                                                    <CheckboxGroup items={kommunikationsapplikationen} />
+                                                                </FormItem>
+                                                            </FormSection><FormSection>
+                                                                <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
+                                                                    <Textarea />
+                                                                </FormItem>
+                                                            </FormSection>
+                                                        </div> : ""
+                                                    }
+
+                                                </FormContainer>
                                             </div>
                                         }
                                     </div>
@@ -312,7 +321,7 @@ export default function NewBooking() {
                                 <FormContainer title="Zahlung">
                                     <FormSection>
                                         <FormItem title="Zahlungsmittel">
-                                            <RadioButtons items={paymentMethods} />
+                                            <RadioButtons items={paymentMethods} FirebaseKey="Bezahlmethode" />
                                         </FormItem>
                                     </FormSection>
 
