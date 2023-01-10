@@ -55,6 +55,15 @@ export default function NewBooking() {
         else return false;
     }
 
+    const price = () => {
+        let price : number = 18;
+        if(workingPlaceType == 2) price = price + 18
+        if(byod1 == 1) price = price + 4.50
+        if(byod2 == 1) price = price + 4.50
+
+        return price.toFixed(2);
+    }
+
     //get all bookings
     get(ref(db, 'bookings/')).then((snapshot) => {
         if (snapshot.exists()) {
@@ -292,8 +301,9 @@ export default function NewBooking() {
                                                 <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Teams</div>
                                             </div>
                                             <div className="py-2 mt-4">
+                                                <p className="font-medium text-lg py-2">{price()}€/Stunde</p>
                                                 <Transition show={showNextButton()} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
-                                                    <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                                    <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter zum Login &rarr;</button>
                                                 </Transition>
                                             </div>
                                         </div>
