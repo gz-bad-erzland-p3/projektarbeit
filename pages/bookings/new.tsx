@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DateTimeRangePicker from "../../components/bookings/dateRangePicker";
 import DropDown from "../../components/bookings/dropDown";
 import StepsForBooking from "../../components/bookings/steps";
@@ -34,10 +34,8 @@ export default function NewBooking() {
 
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
     setBookingValue(uid, "UserID")
-
     //get all bookings
-    function getAllBookings() {
-        get(ref(db, 'bookings/')).then((snapshot) => {
+    get(ref(db, 'bookings/')).then((snapshot) => {
             if (snapshot.exists()) {
                 setAllBookings(snapshot.val());
             } else {
@@ -46,8 +44,6 @@ export default function NewBooking() {
         }).catch((error) => {
             console.error(error);
         });
-    }
-
 
     //next/back step
     function handleSetCurrentStep(operator: string) {
@@ -57,7 +53,6 @@ export default function NewBooking() {
             if (currentStep > 1) setCurrentStep(currentStep - 1);
         }
     }
-
 
     function handleSetWorkingPlaceType(type: number) {
         setWorkingPlaceType(type);
@@ -70,27 +65,24 @@ export default function NewBooking() {
     }
 
     function convertDateAndTimeToUnix(dateComponents: string, timeComponents: string) {
-        const [year, month, day] = dateComponents.split('-');
-        const [hours, minutes] = timeComponents.split(':');
+        const [day, month, year] = dateComponents?.split('-');
+        const [hours, minutes] = timeComponents?.split(':');
         const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
         const timestamp = date.getTime();
         return timestamp
     }
 
     function validateWorkPlaceType(type: number) {
-        //console.log(booking["Applikationen"]["Chrome"])
-        const startTimeCurrent = convertDateAndTimeToUnix(booking["Datumsauswahl"]["startDate"], booking["Startzeit"])
-        const endTimeCurrent = convertDateAndTimeToUnix(booking["Datumsauswahl"]["endDate"], booking["Endzeit"])
+        const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
+        const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
         let numOfWorkingplaces = 0
-
-        getAllBookings()
-        console.log("allBookings")
+        
         for (const key in allBookings) {
             if (allBookings.hasOwnProperty(key)) {
-                const startTime = convertDateAndTimeToUnix(allBookings[key]["Datumsauswahl"]["startDate"], allBookings[key]["Startzeit"])
-                const endTime = convertDateAndTimeToUnix(allBookings[key]["Datumsauswahl"]["endDate"], allBookings[key]["Endzeit"])
+                const startTime = convertDateAndTimeToUnix(allBookings[key]["Startdatum"], allBookings[key]["Startzeit"])
+                const endTime = convertDateAndTimeToUnix(allBookings[key]["Enddatum"], allBookings[key]["Endzeit"])
                 //Wenn die aktuelle auswahl in der Zeitspanne einer bereits gespeicherten Buchung liegt, ...
-                if(startTimeCurrent <= endTime && endTimeCurrent <= startTime){
+                if(startTimeCurrent <= endTime && endTimeCurrent >= startTime){
                     //Sollen die Arbeitsplätze addiert werden
                     numOfWorkingplaces = numOfWorkingplaces + Number(allBookings[key]["Arbeitsplatztyp"])
                 }
@@ -115,9 +107,6 @@ export default function NewBooking() {
             }
         }
     }
-
-    //<small>Von {booking.Datumsauswahl.startDate)} {booking.Startzeit}</small>
-    //<small>Bis {booking.Datumsauswahl.endDate} {booking.Endzeit}</small>
 
     return (
         <BookingContainer>
