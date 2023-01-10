@@ -248,11 +248,11 @@ export default function NewBooking() {
                                                             </FormSection>
                                                             <FormSection>
                                                                 <FormItem title="Gerät wählen">
-                                                                    <RadioButtons items={geraete} FirebaseKey="Geraet" />
+                                                                    <RadioButtons items={geraete} FirebaseKey="Geraet2" />
                                                                 </FormItem>
                                                             </FormSection><FormSection>
                                                                 <FormItem title="Betriebssystem">
-                                                                    <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssytsem" />
+                                                                    <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem2" />
                                                                 </FormItem>
                                                             </FormSection><FormSection>
                                                                 <FormItem title="Browser" width="1/2">
