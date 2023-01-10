@@ -150,10 +150,10 @@ export default function NewBooking() {
                                             <DateTimeRangePicker />
                                         </FormItem>
                                         <FormItem width="1/4" title="Zeit von" icon={faClock}>
-                                            <DropDown title="Startzeit" items={bookingTimes} />
+                                            <DropDown title="Startzeit" items={bookingTimes} FirebaseKey="Startzeit"/>
                                         </FormItem>
                                         <FormItem width="1/4" title="Zeit bis" icon={faClock}>
-                                            <DropDown title="Endzeit" items={bookingTimes} />
+                                            <DropDown title="Endzeit" items={bookingTimes} FirebaseKey="Endzeit"/>
                                         </FormItem>
                                         <FormItem width="1/4">
                                             <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
