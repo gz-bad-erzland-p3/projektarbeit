@@ -5,9 +5,13 @@ import { setBookingValue } from "../../pages/bookings/new";
 export default function DateTimeRangePicker() {
     const [value, setValue] = useState({
         startDate: new Date(),
-        endDate: new Date()
+        endDate: new Date().setMonth(11)
     });
-    setBookingValue(value, "Datumsauswahl")
+    const startDate = new Date(value["startDate"])
+    const endDate = new Date(value["endDate"])
+    setBookingValue(startDate.toLocaleDateString("es-CL"), "Startdatum")
+    setBookingValue(endDate.toLocaleDateString("es-CL"), "Enddatum")
+
 
     function handleValueChange (newValue) {
         setValue(newValue);
