@@ -290,8 +290,7 @@ export default function NewBooking() {
                                                 <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Teams</div>
                                             </div>
                                             <div className="py-2 mt-4">
-                                                {showNextButton ? <div>Helo</div> : ""}
-                                                <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                                {showNextButton() ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
                                             </div>
                                         </div>
                                     </div>
