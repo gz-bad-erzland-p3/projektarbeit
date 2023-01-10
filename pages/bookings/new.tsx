@@ -203,11 +203,11 @@ export default function NewBooking() {
                                                     <div>
                                                         <FormSection>
                                                             <FormItem title="Gerät wählen">
-                                                                <RadioButtons items={geraete} />
+                                                                <RadioButtons items={geraete} FirebaseKey="Geraet"/>
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Betriebssystem">
-                                                                <RadioButtons items={betriebssysteme} />
+                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssytsem"/>
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Browser" width="1/2">
@@ -239,11 +239,11 @@ export default function NewBooking() {
                                                     <div>
                                                         <FormSection>
                                                             <FormItem title="Gerät wählen">
-                                                                <RadioButtons items={geraete} />
+                                                                <RadioButtons items={geraete} FirebaseKey="Geraet" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Betriebssystem">
-                                                                <RadioButtons items={betriebssysteme} />
+                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssytsem" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Browser" width="1/2">

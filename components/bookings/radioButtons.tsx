@@ -21,7 +21,7 @@ export default function RadioButtons(props: any) {
                 {items.map((item) => (
                     <RadioGroup.Option
                         key={item.id}
-                        value={item.id}
+                        value={item.title}
                         className={({ checked, active }) => classNames(checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex focus:outline-none radio-button')}>
                         {({ checked, active }) => (
                             <>
