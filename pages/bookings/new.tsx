@@ -5,7 +5,7 @@ import StepsForBooking from "../../components/bookings/steps";
 import MainContainer from "../../components/container/container";
 import FormContainer from "../../components/form/formContainer";
 import FormSection from "../../components/form/formSection";
-import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikationen, paymentMethods } from "../../components/data/data";
+import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikationen, paymentMethods, suffix } from "../../components/data/data";
 import { ClockIcon, CalendarIcon, CheckIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
@@ -19,6 +19,10 @@ import Textarea from "../../components/bookings/textarea";
 import { standard } from "../../components/data/data";
 import { uuidv4 } from "@firebase/util";
 import { faCalendarWeek, faClock } from "@fortawesome/free-solid-svg-icons";
+import Head from "next/head";
+import BringYourOwnDevice from "../../components/bookings/byod";
+
+
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -30,10 +34,22 @@ export default function NewBooking() {
     const [allBookings, setAllBookings] = useState(Object);
     const [currentStep, setCurrentStep] = useState(1);
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
+    const [byod1, setByod1] = useState(null);
+    const [byod2, setByod2] = useState(null);
+
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
 
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
     setBookingValue(uid, "UserID")
+
+
+    //Frontend Logik
+    const showNextButton = () => {
+        if(workingPlaceType == 1 && byod1 != null) return true;
+        else if(workingPlaceType == 2 && byod1 != null && byod2 != null) return true;
+        else return false;
+    }
+
     //get all bookings
     get(ref(db, 'bookings/')).then((snapshot) => {
             if (snapshot.exists()) {
@@ -88,207 +104,229 @@ export default function NewBooking() {
                 }
             }
         }
-        if(type == 2){
+        if (type == 2) {
             //Wenn alle Doppelarbeitsplätze ausgebucht sind, ...
-            if((numOfWorkingplaces >= 7)){
+            if ((numOfWorkingplaces >= 7)) {
                 //Soll der Button "Doppelarbeitsplatz" disabled werden
                 return true
-            }else{
+            } else {
                 return false
             }
         }
-        if(type == 1){
+        if (type == 1) {
             //Wenn alle Arbeitsplätze ausgebucht sind, ...
-            if(numOfWorkingplaces == 8){
+            if (numOfWorkingplaces == 8) {
                 //Sollen beide buttons disabled sein
                 return true
-            }else{
+            } else {
                 return false
             }
         }
     }
 
     return (
-        <BookingContainer>
-            <div className="flex justify-center mx-auto">
-                <div className="grow max-w-7xl px-4 sm:px-6 ">
-                    <div>
-                        <div className="py-4">
+        <div>
+            <Head>
+                <title>Neue Buchung {suffix}</title>
+                <meta property="og:title" content="Neue Buchung" key="title" />
+            </Head>
+            <BookingContainer>
+                <div className="flex justify-center mx-auto">
+                    <div className="grow max-w-7xl px-4 sm:px-6 ">
+                        <div>
+                            <div className="py-4">
+                                {
+                                    currentStep > 1 ?
+                                        <button className="button-secondary mb-4" onClick={() => handleSetCurrentStep("-")} >&larr; Zurück</button> : ""
+                                }
+                                <StepsForBooking currentId={currentStep} />
+                            </div>
                             {
-                                currentStep > 1 ?
-                                    <button className="button-secondary mb-4" onClick={() => handleSetCurrentStep("-")} >&larr; Zurück</button> : ""
+                                currentStep == 1 &&
+                                <FormContainer title="Zeitraum wählen">
+                                    <FormSection>
+                                        <FormItem width="1/2" title="Zeitraum" icon={faCalendarWeek}>
+                                            <DateTimeRangePicker />
+                                        </FormItem>
+                                        <FormItem width="1/4" title="Zeit von" icon={faClock}>
+                                            <DropDown title="Startzeit" items={bookingTimes} />
+                                        </FormItem>
+                                        <FormItem width="1/4" title="Zeit bis" icon={faClock}>
+                                            <DropDown title="Endzeit" items={bookingTimes} />
+                                        </FormItem>
+                                        <FormItem width="1/4">
+                                            <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
+                                        </FormItem>
+                                    </FormSection>
+                                </FormContainer>
+
                             }
-                            <StepsForBooking currentId={currentStep} />
-                        </div>
-                        {
-                            currentStep == 1 &&
-                            <FormContainer title="Zeitraum wählen">
-                                <FormSection>
-                                    <FormItem width="1/2" title="Zeitraum" icon={faCalendarWeek}>
-                                        <DateTimeRangePicker />
-                                    </FormItem>
-                                    <FormItem width="1/4" title="Zeit von" icon={faClock}>
-                                        <DropDown title="Startzeit" items={bookingTimes} />
-                                    </FormItem>
-                                    <FormItem width="1/4" title="Zeit bis" icon={faClock}>
-                                        <DropDown title="Endzeit" items={bookingTimes} />
-                                    </FormItem>
-                                    <FormItem width="1/4">
-                                        <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
-                                    </FormItem>
-                                </FormSection>
-                            </FormContainer>
-
-                        }
-                        {
-                            currentStep == 2 &&
-                            <FormContainer title="Arbeitsplatztyp wählen">
-                                <FormSection>
-                                    <FormItem width="1/2">
-                                        <button disabled={validateWorkPlaceType(1)} className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
-                                    </FormItem>
-                                    <FormItem width="1/2">
-                                        <button disabled={validateWorkPlaceType(2)} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
-                                    </FormItem>
-                                </FormSection>
-                                <FormContainerEnd>
-                                    {workingPlaceType != null ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
-                                </FormContainerEnd>
-                            </FormContainer>
-                        }
-                        {
-                            currentStep == 3 &&
-                            <div className="flex">
-                                <div className="flex flex-col w-full">
-                                    <div>
-                                        <FormContainer title="Arbeitsplätze konfigurieren">
-                                            <FormSection>
-
-                                                <FormItem title="Standardmäßig inbegriffen">
-                                                    {standard.map((item, index) => (
-                                                        <div key={index}>
-                                                            {item}
-                                                        </div>
-                                                    ))}
-
-                                                </FormItem>
-                                            </FormSection>
-                                            <FormSection title="Arbeitsplatz 1">
-                                                <FormItem title="Gerät wählen">
-                                                    <RadioButtons items={geraete} />
-                                                </FormItem>
-                                            </FormSection>
-                                            <FormSection>
-                                                <FormItem title="Betriebssystem">
-                                                    <RadioButtons items={betriebssysteme} />
-                                                </FormItem>
-                                            </FormSection>
-                                            <FormSection>
-                                                <FormItem title="Browser" width="1/2">
-                                                    <CheckboxGroup items={browser} />
-                                                </FormItem>
-                                                <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                                    <CheckboxGroup items={kommunikationsapplikationen} />
-                                                </FormItem>
-                                            </FormSection>
-                                            <FormSection>
-                                                <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
-                                                    <Textarea />
-                                                </FormItem>
-                                            </FormSection>
-                                        </FormContainer>
-                                    </div>
-                                    {
-                                        workingPlaceType == 2 &&
+                            {
+                                currentStep == 2 &&
+                                <FormContainer title="Arbeitsplatztyp wählen">
+                                    <FormSection>
+                                        <FormItem width="1/2">
+                                            <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}>Einzelarbeitsplatz</button>
+                                        </FormItem>
+                                        <FormItem width="1/2">
+                                            <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}>Doppelarbeitsplatz</button>
+                                        </FormItem>
+                                    </FormSection>
+                                    <FormContainerEnd>
+                                        {workingPlaceType != null ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                    </FormContainerEnd>
+                                </FormContainer>
+                            }
+                            {
+                                currentStep == 3 &&
+                                <div className="flex">
+                                    <div className="flex flex-col w-full">
                                         <div>
                                             <FormContainer title="Arbeitsplätze konfigurieren">
+                                                <FormSection>
+
+                                                    <FormItem title="Standardmäßig inbegriffen">
+                                                        {standard.map((item, index) => (
+                                                            <div key={index}>
+                                                                {item}
+                                                            </div>
+                                                        ))}
+
+                                                    </FormItem>
+                                                </FormSection>
                                                 <FormSection title="Arbeitsplatz 1">
-                                                    <FormItem title="Gerät wählen">
-                                                        <RadioButtons items={geraete} />
+                                                    <FormItem>
+                                                        <BringYourOwnDevice byod={byod1} setByod={setByod1} />
                                                     </FormItem>
                                                 </FormSection>
-                                                <FormSection>
-                                                    <FormItem title="Betriebssystem">
-                                                        <RadioButtons items={betriebssysteme} />
-                                                    </FormItem>
-                                                </FormSection>
-                                                <FormSection>
-                                                    <FormItem title="Browser" width="1/2">
-                                                        <CheckboxGroup items={browser} />
-                                                    </FormItem>
-                                                    <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                                        <CheckboxGroup items={kommunikationsapplikationen} />
-                                                    </FormItem>
-                                                </FormSection>
-                                                <FormSection>
-                                                    <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
-                                                        <Textarea />
-                                                    </FormItem>
-                                                </FormSection>
+                                                {byod1 == 1 ?
+                                                    <div>
+                                                        <FormSection>
+                                                            <FormItem title="Gerät wählen">
+                                                                <RadioButtons items={geraete} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Betriebssystem">
+                                                                <RadioButtons items={betriebssysteme} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Browser" width="1/2">
+                                                                <CheckboxGroup items={browser} />
+                                                            </FormItem>
+                                                            <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                                                <CheckboxGroup items={kommunikationsapplikationen} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
+                                                                <Textarea />
+                                                            </FormItem>
+                                                        </FormSection>
+                                                    </div> : ""
+                                                }
+
                                             </FormContainer>
                                         </div>
-                                    }
-                                </div>
+                                        {
+                                            workingPlaceType == 2 &&
+                                            <div>
+                                                <FormContainer>
+                                                <FormSection title="Arbeitsplatz 2">
+                                                    <FormItem>
+                                                        <BringYourOwnDevice byod={byod2} setByod={setByod2} />
+                                                    </FormItem>
+                                                </FormSection>
+                                                {byod2 == 1 ?
+                                                    <div>
+                                                        <FormSection>
+                                                            <FormItem title="Gerät wählen">
+                                                                <RadioButtons items={geraete} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Betriebssystem">
+                                                                <RadioButtons items={betriebssysteme} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Browser" width="1/2">
+                                                                <CheckboxGroup items={browser} />
+                                                            </FormItem>
+                                                            <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                                                <CheckboxGroup items={kommunikationsapplikationen} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
+                                                                <Textarea />
+                                                            </FormItem>
+                                                        </FormSection>
+                                                    </div> : ""
+                                                }
 
-                                <div className="w-3/12 ml-5 mt-5">
-                                    <div className="sticky top-5 flex flex-col shadow-md p-5">
-                                        <div className="py-2">
-                                            <p className="text-lg font-bold">Zusammenfassung</p>
-                                        </div>
-                                        <hr />
-                                        <div className="flex flex-col py-2">
-                                        </div>
-                                        <hr />
-                                        <div className="flex flex-col space-y-2 text-sm py-2">
-                                            <p>{workingPlaceType == 1 ? "Einzelarbeitsplatz" : "Doppelarbeitsplatz"}</p>
-                                            <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Discord</div>
-                                            <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Teams</div>
-                                        </div>
-                                        <div className="py-2 mt-4">
-                                            <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                            </FormContainer>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div className="w-3/12 ml-5 mt-5">
+                                        <div className="sticky top-5 flex flex-col shadow-md p-5">
+                                            <div className="py-2">
+                                                <p className="text-lg font-bold">Zusammenfassung</p>
+                                            </div>
+                                            <hr />
+                                            <div className="flex flex-col py-2">
+                                            </div>
+                                            <hr />
+                                            <div className="flex flex-col space-y-2 text-sm py-2">
+                                                <p>{workingPlaceType == 1 ? "Einzelarbeitsplatz" : "Doppelarbeitsplatz"}</p>
+                                                <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Discord</div>
+                                                <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Teams</div>
+                                            </div>
+                                            <div className="py-2 mt-4">
+                                                {showNextButton ? <div>Helo</div> : ""}
+                                                <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
 
-                        {
-                            currentStep == 4 &&
-                            <FormContainer title="Übersicht">
-                                <FormSection>
-                                    <Login />
-                                </FormSection>
-                                <FormContainerEnd>
-                                    <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
-                                </FormContainerEnd>
-                            </FormContainer>
-                        }
-                        {
-                            currentStep == 5 &&
-                            <FormContainer title="Login">
+                            {
+                                currentStep == 4 &&
+                                <FormContainer title="Übersicht">
+                                    <FormSection>
+                                        <Login />
+                                    </FormSection>
+                                    <FormContainerEnd>
+                                        <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                    </FormContainerEnd>
+                                </FormContainer>
+                            }
+                            {
+                                currentStep == 5 &&
+                                <FormContainer title="Login">
 
-                                <FormContainerEnd>
-                                    <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
-                                </FormContainerEnd>
-                            </FormContainer>
-                        }
-                        {
-                            currentStep == 6 &&
-                            <FormContainer title="Zahlung">
-                                <FormSection>
-                                    <FormItem title="Zahlungsmittel">
-                                        <RadioButtons items={paymentMethods} />
-                                    </FormItem>
-                                </FormSection>
+                                    <FormContainerEnd>
+                                        <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                    </FormContainerEnd>
+                                </FormContainer>
+                            }
+                            {
+                                currentStep == 6 &&
+                                <FormContainer title="Zahlung">
+                                    <FormSection>
+                                        <FormItem title="Zahlungsmittel">
+                                            <RadioButtons items={paymentMethods} />
+                                        </FormItem>
+                                    </FormSection>
 
-                                <FormContainerEnd>
-                                    <button className="button-primary w-full" onClick={send}>Jetzt bezahlen &rarr;</button>
-                                </FormContainerEnd>
-                            </FormContainer>
-                        }
+                                    <FormContainerEnd>
+                                        <button className="button-primary w-full" onClick={send}>Jetzt bezahlen &rarr;</button>
+                                    </FormContainerEnd>
+                                </FormContainer>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-        </BookingContainer>
+            </BookingContainer>
+        </div>
+
     )
 }

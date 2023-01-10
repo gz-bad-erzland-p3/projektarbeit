@@ -8,7 +8,7 @@ const LoginPage = () => {
   return (
     <div>
       <Head>
-        <title>Login {suffix}</title>
+        <title>Impressum {suffix}</title>
         <meta property="og:title" content="Login" key="title" />
       </Head>
       <Login />
