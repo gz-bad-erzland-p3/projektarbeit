@@ -9,15 +9,16 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function RadioButtons(props: any) {
-    const items: any[] = props.items;
-    const [selectedItem, setSelectedItem] = useState()
-    setBookingValue(selectedItem, props.FirebaseKey)
+export default function BringYourOwnDevice(props: any) {
+    const items: any[] = [{id: "0", title: "Ich habe ein eigenes Gerät"}, {id: "1", title: "Ich brauche ein Gerät"}];
+    const byod = props.byod;
+    const setByod = props.setByod;
 
+    console.log(byod)
 
     return (
-        <RadioGroup value={selectedItem} onChange={setSelectedItem}>
-            <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4">
+        <RadioGroup value={byod} onChange={setByod}>
+            <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                 {items.map((item) => (
                     <RadioGroup.Option
                         key={item.id}

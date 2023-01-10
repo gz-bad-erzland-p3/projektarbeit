@@ -20,6 +20,7 @@ import { standard } from "../../components/data/data";
 import { uuidv4 } from "@firebase/util";
 import { faCalendarWeek, faClock } from "@fortawesome/free-solid-svg-icons";
 import Head from "next/head";
+import BringYourOwnDevice from "../../components/bookings/byod";
 
 
 
@@ -33,10 +34,21 @@ export default function NewBooking() {
     const [allBookings, setAllBookings] = useState(Object);
     const [currentStep, setCurrentStep] = useState(1);
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
+    const [byod1, setByod1] = useState(null);
+    const [byod2, setByod2] = useState(null);
+
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
 
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
     setBookingValue(uid, "UserID")
+
+
+    //Frontend Logik
+    const showNextButton = () => {
+        if(workingPlaceType == 1 && byod1 != null) return true;
+        else if(workingPlaceType == 2 && byod1 != null && byod2 != null) return true;
+        else return false;
+    }
 
     //get all bookings
     function getAllBookings() {
@@ -193,58 +205,72 @@ export default function NewBooking() {
                                                     </FormItem>
                                                 </FormSection>
                                                 <FormSection title="Arbeitsplatz 1">
-                                                    <FormItem title="Gerät wählen">
-                                                        <RadioButtons items={geraete} />
+                                                    <FormItem>
+                                                        <BringYourOwnDevice byod={byod1} setByod={setByod1} />
                                                     </FormItem>
                                                 </FormSection>
-                                                <FormSection>
-                                                    <FormItem title="Betriebssystem">
-                                                        <RadioButtons items={betriebssysteme} />
-                                                    </FormItem>
-                                                </FormSection>
-                                                <FormSection>
-                                                    <FormItem title="Browser" width="1/2">
-                                                        <CheckboxGroup items={browser} />
-                                                    </FormItem>
-                                                    <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                                        <CheckboxGroup items={kommunikationsapplikationen} />
-                                                    </FormItem>
-                                                </FormSection>
-                                                <FormSection>
-                                                    <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
-                                                        <Textarea />
-                                                    </FormItem>
-                                                </FormSection>
+                                                {byod1 == 1 ?
+                                                    <div>
+                                                        <FormSection>
+                                                            <FormItem title="Gerät wählen">
+                                                                <RadioButtons items={geraete} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Betriebssystem">
+                                                                <RadioButtons items={betriebssysteme} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Browser" width="1/2">
+                                                                <CheckboxGroup items={browser} />
+                                                            </FormItem>
+                                                            <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                                                <CheckboxGroup items={kommunikationsapplikationen} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
+                                                                <Textarea />
+                                                            </FormItem>
+                                                        </FormSection>
+                                                    </div> : ""
+                                                }
+
                                             </FormContainer>
                                         </div>
                                         {
                                             workingPlaceType == 2 &&
                                             <div>
-                                                <FormContainer title="Arbeitsplätze konfigurieren">
-                                                    <FormSection title="Arbeitsplatz 2">
-                                                        <FormItem title="Gerät wählen">
-                                                            <RadioButtons items={geraete} />
-                                                        </FormItem>
-                                                    </FormSection>
-                                                    <FormSection>
-                                                        <FormItem title="Betriebssystem">
-                                                            <RadioButtons items={betriebssysteme} />
-                                                        </FormItem>
-                                                    </FormSection>
-                                                    <FormSection>
-                                                        <FormItem title="Browser" width="1/2">
-                                                            <CheckboxGroup items={browser} />
-                                                        </FormItem>
-                                                        <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                                            <CheckboxGroup items={kommunikationsapplikationen} />
-                                                        </FormItem>
-                                                    </FormSection>
-                                                    <FormSection>
-                                                        <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
-                                                            <Textarea />
-                                                        </FormItem>
-                                                    </FormSection>
-                                                </FormContainer>
+                                                <FormContainer>
+                                                <FormSection title="Arbeitsplatz 2">
+                                                    <FormItem>
+                                                        <BringYourOwnDevice byod={byod2} setByod={setByod2} />
+                                                    </FormItem>
+                                                </FormSection>
+                                                {byod2 == 1 ?
+                                                    <div>
+                                                        <FormSection>
+                                                            <FormItem title="Gerät wählen">
+                                                                <RadioButtons items={geraete} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Betriebssystem">
+                                                                <RadioButtons items={betriebssysteme} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Browser" width="1/2">
+                                                                <CheckboxGroup items={browser} />
+                                                            </FormItem>
+                                                            <FormItem title="Kommunikationsapplikationen" width="1/2">
+                                                                <CheckboxGroup items={kommunikationsapplikationen} />
+                                                            </FormItem>
+                                                        </FormSection><FormSection>
+                                                            <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
+                                                                <Textarea />
+                                                            </FormItem>
+                                                        </FormSection>
+                                                    </div> : ""
+                                                }
+
+                                            </FormContainer>
                                             </div>
                                         }
                                     </div>
@@ -264,6 +290,7 @@ export default function NewBooking() {
                                                 <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Teams</div>
                                             </div>
                                             <div className="py-2 mt-4">
+                                                {showNextButton ? <div>Helo</div> : ""}
                                                 <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                             </div>
                                         </div>
