@@ -5,9 +5,7 @@ let valueObj:Obj = {};
 
 export default function Checkbox(props: any) {
     const [value, setValue] = useState(false)
-    console.log(props.FirebaseKey)
-    console.log(props.title)
-
+    //TODO
     valueObj[props.FirebaseKey] = {[props.title]: value}
     
     setBookingValue(valueObj[props.FirebaseKey], props.FirebaseKey)

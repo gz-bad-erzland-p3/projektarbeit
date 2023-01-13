@@ -45,9 +45,7 @@ export default function NewBooking() {
 
     //Frontend Logik
     const showNextButton = () => {
-        console.log(booking["Geraet1"])
-        console.log(booking)
-
+        //TODO
         if (workingPlaceType == 1 && byod1 == false) return true;
         else if (workingPlaceType == 2 && byod1 == false && byod2 == false) return true;
         else if (workingPlaceType == 1 && byod1 == true && booking["Geraet1"] != "" && booking["Betriebssystem1"] != "") return true;
@@ -69,8 +67,6 @@ export default function NewBooking() {
     //get all bookings
     useEffect(() => {
         get(ref(db, 'bookings/')).then((snapshot) => {
-            console.log("eeeey")
-
             if (snapshot.exists()) {
                 setAllBookings(snapshot.val());
             } else {
@@ -113,7 +109,6 @@ export default function NewBooking() {
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
         let numOfWorkingplaces = 0
-        console.log("jiji")
         for (const key in allBookings) {
             if (allBookings.hasOwnProperty(key)) {
                 const startTime = convertDateAndTimeToUnix(allBookings[key]["Startdatum"], allBookings[key]["Startzeit"])
