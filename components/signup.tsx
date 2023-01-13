@@ -29,7 +29,7 @@ const SignupPage = () => {
         }
     };
 
-    const {autocomplete} = usePlacesWidget({apiKey: , onPlaceSelected: (place) => console.log(place)})
+    const {autocomplete} = usePlacesWidget({apiKey: "AIzaSyCY17WLFDKPuYBIl3tzEQ0AWnQ9QFmEZwU" , onPlaceSelected: (place) => console.log(place)})
 
 
     return (
