@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext"
 import { useRouter } from "next/router";
 import { toast } from 'react-toastify';
+import SignupPage from "./signup";
 
 
 interface LoginType {
@@ -12,6 +13,11 @@ interface LoginType {
 
 const Login = () => {
     const methods = useForm<LoginType>({ mode: "onBlur" });
+
+    const [signup, setSignUp] = useState(false)
+    const updateSignUp = () => {
+        setSignUp(!signup);
+    }
 
     const {
         register,
@@ -33,7 +39,7 @@ const Login = () => {
     };
     return (
         <div className="flex w-full justify-center">
-            <FormProvider {...methods}>
+            {signup ? <FormProvider {...methods}>
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
                     <div className="space-y-4">
                         <div>
@@ -58,16 +64,21 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="flex flex-col space-y-2">
-                            <button type="submit" id="btnLogin" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
+                            <button type="submit" id="btnLogin" className='button-primary'>
                                 Anmelden &rarr;
                             </button>
-                            <button type="button" id="btnLogin" className='px-4 py-2 text-base bg-gray-100 hover:bg-gray-200 font-medium rounded-none transition '>
+                            <button type="button" id="btnLogin" onClick={updateSignUp} className='button-secondary'>
                                 Registrieren
                             </button>
                         </div>
                     </div>
                 </form>
-            </FormProvider>
+            </FormProvider> :
+
+                <div className="flex flex-col space-y-2">
+                    <SignupPage />
+                    {signup ? "" : <button className="button-secondary w-full" onClick={updateSignUp}>&larr; Login</button>}
+                </div>}
         </div>
     );
 };
