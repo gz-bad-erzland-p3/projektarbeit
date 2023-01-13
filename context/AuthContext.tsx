@@ -38,7 +38,6 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   }, []);
 
   const signUp = async (email: string, password: string, name: string, prename: string, birthday: string) => {
-    console.log(birthday)
     await createUserWithEmailAndPassword(auth, email, password);
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
     set(ref(db, 'users/' + uid), {
