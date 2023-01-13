@@ -2,7 +2,7 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext"
 import { useRouter } from "next/router";
-import { usePlacesWidget } from "react-google-autocomplete";
+import Autocomplete from "react-google-autocomplete";
 
 interface SignupType {
     email: string;
@@ -29,11 +29,9 @@ const SignupPage = () => {
         }
     };
 
-    const {autocomplete} = usePlacesWidget({apiKey: "AIzaSyCY17WLFDKPuYBIl3tzEQ0AWnQ9QFmEZwU" , onPlaceSelected: (place) => console.log(place)})
-
-
     return (
-        <div className="grid justify-items-center items-center">
+        <div className="grid justify-items-center h-screen items-center">
+            <h2>Registrieren</h2>
             <FormProvider {...methods}>
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
                     <div className="space-y-4">
@@ -66,21 +64,21 @@ const SignupPage = () => {
                                     {...register("password_confirm", { required: "Verify your password", })}
                                     id="password2"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
-                                    placeholder="Passwort wiederholen"
+                                    placeholder="Passwort"
                                 />
                             </div>
                         </div>
-                        <div>
-                            <div className="relative mt-1 rounded-none shadow-sm">
-                                <input
-                                    ref={autocomplete}
-                                    type="text"
-                                    className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
-                                    placeholder="Adresse"
-                                />
-                            </div>
-                        </div>
-                        <div>
+
+                        <Autocomplete apiKey={"AIzaSyCY17WLFDKPuYBIl3tzEQ0AWnQ9QFmEZwU"}
+                            style={{ width: "90%" }}
+                            onPlaceSelected={(place) => {
+                              console.log(place);
+                            }}
+                            options={{
+                              types: ["(regions)"],
+                              componentRestrictions: { country: "de" },
+                            }}
+                            className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition" />              <div>
                             <button id="btnLogin" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
                                 Registrieren &rarr;
                             </button>
