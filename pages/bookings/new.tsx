@@ -22,6 +22,7 @@ import Head from "next/head";
 import BringYourOwnDevice from "../../components/bookings/byod";
 import { Transition } from "@headlessui/react";
 import Image from "next/image";
+import { useAuth } from "../../context/AuthContext";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -230,10 +231,7 @@ export default function NewBooking() {
                                                                 <CheckboxGroup items={kommunikationsapplikationen} />
                                                             </FormItem>
                                                         </FormSection><FormSection>
-                                                            <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
-                                                                <Textarea />
-                                                            </FormItem>
-                                                        </FormSection>
+                                                            </FormSection>
                                                     </div>
                                                 </Transition>
 
@@ -318,7 +316,7 @@ export default function NewBooking() {
                                         <Login />
                                     </FormSection>
                                     <FormContainerEnd>
-                                        <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                        {uid && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>}
                                     </FormContainerEnd>
                                 </FormContainer>
                             }

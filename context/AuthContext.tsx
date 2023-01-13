@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../config/firebase";
 import { ref, set } from "firebase/database";
+import { toast } from "react-toastify";
 
 interface UserType {
   email: string | null;
@@ -56,6 +57,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   const logOut = async () => {
     setUser({ email: null, uid: null });
     await signOut(auth);
+    toast.success("Erfolgreich ausgeloggt");
   };
 
   return (
