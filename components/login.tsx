@@ -16,7 +16,7 @@ const Login = () => {
 
     const [signup, setSignUp] = useState(false)
     const updateSignUp = () => {
-        setSignUp(!signup);
+        setSignUp(true);
     }
 
     const {

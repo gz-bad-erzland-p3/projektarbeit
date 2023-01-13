@@ -21,7 +21,6 @@ export const useAuth = () => useContext<any>(AuthContext);
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserType>({ email: null, uid: null });
   const [loading, setLoading] = useState<boolean>(true);
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -38,14 +37,16 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     return () => unsubscribe();
   }, []);
 
-  const signUp = (email: string, password: string) => {
-    createUserWithEmailAndPassword(auth, email, password);
-
+  const signUp = async (email: string, password: string, name: string, prename: string, birthday: string) => {
+    console.log(birthday)
+    await createUserWithEmailAndPassword(auth, email, password);
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
     set(ref(db, 'users/' + uid), {
-        username: "Ferdinand",
-        email: "signup@mail.de",
-        profile_picture : "imageurl.de"
+        Name: name,
+        Email: email,
+        Vorname: prename,
+        Geburtsdatum: birthday,
+        //Adresse: address
       });
     return;
   };

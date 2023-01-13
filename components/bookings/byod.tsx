@@ -10,11 +10,11 @@ function classNames(...classes: string[]) {
 }
 
 export default function BringYourOwnDevice(props: any) {
-    const items: any[] = [{id: "0", title: "Ich habe ein eigenes Gerät"}, {id: "1", title: "Ich brauche ein Gerät"}];
+    const items: any[] = [{id: "0", title: "Ich habe ein eigenes Gerät", value: false}, {id: "1", title: "Ich brauche ein Gerät", value: true}];
     const byod = props.byod;
     const setByod = props.setByod;
 
-    setBookingValue(byod, "Byod")
+    setBookingValue(!byod, props.FirebaseKey)
 
 
     return (
@@ -23,7 +23,7 @@ export default function BringYourOwnDevice(props: any) {
                 {items.map((item) => (
                     <RadioGroup.Option
                         key={item.id}
-                        value={item.id}
+                        value={item.value}
                         className={({ checked, active }) => classNames(checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex focus:outline-none radio-button')}>
                         {({ checked, active }) => (
                             <>

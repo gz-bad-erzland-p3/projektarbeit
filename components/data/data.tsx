@@ -8,13 +8,13 @@ export const bookingSteps = [
     { id: '1', name: 'Zeitraum', href: '#' },
     { id: '2', name: 'Arbeitsplatztyp', href: '#' },
     { id: '3', name: 'Konfiguration', href: '#' },
-    { id: '4', name: 'Login', href: '#' },
+    { id: '4', name: 'Anmelden oder Registrieren', href: '#' },
     { id: '5', name: 'Ihre Daten', href: '#' },
     { id: '6', name: 'Zahlung', href: '#' },
 ]
 
 export const geraete = [
-  {id: '1', title: "Laptop ", specifications: ["1920 x 1080 Pixel Display", "8GB DDR4 SODIMM", "256GB SSD", "VGA, HDMI, DP, USB 3.0 (3x)", "Audio In / Out", "HD Webcam"],  description: " ",price: "4.50", icon: faLaptop },
+  {id: '1', title: "Laptop", specifications: ["1920 x 1080 Pixel Display", "8GB DDR4 SODIMM", "256GB SSD", "VGA, HDMI, DP, USB 3.0 (3x)", "Audio In / Out", "HD Webcam"],  description: " ",price: "4.50", icon: faLaptop },
   {id: '2', title: "Desktop PC", specifications: ["Intel Pentium Gold G5400", "Intel UHD 610", "16GB DDR4", "256GB SSD", "VGA, HDMI, DP, USB 3.0 (6x) usb 2.0 (4X)", "Audio In / Out"],price: "4,50", icon: faDesktop},
   {id: '3', title: "Barebone", specifications: ["Intel® Pentium G4400T", "Intel UHD 610", "8GB DDR4", "256GB SSD", "VGA, HDMI, DP, USB 3.0 (3x) usb 2.0 (3X)", "Audio In / Out",], price: "4,50", icon: faServer}
 ]

@@ -11,7 +11,7 @@ function classNames(...classes: string[]) {
 
 export default function RadioButtons(props: any) {
     const items: any[] = props.items;
-    const [selectedItem, setSelectedItem] = useState()
+    const [selectedItem, setSelectedItem] = useState("")
     setBookingValue(selectedItem, props.FirebaseKey)
 
 

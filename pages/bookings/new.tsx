@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DateTimeRangePicker from "../../components/bookings/dateRangePicker";
 import DropDown from "../../components/bookings/dropDown";
 import StepsForBooking from "../../components/bookings/steps";
@@ -22,10 +22,10 @@ import Head from "next/head";
 import BringYourOwnDevice from "../../components/bookings/byod";
 import { Transition } from "@headlessui/react";
 import Image from "next/image";
-import { useAuth } from "../../context/AuthContext";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
+
 export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
 }
@@ -37,8 +37,6 @@ export default function NewBooking() {
     const [byod1, setByod1] = useState(null);
     const [byod2, setByod2] = useState(null);
 
-    const [isShowing1, setIsShowing1] = useState(false)
-
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
 
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
@@ -47,34 +45,42 @@ export default function NewBooking() {
 
     //Frontend Logik
     const showNextButton = () => {
-        if (workingPlaceType == 1 && byod1 == 0) return true;
-        else if (workingPlaceType == 2 && byod1 == 0 && byod2 == 0) return true;
-        else if (workingPlaceType == 1 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined) return true;
-        else if (workingPlaceType == 2 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined && byod2 == 0) return true;
-        else if (workingPlaceType == 2 && byod1 == 0 && byod2 == 1 && booking["Geraet2"] != undefined && booking["Betriebssystem2"] != undefined) return true;
-        else if (workingPlaceType == 2 && byod1 == 1 && booking["Geraet"] != undefined && booking["Betriebssystem"] != undefined && byod2 == 1 && booking["Geraet2"] != undefined && booking["Betriebssystem2"] != undefined) return true;
+        console.log(booking["Geraet1"])
+        console.log(booking)
+
+        if (workingPlaceType == 1 && byod1 == false) return true;
+        else if (workingPlaceType == 2 && byod1 == false && byod2 == false) return true;
+        else if (workingPlaceType == 1 && byod1 == true && booking["Geraet1"] != "" && booking["Betriebssystem1"] != "") return true;
+        else if (workingPlaceType == 2 && byod1 == true && booking["Geraet1"] != "" && booking["Betriebssystem1"] != "" && byod2 == false) return true;
+        else if (workingPlaceType == 2 && byod1 == false && byod2 == true && booking["Geraet2"] != "" && booking["Betriebssystem2"] != "") return true;
+        else if (workingPlaceType == 2 && byod1 == true && booking["Geraet1"] != "" && booking["Betriebssystem1"] != "" && byod2 == true && booking["Geraet2"] != "" && booking["Betriebssystem2"] != "") return true;
         else return false;
     }
 
     const price = () => {
-        let price : number = 18;
-        if(workingPlaceType == 2) price = price + 18
-        if(byod1 == 1) price = price + 4.50
-        if(byod2 == 1) price = price + 4.50
+        let price: number = 18;
+        if (workingPlaceType == 2) price = price + 18
+        if (byod1 == 1) price = price + 4.50
+        if (byod2 == 1) price = price + 4.50
 
         return price.toFixed(2);
     }
 
     //get all bookings
-    get(ref(db, 'bookings/')).then((snapshot) => {
-        if (snapshot.exists()) {
-            setAllBookings(snapshot.val());
-        } else {
-            console.log("No data available");
-        }
-    }).catch((error) => {
-        console.error(error);
-    });
+    useEffect(() => {
+        get(ref(db, 'bookings/')).then((snapshot) => {
+            console.log("eeeey")
+
+            if (snapshot.exists()) {
+                setAllBookings(snapshot.val());
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+
+    }, [])
 
     //next/back step
     function handleSetCurrentStep(operator: string) {
@@ -107,7 +113,7 @@ export default function NewBooking() {
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
         let numOfWorkingplaces = 0
-
+        console.log("jiji")
         for (const key in allBookings) {
             if (allBookings.hasOwnProperty(key)) {
                 const startTime = convertDateAndTimeToUnix(allBookings[key]["Startdatum"], allBookings[key]["Startzeit"])
@@ -181,10 +187,10 @@ export default function NewBooking() {
                                 <FormContainer title="Arbeitsplatztyp wählen">
                                     <FormSection>
                                         <FormItem width="1/2">
-                                            <button className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}><Image src="/singleWorkplace.svg" alt="" width={32} height={32}/>Einzelarbeitsplatz</button>
+                                            <button disabled={validateWorkPlaceType(1)} className={"button-select " + (workingPlaceType == 1 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(1)}><Image src="/singleWorkplace.svg" alt="" width={32} height={32} />Einzelarbeitsplatz</button>
                                         </FormItem>
                                         <FormItem width="1/2">
-                                            <button className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}><Image src="/doubleWorkplace.svg" alt="" width={32} height={32}/>Doppelarbeitsplatz</button>
+                                            <button disabled={validateWorkPlaceType(2)} className={"button-select " + (workingPlaceType == 2 ? "background-green" : "bg-gray-100 hover:bg-gray-200")} onClick={() => handleSetWorkingPlaceType(2)}><Image src="/doubleWorkplace.svg" alt="" width={32} height={32} />Doppelarbeitsplatz</button>
                                         </FormItem>
                                     </FormSection>
                                     <FormContainerEnd>
@@ -200,7 +206,7 @@ export default function NewBooking() {
                                             <FormContainer title="Arbeitsplätze konfigurieren">
                                                 <FormSection title="Arbeitsplatz 1">
                                                     <FormItem>
-                                                        <BringYourOwnDevice byod={byod1} setByod={setByod1} />
+                                                        <BringYourOwnDevice byod={byod1} setByod={setByod1} FirebaseKey="Byod1" />
                                                     </FormItem>
                                                 </FormSection>
                                                 <Transition show={byod1 == 1} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
@@ -217,21 +223,24 @@ export default function NewBooking() {
                                                         </FormSection>
                                                         <FormSection title="Konfiguriere dein Gerät">
                                                             <FormItem title="Gerät wählen">
-                                                                <RadioButtons items={geraete} FirebaseKey="Geraet" />
+                                                                <RadioButtons items={geraete} FirebaseKey="Geraet1" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Betriebssystem">
-                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem" />
+                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem1" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Browser" width="1/2">
-                                                                <CheckboxGroup items={browser} />
+                                                                <CheckboxGroup items={browser} FirebaseKey="Browser1" />
                                                             </FormItem>
                                                             <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                                                <CheckboxGroup items={kommunikationsapplikationen} />
+                                                                <CheckboxGroup items={kommunikationsapplikationen} FirebaseKey="Kommunikationsapplikationen1" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
-                                                            </FormSection>
+                                                            <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
+                                                                <Textarea FirebaseKey="Bemerkungen1" />
+                                                            </FormItem>
+                                                        </FormSection>
                                                     </div>
                                                 </Transition>
 
@@ -243,7 +252,7 @@ export default function NewBooking() {
                                                 <FormContainer>
                                                     <FormSection title="Arbeitsplatz 2">
                                                         <FormItem>
-                                                            <BringYourOwnDevice byod={byod2} setByod={setByod2} />
+                                                            <BringYourOwnDevice byod={byod2} setByod={setByod2} FirebaseKey="Byod2" />
                                                         </FormItem>
                                                     </FormSection>
                                                     <Transition show={byod2 == 1} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
@@ -268,14 +277,14 @@ export default function NewBooking() {
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Browser" width="1/2">
-                                                                <CheckboxGroup items={browser} />
+                                                                <CheckboxGroup items={browser} FirebaseKey="Browser2" />
                                                             </FormItem>
                                                             <FormItem title="Kommunikationsapplikationen" width="1/2">
-                                                                <CheckboxGroup items={kommunikationsapplikationen} />
+                                                                <CheckboxGroup items={kommunikationsapplikationen} FirebaseKey="Kommunikationsapplikationen2" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Bemerkungen / Besondere Wünsche" width="full">
-                                                                <Textarea />
+                                                                <Textarea FirebaseKey="Bemerkungen2" />
                                                             </FormItem>
                                                         </FormSection>
                                                     </Transition>
@@ -311,9 +320,9 @@ export default function NewBooking() {
 
                             {
                                 currentStep == 4 &&
-                                <FormContainer title="Übersicht">
+                                <FormContainer title="Anmelden oder Registrieren">
                                     <FormSection>
-                                        <Login />
+                                        {uid != "" ? <p>Sie sind bereits angemeldet</p> : <Login />}
                                     </FormSection>
                                     <FormContainerEnd>
                                         {uid && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>}
@@ -322,8 +331,10 @@ export default function NewBooking() {
                             }
                             {
                                 currentStep == 5 &&
-                                <FormContainer title="Login">
-
+                                <FormContainer title="Übersicht">
+                                    <FormSection>
+                                        <p>{JSON.stringify(booking)}</p>
+                                    </FormSection>
                                     <FormContainerEnd>
                                         <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
                                     </FormContainerEnd>
