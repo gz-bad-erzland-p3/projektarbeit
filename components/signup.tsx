@@ -41,7 +41,7 @@ const SignupPage = () => {
             toast.success("Erfolgreich registriert");
         } catch (error: any) {
             console.log(error.message);
-            toast.success("Fehler bei der Registrierung");
+            toast.error("Fehler bei der Registrierung");
         }
     };
 
