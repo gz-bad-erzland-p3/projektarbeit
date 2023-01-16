@@ -37,7 +37,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     return () => unsubscribe();
   }, []);
 
-  const signUp = async (email: string, password: string, name: string, prename: string, birthday: string) => {
+  const signUp = async (email: string, password: string, name: string, prename: string, birthday: string, address_formatted: string, place_id: string) => {
     await createUserWithEmailAndPassword(auth, email, password);
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
     set(ref(db, 'users/' + uid), {
@@ -45,7 +45,8 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         Email: email,
         Vorname: prename,
         Geburtsdatum: birthday,
-        //Adresse: address
+        Adresse_Formatiert: address_formatted,
+        Adresse_GooglePlaceId: place_id
       });
     return;
   };
