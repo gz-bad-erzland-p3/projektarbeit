@@ -10,6 +10,7 @@ import {
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useAuth } from '../../context/AuthContext'
 
 const resources = [
   {
@@ -62,7 +63,10 @@ export default function Navbar() {
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
-}
+  }
+
+  const user = useAuth();
+  const {logOut} = useAuth();
 
   return (
     <Popover className={classNames(scrollY > 0 ? "navbar-sl" : "navbar-tr", "navbar")}>
@@ -71,7 +75,7 @@ export default function Navbar() {
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">
               <span className="sr-only">Bad Erzlingen</span>
-              <Image src="/logo.svg" alt="" width={32} height={32}/>
+              <Image src="/logo.svg" alt="" width={32} height={32} />
             </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
@@ -81,11 +85,6 @@ export default function Navbar() {
             </Popover.Button>
           </div>
           <div className="hidden items-center justify-end md:flex-1 md:flex lg:w-0">
-            <Link href='/help'>
-              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-none text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
-                Hilfecenter
-              </button>
-            </Link>
             <Link href='/login'>
               <button className='ml-2 px-4 py-2 inline-flex items-center rounded-none text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
                 Anmelden
@@ -96,6 +95,8 @@ export default function Navbar() {
                 Jetzt buchen
               </button>
             </Link>
+            {user.user.email}
+            {user.user.email && <button className='button-secondary' onClick={logOut}>Logout</button>}
             <button aria-label="Toggle Dark Mode" type="button" className="ml-2 px-2 py-2 bg-white dark:bg-gray-900 rounded-none flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-all" onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
               {mounted && (
                 <svg

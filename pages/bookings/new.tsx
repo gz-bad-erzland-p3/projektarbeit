@@ -22,6 +22,7 @@ import Head from "next/head";
 import BringYourOwnDevice from "../../components/bookings/byod";
 import { Transition } from "@headlessui/react";
 import Image from "next/image";
+import { useAuth } from "../../context/AuthContext";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -36,6 +37,8 @@ export default function NewBooking() {
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
     const [byod1, setByod1] = useState(null);
     const [byod2, setByod2] = useState(null);
+
+    const user = useAuth();
 
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
 
@@ -238,7 +241,6 @@ export default function NewBooking() {
                                                         </FormSection>
                                                     </div>
                                                 </Transition>
-
                                             </FormContainer>
                                         </div>
                                         {
@@ -317,9 +319,10 @@ export default function NewBooking() {
                                 currentStep == 4 &&
                                 <FormContainer title="Anmelden oder Registrieren">
                                     <FormSection>
-                                        {uid != "" ? <p>Sie sind bereits angemeldet</p> : <Login />}
+                                        {uid ? <p>Sie sind bereits angemeldet</p> : <Login />}
                                     </FormSection>
                                     <FormContainerEnd>
+                                        {uid ? setCurrentStep(currentStep + 1) : ""}
                                         {uid && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>}
                                     </FormContainerEnd>
                                 </FormContainer>
