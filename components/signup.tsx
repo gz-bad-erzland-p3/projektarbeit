@@ -149,14 +149,11 @@ const SignupPage = () => {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
+                    </div>
+                    <div className="mt-2">
+                        <button id="btnLogin" type="submit" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
                             Registrieren &rarr;
                         </button>
-                    </div>
-                        <div>
-                            <button id="btnLogin" type="submit" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
-                                Registrieren &rarr;
-                            </button>
                     </div>
                 </form>
             </FormProvider>
