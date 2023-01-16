@@ -23,6 +23,7 @@ import BringYourOwnDevice from "../../components/bookings/byod";
 import { Transition } from "@headlessui/react";
 import Image from "next/image";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -325,10 +326,9 @@ export default function NewBooking() {
                                 currentStep == 4 &&
                                 <FormContainer title="Anmelden oder Registrieren">
                                     <FormSection>
-                                        {uid ? <p>Sie sind bereits angemeldet</p> : <Login />}
+                                        {uid ? <p>Sie sind bereits angemeldet</p> : <Login site={false} />}
                                     </FormSection>
                                     <FormContainerEnd>
-                                        {uid ? setCurrentStep(currentStep + 1) : ""}
                                         {uid && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>}
                                     </FormContainerEnd>
                                 </FormContainer>

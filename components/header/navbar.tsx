@@ -85,18 +85,19 @@ export default function Navbar() {
             </Popover.Button>
           </div>
           <div className="hidden items-center justify-end md:flex-1 md:flex lg:w-0">
-            <Link href='/login'>
+            {
+              user.user.email == null && <Link href='/login'>
               <button className='ml-2 px-4 py-2 inline-flex items-center rounded-none text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
                 Anmelden
               </button>
             </Link>
+            }
+            {user.user.email && <div>{user.user.email}<button className='button-secondary ml-2' onClick={logOut}>Logout</button></div>}
             <Link href="/bookings/new">
               <button className='ml-2 text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
                 Jetzt buchen
               </button>
             </Link>
-            {user.user.email}
-            {user.user.email && <button className='button-secondary' onClick={logOut}>Logout</button>}
             <button aria-label="Toggle Dark Mode" type="button" className="ml-2 px-2 py-2 bg-white dark:bg-gray-900 rounded-none flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-all" onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
               {mounted && (
                 <svg
