@@ -26,7 +26,7 @@ export default function BookingNavbar() {
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">
               <span className="sr-only">Bad Erzlingen</span>
-              <Image src="/logo.svg" alt="" width={32} height={32}/>
+              <Image src="/logo.svg" alt="" width={32} height={32} />
             </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
@@ -37,10 +37,9 @@ export default function BookingNavbar() {
           </div>
           <div className="hidden items-center justify-end md:flex-1 md:flex lg:w-0">
             {user.user.uid &&
-            <div className=''>
-              {user.user.email}
-              <button className='button-secondary' onClick={logOut}>Logout</button>
-            </div>
+              <div className=''>
+                {user.user.email}
+              </div>
             }
             <button aria-label="Toggle Dark Mode" type="button" className="ml-2 px-2 py-2 bg-white dark:bg-gray-900 rounded-none flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-all" onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
               {mounted && (

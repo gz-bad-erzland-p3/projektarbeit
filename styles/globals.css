@@ -138,4 +138,3 @@ button {
 .navbar-sl {
     @apply py-2 bg-gray-100 dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm shadow-md;
 }
-
