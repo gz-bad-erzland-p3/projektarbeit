@@ -38,6 +38,7 @@ export default function NewBooking() {
     const [byod1, setByod1] = useState(null);
     const [byod2, setByod2] = useState(null);
 
+    const bookingId = uuidv4()
     const user = useAuth();
 
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
@@ -96,7 +97,6 @@ export default function NewBooking() {
 
     function send() {
         console.log(booking)
-        const bookingId = uuidv4()
         set(ref(db, 'bookings/' + bookingId), booking);
     }
 
@@ -141,6 +141,12 @@ export default function NewBooking() {
                 return false
             }
         }
+    }
+
+    function reservate(){
+        setCurrentStep(currentStep + 1)
+        console.log(booking)
+        set(ref(db, 'bookings/' + bookingId), booking);
     }
 
     return (
@@ -334,7 +340,7 @@ export default function NewBooking() {
                                         <p>{JSON.stringify(booking)}</p>
                                     </FormSection>
                                     <FormContainerEnd>
-                                        <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>
+                                        <button className="button-primary w-full" onClick={reservate} >Weiter &rarr;</button>
                                     </FormContainerEnd>
                                 </FormContainer>
                             }
