@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext"
 import { useRouter } from "next/router";
 import Autocomplete from "react-google-autocomplete";
+import dynamic from 'next/dynamic';
+import { setBookingValue } from "../pages/bookings/new";
+const ReactPasswordChecklist = dynamic(() => import('react-password-checklist'), {
+  ssr: false,
+});
 
 interface SignupType {
     email: string;
@@ -14,6 +19,11 @@ interface SignupType {
     password_confirm: string;
 }
 const SignupPage = () => {
+    const [password, setPassword] = useState("")
+	const [passwordAgain, setPasswordAgain] = useState("")
+    const [formatted_address, setFormattedAddress] = useState("")
+    const [place_id, setPlaceId] = useState("")
+
     const methods = useForm<SignupType>({ mode: "onBlur" });
 
     const {
@@ -26,7 +36,7 @@ const SignupPage = () => {
 
     const onSubmit = async (data: SignupType) => {
         try {
-            await signUp(data.email, data.password, data.name, data.prename, data.birthday);
+            await signUp(data.email, data.password, data.name, data.prename, data.birthday, formatted_address, place_id);
         } catch (error: any) {
             console.log(error.message);
         }
@@ -41,7 +51,7 @@ const SignupPage = () => {
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input
                                     type="text"
-                                    {...register("name", { required: "Name is required" })}
+                                    {...register("name", { required: "Ihr Nachname wird zur Registrierung benötigt." })}
                                     id="name"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Name"
@@ -52,7 +62,7 @@ const SignupPage = () => {
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input
                                     type="text"
-                                    {...register("prename", { required: "Vorname is required" })}
+                                    {...register("prename", { required: "Ihr Vorname wird zur Registrierung benötigt." })}
                                     id="prename"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Vorname"
@@ -63,7 +73,7 @@ const SignupPage = () => {
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input
                                     type="date"
-                                    {...register("birthday", { required: "Geburtsdatum is required" })}
+                                    {...register("birthday", { required: "Ihr Geburtsdatum wird zur Registrierung benötigt." })}
                                     id="birthday"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Geburtsdatum"
@@ -74,7 +84,7 @@ const SignupPage = () => {
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input
                                     type="email"
-                                    {...register("email", { required: "Email is required" })}
+                                    {...register("email", { required: "Ihre Email-Adresse wird zur Registrierung benötigt. An diese wird nach erfolgreicher Buchung eine Bestätigungsmail gesendet." })}
                                     id="email"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Email"
@@ -85,11 +95,11 @@ const SignupPage = () => {
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input
                                     type="password"
-                                    {...register("password", { required: "Password is required" })}
+                                    {...register("password", { required: "Ihr Passwort wird zur Registrierung benötigt." })}
                                     id="password1"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Passwort"
-                                />
+                                    onChange={e => setPassword(e.target.value)}                                />
                             </div>
                         </div>
                         <div>
@@ -100,23 +110,37 @@ const SignupPage = () => {
                                     id="password2"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Passwort"
+                                    onChange={e => setPasswordAgain(e.target.value)}
                                 />
                             </div>
                         </div>
+                        <ReactPasswordChecklist
+                            rules={["minLength","specialChar","number","capital","match"]}
+                            minLength={8}
+                            value={password}
+                            valueAgain={passwordAgain}
+                            onChange={(isValid) => {}}
+                            messages={{
+                                minLength: "Das Passwort muss mindestens 8 Zeichen lang sein.",
+                                specialChar: "Das Passwort muss mindestens ein Sonderzeichen enthalten.",
+                                number: "Das Passwort muss mindestenes eine Zahl enthalten.",
+                                capital: "Das Passwort muss mindestens einen Großbuchstaben enthalten.",
+                                match: "Die Passwörter müssen übereinstimmen.",
+                            }}
+                        />
 
                         <div>
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <Autocomplete apiKey={"AIzaSyCY17WLFDKPuYBIl3tzEQ0AWnQ9QFmEZwU"}
-                                    //style={{ height: "90%" }}
                                     id="address"
                                     onPlaceSelected={(place) => {
-                                        console.log(place);
+                                        setFormattedAddress(place.formatted_address)
+                                        setPlaceId(place.place_id)
                                     }}
                                     options={{
                                         types: ['address'],//oder "street_address" weil ist bis jetzt ohne nr siehe https://developers.google.com/maps/documentation/places/web-service/autocomplete
                                         componentRestrictions: { country: "de" },
                                     }}
-                                    {...register("address", { required: "Adresse is required" })}
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Adresse"
                                 />
