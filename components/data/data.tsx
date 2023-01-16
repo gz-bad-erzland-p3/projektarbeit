@@ -41,9 +41,8 @@ export const kommunikationsapplikationen = [
 
 export const paymentMethods = [
   {id: '1', title: "PayPal", description: "Online-Bezahldienst", icon: faPaypal},
-  {id: '2', title: "Kreditkarte", description: "Nach Weiterleitung Kreditkartendaten eingeben", icon: faCreditCard},
-  {id: '3', title: "Barzahlung", description: "Barzahlung vor Ort", icon: faMoneyBill},
-  {id: '4', title: "Überweisung", description: "Vorkasse per Überweisung",}
+  {id: '2', title: "Barzahlung", description: "Barzahlung vor Ort", icon: faMoneyBill},
+  {id: '3', title: "Überweisung", description: "Vorkasse per Überweisung",}
 ]
 
 export const bookingTimes = getTimeInSteps(new Date("1970-01-01T08:00:00.00"), new Date("1970-01-01T20:00:00.00"), 15)

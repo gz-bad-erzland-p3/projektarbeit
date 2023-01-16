@@ -326,7 +326,7 @@ export default function NewBooking() {
                                 currentStep == 4 &&
                                 <FormContainer title="Anmelden oder Registrieren">
                                     <FormSection>
-                                        {uid ? <p>Sie sind bereits angemeldet</p> : <Login site={false} />}
+                                        {uid ? <p>Sie sind erfolgreich angemeldet</p> : <Login site={false} />}
                                     </FormSection>
                                     <FormContainerEnd>
                                         {uid && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>}
