@@ -5,8 +5,9 @@ import { useRouter } from "next/router";
 import Autocomplete from "react-google-autocomplete";
 import dynamic from 'next/dynamic';
 import { setBookingValue } from "../pages/bookings/new";
+import { toast } from "react-toastify";
 const ReactPasswordChecklist = dynamic(() => import('react-password-checklist'), {
-  ssr: false,
+    ssr: false,
 });
 
 interface SignupType {
@@ -20,7 +21,7 @@ interface SignupType {
 }
 const SignupPage = () => {
     const [password, setPassword] = useState("")
-	const [passwordAgain, setPasswordAgain] = useState("")
+    const [passwordAgain, setPasswordAgain] = useState("")
     const [formatted_address, setFormattedAddress] = useState("")
     const [place_id, setPlaceId] = useState("")
 
@@ -37,8 +38,10 @@ const SignupPage = () => {
     const onSubmit = async (data: SignupType) => {
         try {
             await signUp(data.email, data.password, data.name, data.prename, data.birthday, formatted_address, place_id);
+            toast.success("Erfolgreich registriert");
         } catch (error: any) {
             console.log(error.message);
+            toast.success("Fehler bei der Registrierung");
         }
     };
 
@@ -99,7 +102,7 @@ const SignupPage = () => {
                                     id="password1"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Passwort"
-                                    onChange={e => setPassword(e.target.value)}                                />
+                                    onChange={e => setPassword(e.target.value)} />
                             </div>
                         </div>
                         <div>
@@ -115,11 +118,11 @@ const SignupPage = () => {
                             </div>
                         </div>
                         <ReactPasswordChecklist
-                            rules={["minLength","specialChar","number","capital","match"]}
+                            rules={["minLength", "specialChar", "number", "capital", "match"]}
                             minLength={8}
                             value={password}
                             valueAgain={passwordAgain}
-                            onChange={(isValid) => {}}
+                            onChange={(isValid) => { }}
                             messages={{
                                 minLength: "Das Passwort muss mindestens 8 Zeichen lang sein.",
                                 specialChar: "Das Passwort muss mindestens ein Sonderzeichen enthalten.",
@@ -147,11 +150,9 @@ const SignupPage = () => {
                                 />
                             </div>
                         </div>
-                        <div>
-                            <button id="btnLogin" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
-                                Registrieren &rarr;
-                            </button>
-                        </div>
+                        <button type="submit" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
+                            Registrieren &rarr;
+                        </button>
                     </div>
                 </form>
             </FormProvider>
