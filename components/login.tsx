@@ -11,7 +11,7 @@ interface LoginType {
     password: string;
 }
 
-const Login = () => {
+const Login = (props: any) => {
     const methods = useForm<LoginType>({ mode: "onBlur" });
 
     const [login, setLogin] = useState(true)
@@ -32,6 +32,9 @@ const Login = () => {
         try {
             await logIn(data.email, data.password);
             toast.success("Erfolgreich eingeloggt");
+            if(props.site) {
+                router.push("/")
+            }
         } catch (error: any) {
             console.log(error.message);
             toast.error("Fehler beim Login");
@@ -69,7 +72,7 @@ const Login = () => {
                                     Anmelden &rarr;
                                 </button>
                                 <button type="button" id="btnLogin" onClick={updateSignUp} className='button-secondary'>
-                                    Registrieren
+                                    Registrieren &rarr;
                                 </button>
                             </div>
                         </div>
@@ -80,7 +83,7 @@ const Login = () => {
 
                 <div className="flex flex-col space-y-2">
                     <SignupPage />
-                    {login ? "" : <button className="button-secondary w-full" onClick={updateSignUp}>&larr; Login</button>}
+                    {login ? "" : <button className="button-secondary w-full" onClick={updateSignUp}>Login &rarr;</button>}
                 </div>}
         </div>
     );
