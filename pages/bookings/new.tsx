@@ -186,7 +186,7 @@ export default function NewBooking() {
                                             <DropDown title="Endzeit" items={bookingTimes} FirebaseKey="Endzeit" />
                                         </FormItem>
                                         <FormItem width="1/4">
-                                            <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>
+                                            {dateIsValid && <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>} 
                                         </FormItem>
                                     </FormSection>
                                 </FormContainer>
