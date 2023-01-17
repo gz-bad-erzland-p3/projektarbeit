@@ -1,15 +1,26 @@
+import { get, ref } from "firebase/database";
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 import Container from "../components/container/container";
 import { suffix } from "../components/data/data";
 import Login from "../components/login"
+import { db } from "../config/firebase";
 import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
+    const [userdata, setUserdata] = useState(Object);
 
     const auth = useAuth()
+        get(ref(db, 'users/' + auth.user.uid)).then((snapshot) => {
+            if (snapshot.exists()) {
+                setUserdata(snapshot.val());
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
 
-    console.log(auth.user)
     return (
         <div>
             <Head>
@@ -20,8 +31,11 @@ const LoginPage = () => {
             <Container>
                 <div className="flex justify-center w-screen">
                     <div className="flex flex-col px-6 max-w-7xl w-screen">
-                        <h1 className="text-xl mb-10">{auth.user.email}</h1>
-                        <p className="text-md">{auth.user.email}</p>
+                        <h1 className="text-xl mb-10">{userdata.Email}</h1>
+                        {
+                            
+                        }
+                        <p className="text-md">{userdata.Name}</p>
                     </div>
                 </div>
             </Container>
