@@ -32,7 +32,7 @@ const Login = (props: any) => {
         try {
             await logIn(data.email, data.password);
             toast.success("Erfolgreich eingeloggt");
-            if(props.site) {
+            if (props.site) {
                 router.push("/")
             }
         } catch (error: any) {
@@ -77,8 +77,8 @@ const Login = (props: any) => {
                             </div>
                         </div>
                     </form>
-                </FormProvider> 
-                
+                </FormProvider>
+
                 :
 
                 <div className="flex flex-col space-y-2">

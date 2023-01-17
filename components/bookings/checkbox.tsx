@@ -1,24 +1,24 @@
 import { ChangeEvent, useState } from "react";
 import { setBookingValue } from "../../pages/bookings/new";
-type Obj = {[key: string] : {[key: string] : boolean}}
-let valueObj:Obj = {};
+type Obj = { [key: string]: { [key: string]: boolean } }
+let valueObj: Obj = {};
 
 export default function Checkbox(props: any) {
     const [value, setValue] = useState(false)
-    
-    valueObj[props.FirebaseKey] = { ...valueObj[props.FirebaseKey], [props.title]: value};
+
+    valueObj[props.FirebaseKey] = { ...valueObj[props.FirebaseKey], [props.title]: value };
     setBookingValue(valueObj[props.FirebaseKey], props.FirebaseKey)
 
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
     }
-    
+
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         setValue(e.target.checked)
     }
 
-    function handleClick(){
-        if(value){setValue(false)}
+    function handleClick() {
+        if (value) { setValue(false) }
         else { setValue(true) }
     }
 

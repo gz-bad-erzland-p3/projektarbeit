@@ -30,6 +30,14 @@ import animationData from '../../lotties/check.json';
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
 
+const { https } = require('firebase-functions');
+
+const sendEmail = https.onRequest((req: any, res: any) => {
+    res.send({ status: 200 });
+});
+
+module.exports = sendEmail;
+
 export const setBookingValue = (value: any, prop: any) => {
 
     booking[prop] = value
@@ -384,7 +392,7 @@ export default function NewBooking() {
                             {
                                 currentStep == 7 &&
                                 <FormContainer title="Zahlung">
-                                    <Lottie options={defaultLottieOptions} height={400} width={400}  />
+                                    <Lottie options={defaultLottieOptions} height={400} width={400} />
                                     <h2 className="text-4xl text-center">Buchung erfolgreich!</h2>
                                 </FormContainer>
                             }

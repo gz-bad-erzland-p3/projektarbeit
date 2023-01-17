@@ -14,7 +14,7 @@ export default function RadioButtons(props: any) {
     const items: any[] = props.items;
     const [selectedItem, setSelectedItem] = useState("")
 
-    if(selectedItem.length > 0) { props.setValue(selectedItem) }
+    if (selectedItem.length > 0) { props.setValue(selectedItem) }
     else { props.setValue(null) }
 
     setBookingValue(selectedItem, props.FirebaseKey)

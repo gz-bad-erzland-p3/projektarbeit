@@ -12,8 +12,8 @@ import { get, ref } from 'firebase/database'
 import { auth, db } from '../../config/firebase'
 
 const navigation = [
-    { id: 0, name: 'Buchungen', href: '/dashboard', icon: UsersIcon, current: false},
-    { id: 0, name: 'Rechnungen', href: '#', icon: UsersIcon, current: false},
+  { id: 0, name: 'Buchungen', href: '/dashboard', icon: UsersIcon, current: false },
+  { id: 0, name: 'Rechnungen', href: '#', icon: UsersIcon, current: false },
 ]
 
 
@@ -21,7 +21,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DashboardContainer(props: { [x: string]: any; children: any;}) {
+export default function DashboardContainer(props: { [x: string]: any; children: any; }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [username, setUsername] = useState('');
   const { children } = props;
@@ -31,24 +31,24 @@ export default function DashboardContainer(props: { [x: string]: any; children: 
   const router = useRouter()
 
   navigation.forEach(item => {
-      if(item.href === router.pathname){
-          item.current = true;
-          currentItemName = item.name;
-      }
-      else {
-        item.current = false;
-      }
+    if (item.href === router.pathname) {
+      item.current = true;
+      currentItemName = item.name;
+    }
+    else {
+      item.current = false;
+    }
   });
 
   const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
   get(ref(db, 'users/' + uid + "/username")).then((snapshot) => {
     if (snapshot.exists()) {
-        setUsername(snapshot.val());
+      setUsername(snapshot.val());
     } else {
-        console.log("No data available");
+      console.log("No data available");
     }
   }).catch((error) => {
-      console.error(error);
+    console.error(error);
   });
 
   return (
@@ -198,7 +198,7 @@ export default function DashboardContainer(props: { [x: string]: any; children: 
               <a href="#" className="flex-shrink-0 w-full group block">
                 <div className="flex items-center">
                   <div>
-                    <UserCircleIcon className='h-8 w-8'/>
+                    <UserCircleIcon className='h-8 w-8' />
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">{username}</p>
@@ -228,7 +228,7 @@ export default function DashboardContainer(props: { [x: string]: any; children: 
               </div>
               <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 {/* Replace with your content */}
-                    {children}
+                {children}
                 {/* /End replace */}
               </div>
             </div>
