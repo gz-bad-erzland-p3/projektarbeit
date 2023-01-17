@@ -23,7 +23,7 @@ export default function DateTimeRangePicker() {
         
         console.log(startDate)
         console.log(today)
-        if(startDate <= today || endDate <= today) {
+        if(startDate <= today && endDate <= today) {
             toast.error("Mietzeitraum darf nicht in der Vergangenheit liegen")
         }
     }

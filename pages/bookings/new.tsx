@@ -38,7 +38,7 @@ export default function NewBooking() {
     const [byod1, setByod1] = useState(false);
     const [byod2, setByod2] = useState(false);
     const [geraet1, setGeraet1] = useState(false);
-    const [gerat2, setGeraet2] = useState(false);
+    const [geraet2, setGeraet2] = useState(false);
     const [bs1, setBs1] = useState(false);
     const [bs2, setBs2] = useState(false);
     const [payment, setPayment] = useState(false)
@@ -50,12 +50,17 @@ export default function NewBooking() {
     setBookingValue(uid, "UserID")
     const user = useAuth();
 
+    console.log(booking)
 
     //Frontend Logik
     const showNextButton = () => {
         console.log(booking["Geraet1"])
-        if (workingPlaceType == 1 && byod1 == false) return true;
-        else if (workingPlaceType == 1 && byod1 == true && booking["Geraet1"]) return true;
+        if (workingPlaceType == 1 && !byod1) return true;
+        else if (workingPlaceType == 2 && !byod1 && !byod2) return true;
+        else if (workingPlaceType == 1 && byod1 && geraet1 && bs1 ) return true
+        else if (workingPlaceType == 2 && byod1 && !byod2 && geraet1 && bs1 ) return true
+        else if (workingPlaceType == 2 && !byod1 && byod2 && geraet2 && bs2 ) return true
+        else if (workingPlaceType == 2 && byod1 && geraet1 && bs1 && byod2 && geraet2 && bs2 ) return true
         else return false;
     }
 
@@ -307,7 +312,12 @@ export default function NewBooking() {
                                                 <div>Start: {booking.Startdatum} {booking.Startzeit}</div>
                                                 <div>Ende: {booking.Enddatum} {booking.Endzeit}</div>
                                                 <hr />
-                                                <div className="flex items-center space-x-2"><FontAwesomeIcon icon={faCheck} /> { byod1 == false ? <div>Eigenes Gerät</div> : <div>Gerät leihen</div> }</div>
+                                                <div className="flex items-start space-x-2">1. { byod1 == false ? <div>Eigenes Gerät</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{booking["Geraet1"]}</div>{booking["Betriebssystem1"]}<div></div></div> }</div>
+                                                {workingPlaceType == 2 ?
+                                                <div>
+                                                    <div className="flex items-start space-x-2">2. { byod2 == false ? <div>Eigenes Gerät</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{booking["Geraet2"]}</div>{booking["Betriebssystem2"]}<div></div></div> }</div>
+                                                </div> : ""    
+                                                }
                                             </div>
                                             <div className="py-2 mt-4">
                                                 <p className="font-medium text-lg py-2">{price()}€/Stunde</p>
