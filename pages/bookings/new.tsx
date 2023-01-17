@@ -23,6 +23,9 @@ import { Transition } from "@headlessui/react";
 import Image from "next/image";
 import { useAuth } from "../../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from "react-toastify";
+import Lottie from 'react-lottie';
+import animationData from '../../lotties/check.json';
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -48,11 +51,11 @@ export default function NewBooking() {
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
     const [byod1, setByod1] = useState(false);
     const [byod2, setByod2] = useState(false);
-    const [geraet1, setGeraet1] = useState(false);
-    const [geraet2, setGeraet2] = useState(false);
-    const [bs1, setBs1] = useState(false);
-    const [bs2, setBs2] = useState(false);
-    const [payment, setPayment] = useState(false)
+    const [geraet1, setGeraet1] = useState(null);
+    const [geraet2, setGeraet2] = useState(null);
+    const [bs1, setBs1] = useState(null);
+    const [bs2, setBs2] = useState(null);
+    const [payment, setPayment] = useState(null)
     const [dateIsValid, setDateIsValid] = useState(false)
 
     const bookingId = uuidv4()
@@ -62,17 +65,24 @@ export default function NewBooking() {
     setBookingValue(uid, "UserID")
     const user = useAuth();
 
-    console.log(dateIsValid)
+    const defaultLottieOptions = {
+        loop: false,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice"
+        }
+    };
 
     //Frontend Logik
     const showNextButton = () => {
         console.log(booking["Geraet1"])
         if (workingPlaceType == 1 && !byod1) return true;
         else if (workingPlaceType == 2 && !byod1 && !byod2) return true;
-        else if (workingPlaceType == 1 && byod1 && geraet1 && bs1 ) return true
-        else if (workingPlaceType == 2 && byod1 && !byod2 && geraet1 && bs1 ) return true
-        else if (workingPlaceType == 2 && !byod1 && byod2 && geraet2 && bs2 ) return true
-        else if (workingPlaceType == 2 && byod1 && geraet1 && bs1 && byod2 && geraet2 && bs2 ) return true
+        else if (workingPlaceType == 1 && byod1 && geraet1 && bs1) return true
+        else if (workingPlaceType == 2 && byod1 && !byod2 && geraet1 && bs1) return true
+        else if (workingPlaceType == 2 && !byod1 && byod2 && geraet2 && bs2) return true
+        else if (workingPlaceType == 2 && byod1 && geraet1 && bs1 && byod2 && geraet2 && bs2) return true
         else return false;
     }
 
@@ -113,7 +123,8 @@ export default function NewBooking() {
     }
 
     function send() {
-        console.log(booking)
+        setCurrentStep(currentStep + 1)
+        toast.success("Buchung erfolgreich ausgeführt!")
         set(ref(db, 'bookings/' + bookingId), booking);
     }
 
@@ -178,7 +189,7 @@ export default function NewBooking() {
                         <div>
                             <div className="py-4">
                                 {
-                                    currentStep > 1 ?
+                                    currentStep > 1 && currentStep < 6 ?
                                         <button className="button-secondary mb-4" onClick={() => handleSetCurrentStep("-")} >&larr; Zurück</button> : ""
                                 }
                                 <StepsForBooking currentId={currentStep} />
@@ -188,7 +199,7 @@ export default function NewBooking() {
                                 <FormContainer title="Zeitraum wählen">
                                     <FormSection>
                                         <FormItem width="1/2" title="Zeitraum" icon={faCalendarWeek}>
-                                            <DateTimeRangePicker setIsValid={setDateIsValid}/>
+                                            <DateTimeRangePicker setIsValid={setDateIsValid} />
                                         </FormItem>
                                         <FormItem width="1/4" title="Zeit von" icon={faClock}>
                                             <DropDown title="Startzeit" items={bookingTimes} FirebaseKey="Startzeit" />
@@ -197,7 +208,7 @@ export default function NewBooking() {
                                             <DropDown title="Endzeit" items={bookingTimes} FirebaseKey="Endzeit" />
                                         </FormItem>
                                         <FormItem width="1/4">
-                                            {dateIsValid && <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>} 
+                                            {dateIsValid && <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>}
                                         </FormItem>
                                     </FormSection>
                                 </FormContainer>
@@ -324,11 +335,11 @@ export default function NewBooking() {
                                                 <div>Start: {booking.Startdatum} {booking.Startzeit}</div>
                                                 <div>Ende: {booking.Enddatum} {booking.Endzeit}</div>
                                                 <hr />
-                                                <div className="flex items-start space-x-2">1. { byod1 == false ? <div>Eigenes Gerät</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{booking["Geraet1"]}</div>{booking["Betriebssystem1"]}<div></div></div> }</div>
+                                                <div className="flex items-start space-x-2">1. {byod1 == false ? <div>Eigenes Gerät</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{geraet1}</div>{bs1}<div></div></div>}</div>
                                                 {workingPlaceType == 2 ?
-                                                <div>
-                                                    <div className="flex items-start space-x-2">2. { byod2 == false ? <div>Eigenes Gerät</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{booking["Geraet2"]}</div>{booking["Betriebssystem2"]}<div></div></div> }</div>
-                                                </div> : ""    
+                                                    <div>
+                                                        <div className="flex items-start space-x-2">2. {byod2 == false ? <div>Eigenes Gerät</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{geraet2}</div>{bs2}<div></div></div>}</div>
+                                                    </div> : ""
                                                 }
                                             </div>
                                             <div className="py-2 mt-4">
@@ -349,7 +360,7 @@ export default function NewBooking() {
                                         {uid ? <p>Sie sind erfolgreich angemeldet</p> : <Login site={false} />}
                                     </FormSection>
                                     <FormContainerEnd>
-                                        {user.user.email && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>}
+                                        {user.user.email && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Zur Übersicht &rarr;</button>}
                                     </FormContainerEnd>
                                 </FormContainer>
                             }
@@ -360,7 +371,7 @@ export default function NewBooking() {
                                         <p>{JSON.stringify(booking)}</p>
                                     </FormSection>
                                     <FormContainerEnd>
-                                        <button className="button-primary w-full" onClick={reservate} >Weiter &rarr;</button>
+                                        <button className="button-primary w-full" onClick={reservate} >Stimmt so &rarr;</button>
                                     </FormContainerEnd>
                                 </FormContainer>
                             }
@@ -374,8 +385,15 @@ export default function NewBooking() {
                                     </FormSection>
 
                                     <FormContainerEnd>
-                                        <button className="button-primary w-full" onClick={send}>Jetzt bezahlen &rarr;</button>
+                                        {payment ? <button className="button-primary w-full" onClick={send}>Jetzt bezahlen &rarr;</button> : ""}
                                     </FormContainerEnd>
+                                </FormContainer>
+                            }
+                            {
+                                currentStep == 7 &&
+                                <FormContainer title="Zahlung">
+                                    <Lottie options={defaultLottieOptions} height={400} width={400}  />
+                                    <h2 className="text-4xl text-center">Buchung erfolgreich!</h2>
                                 </FormContainer>
                             }
                         </div>
