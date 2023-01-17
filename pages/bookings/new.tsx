@@ -5,7 +5,6 @@ import StepsForBooking from "../../components/bookings/steps";
 import FormContainer from "../../components/form/formContainer";
 import FormSection from "../../components/form/formSection";
 import { betriebssysteme, bookingTimes, browser, geraete, kommunikationsapplikationen, paymentMethods, suffix } from "../../components/data/data";
-import { CheckIcon } from "@heroicons/react/24/outline";
 import FormItem from "../../components/form/formItem";
 import FormContainerEnd from "../../components/form/formContainerEnd";
 import { auth, db } from "../../config/firebase";
@@ -17,13 +16,13 @@ import Login from "../../components/login";
 import Textarea from "../../components/bookings/textarea";
 import { standard } from "../../components/data/data";
 import { uuidv4 } from "@firebase/util";
-import { faCalendarWeek, faClock } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarWeek, faCheck, faClock } from "@fortawesome/free-solid-svg-icons";
 import Head from "next/head";
 import BringYourOwnDevice from "../../components/bookings/byod";
 import { Transition } from "@headlessui/react";
 import Image from "next/image";
 import { useAuth } from "../../context/AuthContext";
-import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -36,12 +35,10 @@ export default function NewBooking() {
     const [allBookings, setAllBookings] = useState(Object);
     const [currentStep, setCurrentStep] = useState(1);
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
-    const [byod1, setByod1] = useState(null);
-    const [byod2, setByod2] = useState(null);
+    const [byod1, setByod1] = useState(false);
+    const [byod2, setByod2] = useState(false);
 
     const bookingId = uuidv4()
-    const user = useAuth();
-
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
 
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
@@ -50,21 +47,17 @@ export default function NewBooking() {
 
     //Frontend Logik
     const showNextButton = () => {
-        //TODO
+        console.log(booking["Geraet1"])
         if (workingPlaceType == 1 && byod1 == false) return true;
-        else if (workingPlaceType == 2 && byod1 == false && byod2 == false) return true;
-        else if (workingPlaceType == 1 && byod1 == true && booking["Geraet1"] != "" && booking["Betriebssystem1"] != "") return true;
-        else if (workingPlaceType == 2 && byod1 == true && booking["Geraet1"] != "" && booking["Betriebssystem1"] != "" && byod2 == false) return true;
-        else if (workingPlaceType == 2 && byod1 == false && byod2 == true && booking["Geraet2"] != "" && booking["Betriebssystem2"] != "") return true;
-        else if (workingPlaceType == 2 && byod1 == true && booking["Geraet1"] != "" && booking["Betriebssystem1"] != "" && byod2 == true && booking["Geraet2"] != "" && booking["Betriebssystem2"] != "") return true;
+        else if (workingPlaceType == 1 && byod1 == true && booking["Geraet1"]) return true;
         else return false;
     }
 
     const price = () => {
         let price: number = 18;
         if (workingPlaceType == 2) price = price + 18
-        if (byod1 == 1) price = price + 4.50
-        if (byod2 == 1) price = price + 4.50
+        if (byod1 == true) price = price + 4.50
+        if (byod2 == true) price = price + 4.50
 
         return price.toFixed(2);
     }
@@ -144,7 +137,7 @@ export default function NewBooking() {
         }
     }
 
-    function reservate(){
+    function reservate() {
         setCurrentStep(currentStep + 1)
         console.log(booking)
         set(ref(db, 'bookings/' + bookingId), booking);
@@ -199,7 +192,7 @@ export default function NewBooking() {
                                         </FormItem>
                                     </FormSection>
                                     <FormContainerEnd>
-                                        {workingPlaceType != null ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
+                                        {workingPlaceType != 0 ? <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button> : ""}
                                     </FormContainerEnd>
                                 </FormContainer>
                             }
@@ -214,7 +207,7 @@ export default function NewBooking() {
                                                         <BringYourOwnDevice byod={byod1} setByod={setByod1} FirebaseKey="Byod1" />
                                                     </FormItem>
                                                 </FormSection>
-                                                <Transition show={byod1 == 1} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                                <Transition show={byod1 == true} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
                                                     <div>
                                                         <FormSection>
                                                             <FormItem title="Standardmäßig inbegriffen">
@@ -259,7 +252,7 @@ export default function NewBooking() {
                                                             <BringYourOwnDevice byod={byod2} setByod={setByod2} FirebaseKey="Byod2" />
                                                         </FormItem>
                                                     </FormSection>
-                                                    <Transition show={byod2 == 1} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                                    <Transition show={byod2 == true} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
 
                                                         <FormSection>
                                                             <FormItem title="Standardmäßig inbegriffen">
@@ -303,13 +296,12 @@ export default function NewBooking() {
                                                 <p className="text-lg font-bold">Zusammenfassung</p>
                                             </div>
                                             <hr />
-                                            <div className="flex flex-col py-2">
-                                            </div>
-                                            <hr />
-                                            <div className="flex flex-col space-y-2 text-sm py-2">
-                                                <p>{workingPlaceType == 1 ? "Einzelarbeitsplatz" : "Doppelarbeitsplatz"}</p>
-                                                <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Discord</div>
-                                                <div className="flex items-center"><CheckIcon className="h-5 w-5 mr-3 text-green-600" /> Teams</div>
+                                            <div className="flex flex-col space-y-2 py-2 text-sm">
+                                                <div className="font-bold">{workingPlaceType == 1 ? "Einzelarbeitsplatz" : "Doppelarbeitsplatz"}</div>
+                                                <div>Start: {booking.Startdatum} {booking.Startzeit}</div>
+                                                <div>Ende: {booking.Enddatum} {booking.Endzeit}</div>
+                                                <hr />
+                                                <div className="flex items-center space-x-2"><FontAwesomeIcon icon={faCheck} /> { byod1 == false ? <div>Eigenes Gerät</div> : <div>Gerät leihen</div> }</div>
                                             </div>
                                             <div className="py-2 mt-4">
                                                 <p className="font-medium text-lg py-2">{price()}€/Stunde</p>
