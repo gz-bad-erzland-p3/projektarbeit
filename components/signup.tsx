@@ -19,7 +19,7 @@ interface SignupType {
     password_confirm: string;
 
 }
-const SignupPage = () => {
+const SignupPage = (props: any) => {
     const [password, setPassword] = useState("")
     const [passwordAgain, setPasswordAgain] = useState("")
     const [formatted_address, setFormattedAddress] = useState("")
@@ -39,6 +39,9 @@ const SignupPage = () => {
         try {
             await signUp(data.email, data.password, data.name, data.prename, data.birthday, formatted_address, place_id);
             toast.success("Erfolgreich registriert");
+            if(props.site) {
+                router.push("/")
+            }
         } catch (error: any) {
             console.log(error.message);
             toast.error("Fehler bei der Registrierung");

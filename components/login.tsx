@@ -82,7 +82,7 @@ const Login = (props: any) => {
                 :
 
                 <div className="flex flex-col space-y-2">
-                    <SignupPage />
+                    <SignupPage site={props.site} />
                     {login ? "" : <button className="button-secondary w-full" onClick={updateSignUp}>Login &rarr;</button>}
                 </div>}
         </div>
