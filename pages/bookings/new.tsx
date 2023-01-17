@@ -47,6 +47,7 @@ export default function NewBooking() {
 
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
     setBookingValue(uid, "UserID")
+    const user = useAuth();
 
 
     //Frontend Logik
@@ -325,7 +326,7 @@ export default function NewBooking() {
                                         {uid ? <p>Sie sind erfolgreich angemeldet</p> : <Login site={false} />}
                                     </FormSection>
                                     <FormContainerEnd>
-                                        {uid && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>}
+                                        {user.user.email && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter &rarr;</button>}
                                     </FormContainerEnd>
                                 </FormContainer>
                             }
