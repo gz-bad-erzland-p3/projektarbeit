@@ -41,6 +41,7 @@ export default function NewBooking() {
     const [gerat2, setGeraet2] = useState(false);
     const [bs1, setBs1] = useState(false);
     const [bs2, setBs2] = useState(false);
+    const [payment, setPayment] = useState(false)
 
     const bookingId = uuidv4()
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
@@ -346,7 +347,7 @@ export default function NewBooking() {
                                 <FormContainer title="Zahlung">
                                     <FormSection>
                                         <FormItem title="Zahlungsmittel">
-                                            <RadioButtons items={paymentMethods} FirebaseKey="Bezahlmethode" />
+                                            <RadioButtons setValue={setPayment} items={paymentMethods} FirebaseKey="Bezahlmethode" />
                                         </FormItem>
                                     </FormSection>
 
