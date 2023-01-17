@@ -16,7 +16,7 @@ export default function RadioButtons(props: any) {
 
     if(selectedItem.length > 0) { props.setValue(true) }
     else { props.setValue(false) }
-
+console.log(selectedItem)
     setBookingValue(selectedItem, props.FirebaseKey)
 
     return (

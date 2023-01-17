@@ -28,7 +28,10 @@ type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
 
 export const setBookingValue = (value: any, prop: any) => {
+
     booking[prop] = value
+    console.log(booking)
+
 }
 
 export default function NewBooking() {
