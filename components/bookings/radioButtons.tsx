@@ -4,6 +4,7 @@ import { RadioGroup } from '@headlessui/react'
 import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { setBookingValue } from '../../pages/bookings/new';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { stringLength } from '@firebase/util';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -12,8 +13,11 @@ function classNames(...classes: string[]) {
 export default function RadioButtons(props: any) {
     const items: any[] = props.items;
     const [selectedItem, setSelectedItem] = useState("")
-    setBookingValue(selectedItem, props.FirebaseKey)
 
+    if(selectedItem.length > 0) { props.setValue(true) }
+    else { props.setValue(false) }
+
+    setBookingValue(selectedItem, props.FirebaseKey)
 
     return (
         <RadioGroup value={selectedItem} onChange={setSelectedItem}>

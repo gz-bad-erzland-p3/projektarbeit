@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import DateTimeRangePicker from "../../components/bookings/dateRangePicker";
 import DropDown from "../../components/bookings/dropDown";
 import StepsForBooking from "../../components/bookings/steps";
@@ -37,6 +37,10 @@ export default function NewBooking() {
     const [workingPlaceType, setWorkingPlaceType] = useState(0);
     const [byod1, setByod1] = useState(false);
     const [byod2, setByod2] = useState(false);
+    const [geraet1, setGeraet1] = useState(false);
+    const [gerat2, setGeraet2] = useState(false);
+    const [bs1, setBs1] = useState(false);
+    const [bs2, setBs2] = useState(false);
 
     const bookingId = uuidv4()
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
@@ -221,11 +225,11 @@ export default function NewBooking() {
                                                         </FormSection>
                                                         <FormSection title="Konfiguriere dein Gerät">
                                                             <FormItem title="Gerät wählen">
-                                                                <RadioButtons items={geraete} FirebaseKey="Geraet1" />
+                                                                <RadioButtons setValue={setGeraet1} items={geraete} FirebaseKey="Geraet1" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Betriebssystem">
-                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem1" />
+                                                                <RadioButtons setValue={setBs1} items={betriebssysteme} FirebaseKey="Betriebssystem1" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Browser" width="1/2">
@@ -266,11 +270,11 @@ export default function NewBooking() {
                                                         </FormSection>
                                                         <FormSection title="Konfiguriere dein Gerät">
                                                             <FormItem title="Gerät wählen">
-                                                                <RadioButtons items={geraete} FirebaseKey="Geraet2" />
+                                                                <RadioButtons setValue={setGeraet2} items={geraete} FirebaseKey="Geraet2" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Betriebssystem">
-                                                                <RadioButtons items={betriebssysteme} FirebaseKey="Betriebssystem2" />
+                                                                <RadioButtons setValue={setBs2} items={betriebssysteme} FirebaseKey="Betriebssystem2" />
                                                             </FormItem>
                                                         </FormSection><FormSection>
                                                             <FormItem title="Browser" width="1/2">
