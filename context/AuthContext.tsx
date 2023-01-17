@@ -42,13 +42,13 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     await createUserWithEmailAndPassword(auth, email, password);
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
     set(ref(db, 'users/' + uid), {
-        Name: name,
-        Email: email,
-        Vorname: prename,
-        Geburtsdatum: birthday,
-        Adresse_Formatiert: address_formatted,
-        Adresse_GooglePlaceId: place_id
-      });
+      Name: name,
+      Email: email,
+      Vorname: prename,
+      Geburtsdatum: birthday,
+      Adresse_Formatiert: address_formatted,
+      Adresse_GooglePlaceId: place_id
+    });
     return;
   };
 

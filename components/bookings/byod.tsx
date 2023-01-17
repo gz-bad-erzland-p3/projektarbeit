@@ -10,7 +10,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function BringYourOwnDevice(props: any) {
-    const items: any[] = [{id: "0", title: "Ich habe ein eigenes Gerät", value: false}, {id: "1", title: "Ich brauche ein Gerät", value: true}];
+    const items: any[] = [{ id: "0", title: "Ich habe ein eigenes Gerät", value: false }, { id: "1", title: "Ich brauche ein Gerät", value: true }];
     const byod = props.byod;
     const setByod = props.setByod;
 

@@ -11,15 +11,15 @@ const LoginPage = () => {
     const [userdata, setUserdata] = useState(Object);
 
     const auth = useAuth()
-        get(ref(db, 'users/' + auth.user.uid)).then((snapshot) => {
-            if (snapshot.exists()) {
-                setUserdata(snapshot.val());
-            } else {
-                console.log("No data available");
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
+    get(ref(db, 'users/' + auth.user.uid)).then((snapshot) => {
+        if (snapshot.exists()) {
+            setUserdata(snapshot.val());
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
 
     return (
         <div>
@@ -33,7 +33,7 @@ const LoginPage = () => {
                     <div className="flex flex-col px-6 max-w-7xl w-screen">
                         <h1 className="text-xl mb-10">{userdata.Email}</h1>
                         {
-                            
+
                         }
                         <p className="text-md">{userdata.Name}</p>
                     </div>

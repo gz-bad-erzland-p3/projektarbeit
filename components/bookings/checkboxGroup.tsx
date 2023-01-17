@@ -6,7 +6,7 @@ export default function CheckboxGroup(props: any) {
     return (
         <fieldset className="space-y-3">
             {items.map((item, index) => (
-                <Checkbox key={index} id={index} title={item} FirebaseKey={props.FirebaseKey}/>
+                <Checkbox key={index} id={index} title={item} FirebaseKey={props.FirebaseKey} />
             ))}
         </fieldset>
     )
