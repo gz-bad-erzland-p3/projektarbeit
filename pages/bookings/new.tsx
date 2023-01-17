@@ -42,6 +42,7 @@ export default function NewBooking() {
     const [bs1, setBs1] = useState(false);
     const [bs2, setBs2] = useState(false);
     const [payment, setPayment] = useState(false)
+    const [dateIsValid, setDateIsValid] = useState(false)
 
     const bookingId = uuidv4()
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
@@ -50,6 +51,7 @@ export default function NewBooking() {
     setBookingValue(uid, "UserID")
     const user = useAuth();
 
+    console.log(dateIsValid)
 
     //Frontend Logik
     const showNextButton = () => {
@@ -171,7 +173,7 @@ export default function NewBooking() {
                                 <FormContainer title="Zeitraum wählen">
                                     <FormSection>
                                         <FormItem width="1/2" title="Zeitraum" icon={faCalendarWeek}>
-                                            <DateTimeRangePicker />
+                                            <DateTimeRangePicker setIsValid={setDateIsValid}/>
                                         </FormItem>
                                         <FormItem width="1/4" title="Zeit von" icon={faClock}>
                                             <DropDown title="Startzeit" items={bookingTimes} FirebaseKey="Startzeit" />
