@@ -75,8 +75,19 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     await sendPasswordResetEmail(auth, email)
   }
 
+  const changeUserData = async (email: string, name: string, prename: string, birthday: string, address_formatted: string, place_id: string) => {
+    set(ref(db, 'users/' + user.uid), {
+      Name: name,
+      Email: email,
+      Vorname: prename,
+      Geburtsdatum: birthday,
+      Adresse_Formatiert: address_formatted,
+      Adresse_GooglePlaceId: place_id
+    });
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signUp, logIn, logOut, forgotPassword }}>
+    <AuthContext.Provider value={{ user, signUp, logIn, logOut, forgotPassword, changeUserData }}>
       {loading ? null : children}
     </AuthContext.Provider>
   );

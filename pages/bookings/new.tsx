@@ -97,7 +97,6 @@ export default function NewBooking() {
         }).catch((error) => {
             console.error(error);
         });
-
     }, [])
 
     //next/back step
