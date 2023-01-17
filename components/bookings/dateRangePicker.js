@@ -5,7 +5,7 @@ import { setBookingValue } from "../../pages/bookings/new";
 export default function DateTimeRangePicker() {
     const [value, setValue] = useState({
         startDate: new Date(),
-        endDate: new Date().setMonth(11)
+        endDate: new Date()
     });
     const startDate = new Date(value["startDate"])
     const endDate = new Date(value["endDate"])
