@@ -1,14 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  sendPasswordResetEmail,
-} from "firebase/auth";
+import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
 import { auth, db } from "../config/firebase";
 import { ref, set } from "firebase/database";
 import { toast } from "react-toastify";
+import { send } from "@emailjs/browser";
 
 interface UserType {
   email: string | null;
@@ -41,6 +36,20 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   const signUp = async (email: string, password: string, name: string, prename: string, birthday: string, address_formatted: string, place_id: string) => {
     await createUserWithEmailAndPassword(auth, email, password);
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
+
+    //bestätigungsmail senden
+    var templateParams = {
+      Name: name,
+      Vorname: prename,
+      Email: email
+    };
+    send('service_hs19w57', 'template_p3z83mn', templateParams, '5fMJGYQBc902cFst3')
+      .then((result: any) => {
+        console.log(result.text);
+      }, (error: any) => {
+        console.log(error.text);
+      });
+
     set(ref(db, 'users/' + uid), {
       Name: name,
       Email: email,

@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import DateTimeRangePicker from "../../components/bookings/dateRangePicker";
 import DropDown from "../../components/bookings/dropDown";
 import StepsForBooking from "../../components/bookings/steps";
@@ -24,26 +24,17 @@ import Image from "next/image";
 import { useAuth } from "../../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
-import Lottie from 'react-lottie';
+//import Lottie from 'react-lottie';
 import animationData from '../../lotties/check.json';
+import { send } from "@emailjs/browser";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
 
-const { https } = require('firebase-functions');
-
-const sendEmail = https.onRequest((req: any, res: any) => {
-    res.send({ status: 200 });
-});
-
-module.exports = sendEmail;
-
 export const setBookingValue = (value: any, prop: any) => {
-
     booking[prop] = value
-    console.log(booking)
-
 }
+
 
 export default function NewBooking() {
     const [allBookings, setAllBookings] = useState(Object);
@@ -122,10 +113,37 @@ export default function NewBooking() {
         setWorkingPlaceType(type);
     }
 
-    function send() {
+    function sendBooking() {
         setCurrentStep(currentStep + 1)
         toast.success("Buchung erfolgreich ausgeführt!")
         set(ref(db, 'bookings/' + bookingId), booking);
+        //userdaten auslesen und bestätigungsmail senden
+        var templateParams = {
+            Startdatum: booking.Startdatum,
+            Startzeit: booking.Startzeit,
+            Enddatum: booking.Enddatum,
+            Endzeit: booking.Endzeit,
+            Name: "",
+            Vorname: "",
+            Email: user.user.email
+        };
+        get(ref(db, 'users/' + user.user.uid)).then((snapshot) => {
+            if (snapshot.exists()) {
+                console.log(snapshot.val())
+                templateParams.Name = (snapshot.val().Name);
+                templateParams.Vorname = (snapshot.val().Vorname);
+                send('service_hs19w57', 'template_xl148t9', templateParams, '5fMJGYQBc902cFst3')
+                .then((result: any) => {
+                    console.log(result.text);
+                }, (error: any) => {
+                    console.log(error.text);
+                });
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
     }
 
     function convertDateAndTimeToUnix(dateComponents: any, timeComponents: any) {
@@ -173,10 +191,9 @@ export default function NewBooking() {
 
     function reservate() {
         setCurrentStep(currentStep + 1)
-        console.log(booking)
         set(ref(db, 'bookings/' + bookingId), booking);
     }
-
+    
     return (
         <div>
             <Head>
@@ -385,14 +402,14 @@ export default function NewBooking() {
                                     </FormSection>
 
                                     <FormContainerEnd>
-                                        {payment ? <button className="button-primary w-full" onClick={send}>Jetzt bezahlen &rarr;</button> : ""}
+                                        {payment ? <button className="button-primary w-full" onClick={sendBooking}>Jetzt bezahlen &rarr;</button> : ""}
                                     </FormContainerEnd>
                                 </FormContainer>
                             }
                             {
                                 currentStep == 7 &&
                                 <FormContainer title="Zahlung">
-                                    <Lottie options={defaultLottieOptions} height={400} width={400} />
+
                                     <h2 className="text-4xl text-center">Buchung erfolgreich!</h2>
                                 </FormContainer>
                             }
@@ -404,3 +421,4 @@ export default function NewBooking() {
 
     )
 }
+//                                    <Lottie options={defaultLottieOptions} height={400} width={400} />
