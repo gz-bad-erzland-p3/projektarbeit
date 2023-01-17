@@ -63,7 +63,6 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   };
 
   const forgotPassword = async (email: string) => {
-    console.log("huhu")
     await sendPasswordResetEmail(auth, email)
   }
 

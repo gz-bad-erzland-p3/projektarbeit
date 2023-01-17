@@ -27,6 +27,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
 
+const { https } = require('firebase-functions');
+
+const sendEmail = https.onRequest((req: any, res: any) => {
+  res.send({ status: 200 });
+});
+
+module.exports = sendEmail;
+
 export const setBookingValue = (value: any, prop: any) => {
 
     booking[prop] = value
