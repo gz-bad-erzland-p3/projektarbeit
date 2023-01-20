@@ -30,6 +30,7 @@ import { send } from "@emailjs/browser";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
+const bookingId = uuidv4()
 
 export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
@@ -49,7 +50,6 @@ export default function NewBooking() {
     const [payment, setPayment] = useState(null)
     const [dateIsValid, setDateIsValid] = useState(false)
 
-    const bookingId = uuidv4()
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
 
     setBookingValue(workingPlaceType, "Arbeitsplatztyp")
@@ -179,7 +179,7 @@ export default function NewBooking() {
         }
         if (type == 1) {
             //Wenn alle Arbeitsplätze ausgebucht sind, ...
-            if (numOfWorkingplaces == 8) {
+            if (numOfWorkingplaces >= 8) {
                 //Sollen beide buttons disabled sein
                 return true
             } else {
