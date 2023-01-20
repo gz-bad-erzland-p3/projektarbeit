@@ -4,13 +4,13 @@ import { getDatabase } from "firebase/database";
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDI3MO8GtJ9J0Ps0vWWeCvwiNH6wA4Lyy8",
-    authDomain: "gz-bad-erzland-1eab5.firebaseapp.com",
-    projectId: "gz-bad-erzland-1eab5",
-    storageBucket: "gz-bad-erzland-1eab5.appspot.com",
-    messagingSenderId: "813720766420",
-    appId: "1:813720766420:web:982fff757b06eada6ff841",
-    measurementId: "G-23PY6JFSK9"
+    apiKey: "AIzaSyBnDu6VFsaZIIPYG6AWNSqKqnVpgTEplY4",
+    authDomain: "gz-bad-erzland-a5231.firebaseapp.com",
+    projectId: "gz-bad-erzland-a5231",
+    storageBucket: "gz-bad-erzland-a5231.appspot.com",
+    messagingSenderId: "389584456404",
+    appId: "1:389584456404:web:0af49a35ba216bbd0dc941",
+    measurementId: "G-3QLDSXMNVG"
 };
 
 // Initialize Firebase

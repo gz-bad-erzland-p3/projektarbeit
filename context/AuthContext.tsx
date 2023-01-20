@@ -36,7 +36,15 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   const signUp = async (email: string, password: string, name: string, prename: string, birthday: string, address_formatted: string, place_id: string) => {
     await createUserWithEmailAndPassword(auth, email, password);
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
-
+    console.log(name)
+    await set(ref(db, 'users/' + uid), {
+      Name: name,
+      Email: email,
+      Vorname: prename,
+      Geburtsdatum: birthday,
+      Adresse_Formatiert: address_formatted,
+      Adresse_GooglePlaceId: place_id
+    });
     //bestätigungsmail senden
     var templateParams = {
       Name: name,
@@ -50,14 +58,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         console.log(error.text);
       });
 
-    set(ref(db, 'users/' + uid), {
-      Name: name,
-      Email: email,
-      Vorname: prename,
-      Geburtsdatum: birthday,
-      Adresse_Formatiert: address_formatted,
-      Adresse_GooglePlaceId: place_id
-    });
+    
     return;
   };
 
