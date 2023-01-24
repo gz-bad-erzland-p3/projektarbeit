@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import { db } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
 import BookingModal from "./bookingmodal";
+import ProfileDeleteModal from "./profiledeletemodal";
 
 export default function UserDescription(props: any) {
     const [userdata, setUserdata] = useState(Object);
     const [userBookings, setUserBookings] = useState(Object);
     const [open1, setOpen1] = useState(false);
+    const [open2, setOpen2] = useState(false);
 
     //TODO: changeUserData(...) siehe AuthContext
 
@@ -141,9 +143,11 @@ export default function UserDescription(props: any) {
                             <button
                                 type="button"
                                 className="mt-10 bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                onClick={() => setOpen2(true)}
                             >
                                 Dein Konto löschen
                             </button>
+                            <ProfileDeleteModal open={open2} setOpen={setOpen2} />
                         </dd>
                     </div>
                 </dl>

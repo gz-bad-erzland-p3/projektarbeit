@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
+import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, deleteUser, getAuth, EmailAuthProvider, reauthenticateWithPopup, reauthenticateWithCredential } from "firebase/auth";
 import { auth, db } from "../config/firebase";
 import { ref, set } from "firebase/database";
 import { toast } from "react-toastify";
@@ -62,6 +62,16 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     return;
   };
 
+  const deleteAccount = async (userr: any) => {
+    //await reauthenticateWithCredential(userr,)
+    set(ref(db, 'users/' + userr.uid), {});
+    await deleteUser(userr).then(() => {
+      toast.error("Ihr Benutzer wurde erfolgreich gelöscht")
+    }).catch((error) => {
+      toast.error("Ihr Benutzer konnte nicht gelöscht werden. Bitte melden Sie sich neu an und versuchen es erneut.")
+    });
+  }
+  
   const logIn = (email: string, password: string) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -88,7 +98,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   }
 
   return (
-    <AuthContext.Provider value={{ user, signUp, logIn, logOut, forgotPassword, changeUserData }}>
+    <AuthContext.Provider value={{ user, signUp, logIn, logOut, forgotPassword, changeUserData, deleteAccount }}>
       {loading ? null : children}
     </AuthContext.Provider>
   );
