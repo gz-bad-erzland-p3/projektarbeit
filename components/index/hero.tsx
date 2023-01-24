@@ -13,7 +13,7 @@ export default function HeroSection() {
           <div className="mx-auto max-w-3xl">
             <div>
               <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-                <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-200 dark:ring-gray-600 dark:hover:ring-gray-200 hover:ring-gray-600">
+                <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-200 hover:ring-gray-600">
                   <span>
                     Die Projektarbeit ist jetzt auf {' '}
                     <a href="https://github.com/Nichtmetall/Project" className="font-semibold text-green-600">
@@ -27,9 +27,6 @@ export default function HeroSection() {
                 <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
                   Office-Sharing<br /> Bad Erzland
                 </h1>
-                <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
-                  Das Gemeindezentrum Bad Erzland ermöglicht seinen Bürger*innen ein Office-Sharing im Verwaltungsgebäude der Stadtverwaltung.
-                </p>
                 <div className="mt-8 flex gap-x-4 sm:justify-center">
                   <button onClick={handleClick} className='ml-2 text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
                     Arbeitsplatz mieten &rarr;
