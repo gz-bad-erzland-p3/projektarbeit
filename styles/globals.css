@@ -177,3 +177,8 @@ button {
     visibility: visible;
     opacity: 1;
   }
+
+  .link-main {
+    text-decoration: underline dotted;
+    text-decoration-color: #121212;
+  }

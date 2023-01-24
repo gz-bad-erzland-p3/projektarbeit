@@ -7,7 +7,7 @@ export default function HeroSection() {
   }
 
   return (
-    <div className="isolate">
+    <div className="isolate pb-52">
       <main>
         <div className="px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
