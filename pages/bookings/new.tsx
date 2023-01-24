@@ -382,17 +382,6 @@ export default function NewBooking() {
                             }
                             {
                                 currentStep == 5 &&
-                                <FormContainer title="Übersicht">
-                                    <FormSection>
-                                        <p>{JSON.stringify(booking)}</p>
-                                    </FormSection>
-                                    <FormContainerEnd>
-                                        <button className="button-primary w-full" onClick={reservate} >Stimmt so &rarr;</button>
-                                    </FormContainerEnd>
-                                </FormContainer>
-                            }
-                            {
-                                currentStep == 6 &&
                                 <FormContainer title="Zahlung">
                                     <FormSection>
                                         <FormItem title="Zahlungsmittel">
@@ -406,9 +395,8 @@ export default function NewBooking() {
                                 </FormContainer>
                             }
                             {
-                                currentStep == 7 &&
+                                currentStep == 6 &&
                                 <FormContainer title="Zahlung">
-
                                     <h2 className="text-4xl text-center">Buchung erfolgreich!</h2>
                                 </FormContainer>
                             }

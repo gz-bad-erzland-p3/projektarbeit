@@ -1,8 +1,7 @@
 import Head from "next/head"
 import Container from "../components/container/container"
-import Features from "../components/index/features"
 import HeroSection from "../components/index/hero"
-
+import CookieConsent from "react-cookie-consent";
 
 export default function Index() {
   const meta = {
@@ -17,11 +16,19 @@ export default function Index() {
         <meta content={meta.description} name="description" />
       </Head>
       <Container>
+        <CookieConsent
+          location="bottom"
+          buttonText="Akzeptieren"
+          declineButtonText="Ablehnen"
+          cookieName="Cookie"
+          style={{ background: "#2B373B" }}
+          buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+          expires={150}
+        >
+          This website uses cookies to enhance the user experience.{" "}
+        </CookieConsent>
         <div className="my-48">
           <HeroSection />
-        </div>
-        <div className="my-32">
-          <Features />
         </div>
       </Container>
     </div>

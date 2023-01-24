@@ -1,10 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
 const navigation = {
     main: [
-      { name: 'Impressum', href: '#' },
-      { name: 'AGB', href: '#' },
-      { name: 'Datenschutz', href: '#' },
-      { name: 'Hilfe', href: '#' },
+      { name: 'Impressum', href: '/impressum' },
+      { name: 'Hilfe', href: '/hilfe' },
     ]
 }
   
@@ -15,7 +13,7 @@ const navigation = {
           <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             {navigation.main.map((item) => (
               <div key={item.name} className="px-5 py-2">
-                <a href={item.href} className="text-base link-primary hover:text-gray-700 dark:hover:text-gray-200">
+                <a href={item.href} className="text-base link-primary hover:text-gray-700">
                   {item.name}
                 </a>
               </div>

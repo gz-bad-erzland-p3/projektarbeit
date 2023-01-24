@@ -55,11 +55,11 @@ html {
 }
 
 body {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-200;
+    @apply bg-white text-gray-900 transition-all duration-200;
 }
 
 .form-input {
-    @apply rounded-none focus:ring-0 focus:ring-offset-0 focus:border-green-600 bg-gray-100 dark:bg-gray-800 dark:text-white hover:border-green-600 border-0 border-b-2 border-gray-500 text-gray-900 text-base focus:border-b-2 outline-none py-2 px-4 m-0;
+    @apply rounded-none focus:ring-0 focus:ring-offset-0 focus:border-green-600 bg-gray-100 hover:border-green-600 border-0 border-b-2 border-gray-500 text-gray-900 text-base focus:border-b-2 outline-none py-2 px-4 m-0;
     --tw-ring-shadow: none !important;
     --tw-ring-offset-shadow: none !important;
     transition: background 200ms ease, border 200ms ease;
@@ -136,7 +136,7 @@ button {
 }
 
 .navbar-sl {
-    @apply py-2 bg-gray-100 dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm shadow-md;
+    @apply py-2 bg-gray-100 bg-opacity-80 backdrop-blur-sm shadow-md;
 }
 
 .tooltip {
