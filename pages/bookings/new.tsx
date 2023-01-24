@@ -132,11 +132,11 @@ export default function NewBooking() {
                 templateParams.Name = (snapshot.val().Name);
                 templateParams.Vorname = (snapshot.val().Vorname);
                 send('service_hs19w57', 'template_xl148t9', templateParams, '5fMJGYQBc902cFst3')
-                .then((result: any) => {
-                    console.log(result.text);
-                }, (error: any) => {
-                    console.log(error.text);
-                });
+                    .then((result: any) => {
+                        console.log(result.text);
+                    }, (error: any) => {
+                        console.log(error.text);
+                    });
             } else {
                 console.log("No data available");
             }
@@ -192,7 +192,18 @@ export default function NewBooking() {
         setCurrentStep(currentStep + 1)
         set(ref(db, 'bookings/' + bookingId), booking);
     }
-    
+
+    function validateTime() {
+        const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
+        const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
+
+        if (endTimeCurrent - startTimeCurrent > 7200) {
+            setCurrentStep(currentStep + 1)
+        } else {
+            toast.error("Die Mindestmietdauer beträgt 2h");
+        }
+    }
+
     return (
         <div>
             <Head>
@@ -224,7 +235,7 @@ export default function NewBooking() {
                                             <DropDown title="Endzeit" items={bookingTimes} FirebaseKey="Endzeit" />
                                         </FormItem>
                                         <FormItem width="1/4">
-                                            {dateIsValid && <button className="button-primary w-full mt-8" onClick={() => setCurrentStep(currentStep + 1)} >Jetzt suchen &rarr;</button>}
+                                            {dateIsValid && <button className="button-primary w-full mt-8" onClick={() => validateTime()} >Jetzt suchen &rarr;</button>}
                                         </FormItem>
                                     </FormSection>
                                 </FormContainer>
@@ -376,7 +387,7 @@ export default function NewBooking() {
                                         {uid ? <p>Sie sind erfolgreich angemeldet</p> : <Login site={false} />}
                                     </FormSection>
                                     <FormContainerEnd>
-                                        {user.user.email && <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Zur Übersicht &rarr;</button>}
+                                        {user.user.email && <button className="button-primary w-full" onClick={() => reservate()} >Für den Zahlungsprozess Reservieren und Bezahlen&rarr;</button>}
                                     </FormContainerEnd>
                                 </FormContainer>
                             }
