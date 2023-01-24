@@ -25,11 +25,11 @@ export default function HeroSection() {
               </div>
               <div>
                 <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
-                  Gemeindezentrum <br /> Bad Erzland
+                  Office-Sharing<br /> Bad Erzland
                 </h1>
                 <div className="mt-8 flex gap-x-4 sm:justify-center">
                   <button onClick={handleClick} className='ml-2 text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
-                    Jetzt mieten! &rarr;
+                    Arbeitsplatz mieten &rarr;
                   </button>
                 </div>
               </div>

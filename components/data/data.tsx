@@ -19,7 +19,7 @@ export const geraete = [
   { id: '3', title: "Barebone", specifications: ["Intel® Pentium G4400T", "Intel UHD 610", "8GB DDR4", "256GB SSD", "VGA, HDMI, DP, USB 3.0 (3x) usb 2.0 (3X)", "Audio In / Out",], price: "4,50", icon: faServer }
 ]
 
-export const standard = ["1 Gig LAN oder WLAN", "Fujitsu Bildschirm", "Fujitsu Maus", "Fujitsu Tastatur"]
+export const standard = ["1GB LAN oder WLAN", "Fujitsu Bildschirm", "Fujitsu Maus", "Fujitsu Tastatur"]
 
 export const betriebssysteme = [
   { id: '1', title: "Windows 11", description: "Version 22H2", icon: faWindows },

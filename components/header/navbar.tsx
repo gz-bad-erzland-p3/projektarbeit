@@ -87,7 +87,7 @@ export default function Navbar() {
           <div className="hidden items-center justify-end md:flex-1 md:flex lg:w-0">
             {
               user.user.email == null && <Link href='/login'>
-              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-none text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600 outline-none'>
+              <button className='ml-2 px-4 py-2 inline-flex items-center rounded-none text-base font-medium hover:bg-gray-200 outline-none'>
                 Anmelden
               </button>
             </Link>
