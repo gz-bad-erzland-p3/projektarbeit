@@ -5,10 +5,12 @@ import { get, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { db } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
+import BookingModal from "./bookingmodal";
 
 export default function UserDescription(props: any) {
     const [userdata, setUserdata] = useState(Object);
     const [userBookings, setUserBookings] = useState(Object);
+    const [open1, setOpen1] = useState(false);
 
     //TODO: changeUserData(...) siehe AuthContext
 
@@ -33,6 +35,7 @@ export default function UserDescription(props: any) {
                 for (const key in bookings) {
                     if (bookings.hasOwnProperty(key)) {
                         if (bookings[key]["UserID"] == auth.user.uid) {
+                            bookings[key]["BookingId"] = key
                             selected.push(bookings[key])
                         }
                     }
@@ -125,9 +128,11 @@ export default function UserDescription(props: any) {
                                             <button
                                                 type="button"
                                                 className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                onClick={() => setOpen1(true)}
                                             >
                                                 Stornieren
                                             </button>
+                                            <BookingModal open={open1} setOpen={setOpen1} booking={item}/>
                                         </div>
                                     </li>)
                                     : <p>Keine Buchungen</p>

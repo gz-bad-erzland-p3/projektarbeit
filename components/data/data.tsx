@@ -9,8 +9,8 @@ export const bookingSteps = [
   { id: '2', name: 'Arbeitsplatztyp', href: '#' },
   { id: '3', name: 'Konfiguration', href: '#' },
   { id: '4', name: 'Anmelden oder Registrieren', href: '#' },
-  { id: '5', name: 'Ihre Daten', href: '#' },
-  { id: '6', name: 'Zahlung', href: '#' },
+  { id: '5', name: 'Zahlung', href: '#' },
+  { id: '6', name: 'Bestätigung', href: '#' },
 ]
 
 export const geraete = [
