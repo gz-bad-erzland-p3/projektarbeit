@@ -10,7 +10,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function BringYourOwnDevice(props: any) {
-    const items: any[] = [{ id: "0", title: "Ich habe ein eigenes Gerät", value: false }, { id: "1", title: "Ich brauche ein Gerät", value: true }];
+    const items: any[] = [{ id: "0", title: "Ich habe ein eigenes Gerät", value: false }, { id: "1", title: "Ich brauche ein Gerät", value: true, specifications: ["+ 4,50€/Stunde"] }];
     const byod = props.byod;
     const setByod = props.setByod;
 
@@ -45,8 +45,7 @@ export default function BringYourOwnDevice(props: any) {
                                                     item.specifications.map((specification: any, index: Key | null | undefined) => (
                                                         <div key={index}>
                                                             {specification ?
-                                                                <RadioGroup.Description as="span" className="mt-1 flex text-left items-center text-sm text-gray-500">
-                                                                    <ChevronRightIcon className='h-4 w-4 mr-1' /> {specification}
+                                                                <RadioGroup.Description as="span" className="mt-1 flex text-left items-center text-sm text-gray-500">{specification}
                                                                 </RadioGroup.Description> : ""}
                                                         </div>
                                                     ))}
@@ -56,12 +55,6 @@ export default function BringYourOwnDevice(props: any) {
                                             <RadioGroup.Description as="span" className="mt-1 flex text-left items-center text-sm text-gray-500">
                                                 {item.description}
                                             </RadioGroup.Description>
-                                        </div>
-                                        <div className='flex h-full items-end'>
-                                            {item.price ?
-                                                <RadioGroup.Description as="p" className="mt-6 text-left text-sm font-medium text-gray-900">
-                                                    + {item.price}€ / Tag
-                                                </RadioGroup.Description> : ""}
                                         </div>
                                     </div>
                                 </div>

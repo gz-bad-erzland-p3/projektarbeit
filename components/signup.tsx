@@ -124,6 +124,7 @@ const SignupPage = (props: any) => {
                             rules={["minLength", "specialChar", "number", "capital", "match"]}
                             minLength={8}
                             value={password}
+                            className="text-start"
                             valueAgain={passwordAgain}
                             onChange={(isValid) => { }}
                             messages={{
