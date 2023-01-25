@@ -19,7 +19,7 @@ const LoginPage = () => {
             </Head>
             <Container>
                 <div className="flex justify-center w-screen">
-                    <div className="flex flex-col px-6 max-w-7xl w-screen">
+                    <div className="flex flex-col px-6 max-w-4xl w-screen">
                         <UserDescription></UserDescription>
                     </div>
                 </div>

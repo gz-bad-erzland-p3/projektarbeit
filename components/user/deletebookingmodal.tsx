@@ -5,22 +5,17 @@ import { ExclamationCircleIcon, ExclamationTriangleIcon } from '@heroicons/react
 import { ref, set } from 'firebase/database'
 import { db } from '../../config/firebase'
 import { useRouter } from 'next/router'
-import { useAuth } from '../../context/AuthContext'
-import { getAuth } from 'firebase/auth'
 
-export default function ProfileDeleteModal(props: any) {
-  const router = useRouter()
+export default function DeleteBookingModal(props: any) {
+    const router = useRouter()
   const cancelButtonRef = useRef(null)
-  const user = useAuth();
-  const { deleteAccount } = useAuth();
 
-  function deleteProfile(){
+  function cancelBooking(){
     props.setOpen(false)
-    console.log(user.user.uid)
-    const auth = getAuth();
-    const userr = auth.currentUser;
-    deleteAccount(userr);
-    router.reload()
+    set(ref(db, 'bookings/' + props.booking.BookingId), {
+        
+      });
+      router.reload()
   }
 
   return (
@@ -59,11 +54,11 @@ export default function ProfileDeleteModal(props: any) {
                 </div>
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                   <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                    Konto löschen
+                    Bungung löschen
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Möchten Sie wirklich Ihr Konto mit Ihren gesamten Buchungen löschen?
+                      Wollen Sie die Buchung vom {props.booking.Startdatum} um {props.booking.Startzeit} bis <br /> {props.booking.Enddatum} um {props.booking.Endzeit} wirklich stornieren?
                     </p>
                   </div>
                 </div>
@@ -72,9 +67,9 @@ export default function ProfileDeleteModal(props: any) {
                 <button
                   type="button"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  onClick={() => deleteProfile()}
+                  onClick={() => cancelBooking()}
                 >
-                  Konto löschen
+                  Stornieren
                 </button>
                 <button
                   type="button"

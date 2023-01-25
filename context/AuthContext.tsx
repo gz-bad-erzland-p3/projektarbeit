@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, deleteUser, getAuth, EmailAuthProvider, reauthenticateWithPopup, reauthenticateWithCredential } from "firebase/auth";
+import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, deleteUser, getAuth, EmailAuthProvider, reauthenticateWithPopup, reauthenticateWithCredential, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, db } from "../config/firebase";
 import { ref, set } from "firebase/database";
 import { toast } from "react-toastify";
@@ -13,6 +13,8 @@ interface UserType {
 const AuthContext = createContext({});
 
 export const useAuth = () => useContext<any>(AuthContext);
+const provider = new GoogleAuthProvider();
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserType>({ email: null, uid: null });
@@ -58,20 +60,29 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         console.log(error.text);
       });
 
-    
+
     return;
   };
 
   const deleteAccount = async (userr: any) => {
     //await reauthenticateWithCredential(userr,)
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log("huuh")
+      }).catch((error) => {
+        console.log("mähh")
+      });
     set(ref(db, 'users/' + userr.uid), {});
+
     await deleteUser(userr).then(() => {
       toast.error("Ihr Benutzer wurde erfolgreich gelöscht")
     }).catch((error) => {
       toast.error("Ihr Benutzer konnte nicht gelöscht werden. Bitte melden Sie sich neu an und versuchen es erneut.")
     });
+
+    //TODO: delete all bookings from this user
   }
-  
+
   const logIn = (email: string, password: string) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -86,19 +97,13 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     await sendPasswordResetEmail(auth, email)
   }
 
-  const changeUserData = async (email: string, name: string, prename: string, birthday: string, address_formatted: string, place_id: string) => {
-    set(ref(db, 'users/' + user.uid), {
-      Name: name,
-      Email: email,
-      Vorname: prename,
-      Geburtsdatum: birthday,
-      Adresse_Formatiert: address_formatted,
-      Adresse_GooglePlaceId: place_id
-    });
+  const changeUserAddress = async (address_formatted: string, place_id: string) => {
+    set(ref(db, 'users/' + user.uid + '/Adresse_Formatiert/'), address_formatted);
+    set(ref(db, 'users/' + user.uid + '/Adresse_GooglePlaceId/'), place_id);
   }
 
   return (
-    <AuthContext.Provider value={{ user, signUp, logIn, logOut, forgotPassword, changeUserData, deleteAccount }}>
+    <AuthContext.Provider value={{ user, signUp, logIn, logOut, forgotPassword, changeUserAddress, deleteAccount }}>
       {loading ? null : children}
     </AuthContext.Provider>
   );

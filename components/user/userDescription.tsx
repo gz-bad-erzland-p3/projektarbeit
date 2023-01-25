@@ -5,14 +5,20 @@ import { get, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { db } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
-import BookingModal from "./bookingmodal";
-import ProfileDeleteModal from "./profiledeletemodal";
+import ChangeAddressModal from "./changeaddressmodal";
+import DeleteBookingModal from "./deletebookingmodal";
+import DeleteProfileModal from "./deleteprofilemodal";
+import ResetPasswordModal from "./resetpasswordmodal";
+import ShowBookingModal from "./showbookingmodal";
 
 export default function UserDescription(props: any) {
     const [userdata, setUserdata] = useState(Object);
     const [userBookings, setUserBookings] = useState(Object);
+    const [open0, setOpen0] = useState(false);
     const [open1, setOpen1] = useState(false);
     const [open2, setOpen2] = useState(false);
+    const [open3, setOpen3] = useState(false);
+    const [open4, setOpen4] = useState(false);
 
     //TODO: changeUserData(...) siehe AuthContext
 
@@ -76,14 +82,6 @@ export default function UserDescription(props: any) {
                         <dt className="text-sm font-medium text-gray-500">E-Mail</dt>
                         <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             <span className="flex-grow">{userdata.Email}</span>
-                            <span className="ml-4 flex-shrink-0">
-                                <button
-                                    type="button"
-                                    className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Ändern
-                                </button>
-                            </span>
                         </dd>
                     </div>
                     <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
@@ -100,9 +98,27 @@ export default function UserDescription(props: any) {
                                 <button
                                     type="button"
                                     className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    onClick={() => setOpen3(true)}
                                 >
                                     Ändern
                                 </button>
+                                <ChangeAddressModal open={open3} setOpen={setOpen3}></ChangeAddressModal>
+                            </span>
+                        </dd>
+                    </div>
+                    <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+                        <dt className="text-sm font-medium text-gray-500">Passwort</dt>
+                        <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <span className="flex-grow">*********</span>
+                            <span className="ml-4 flex-shrink-0">
+                                <button
+                                    type="button"
+                                    className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    onClick={() => setOpen4(true)}
+                                >
+                                    Zurücksetzen
+                                </button>
+                                <ResetPasswordModal open={open4} setOpen={setOpen4} Email={userdata.Email}></ResetPasswordModal>
                             </span>
                         </dd>
                     </div>
@@ -121,9 +137,11 @@ export default function UserDescription(props: any) {
                                             <button
                                                 type="button"
                                                 className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                onClick={() => setOpen0(true)}
                                             >
                                                 Anzeigen
                                             </button>
+                                            <ShowBookingModal open={open0} setOpen={setOpen0} booking={item}></ShowBookingModal>
                                             <span className="text-gray-300" aria-hidden="true">
                                                 |
                                             </span>
@@ -134,7 +152,7 @@ export default function UserDescription(props: any) {
                                             >
                                                 Stornieren
                                             </button>
-                                            <BookingModal open={open1} setOpen={setOpen1} booking={item}/>
+                                            <DeleteBookingModal open={open1} setOpen={setOpen1} booking={item}/>
                                         </div>
                                     </li>)
                                     : <p>Keine Buchungen</p>
@@ -145,9 +163,9 @@ export default function UserDescription(props: any) {
                                 className="mt-10 bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 onClick={() => setOpen2(true)}
                             >
-                                Dein Konto löschen
+                                <br />Konto löschen
                             </button>
-                            <ProfileDeleteModal open={open2} setOpen={setOpen2} />
+                            <DeleteProfileModal open={open2} setOpen={setOpen2} />
                         </dd>
                     </div>
                 </dl>

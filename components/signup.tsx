@@ -145,7 +145,7 @@ const SignupPage = (props: any) => {
                                         setPlaceId(place.place_id)
                                     }}
                                     options={{
-                                        types: ['address'],//oder "street_address" weil ist bis jetzt ohne nr siehe https://developers.google.com/maps/documentation/places/web-service/autocomplete
+                                        types: ['street_address'],//oder "street_address" weil ist bis jetzt ohne nr siehe https://developers.google.com/maps/documentation/places/web-service/autocomplete
                                         componentRestrictions: { country: "de" },
                                     }}
                                     className="block w-full ring-1 ring-gray-300 h-9 rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
