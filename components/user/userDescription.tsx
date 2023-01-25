@@ -62,7 +62,7 @@ export default function UserDescription(props: any) {
         <>
             <div>
                 <h3 className="text-lg leading-6 font-medium text-gray-900">Ihre Benutzerdaten</h3>
-                <p className="mt-1 max-w-2xl text-sm text-gray-500">Hier kannst du deine Benutzer- und Buchungsdaten sehen und dein Passwort ändern</p>
+                <p className="mt-1 max-w-3xl text-sm text-gray-500">Hier kannst du deine Benutzer- und Buchungsdaten sehen, deine Adresse ändern und dein Passwort zurücksetzen</p>
             </div>
             <div className="mt-5 border-t border-gray-200">
                 <dl className="divide-y divide-gray-200">
