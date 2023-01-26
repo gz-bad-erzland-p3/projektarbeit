@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext"
 import { useRouter } from "next/router";
 import Autocomplete from "react-google-autocomplete";
 import dynamic from 'next/dynamic';
-import { setBookingValue } from "../pages/bookings/new";
 import { toast } from "react-toastify";
 const ReactPasswordChecklist = dynamic(() => import('react-password-checklist'), {
     ssr: false,
@@ -59,6 +58,7 @@ const SignupPage = (props: any) => {
                                     type="text"
                                     {...register("name", { required: "Ihr Nachname wird zur Registrierung benötigt." })}
                                     id="name"
+                                    autoComplete="family-name"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Name"
                                 />
@@ -70,6 +70,7 @@ const SignupPage = (props: any) => {
                                     type="text"
                                     {...register("prename", { required: "Ihr Vorname wird zur Registrierung benötigt." })}
                                     id="prename"
+                                    autoComplete="given-name"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Vorname"
                                 />
@@ -81,6 +82,7 @@ const SignupPage = (props: any) => {
                                     type="date"
                                     {...register("birthday", { required: "Ihr Geburtsdatum wird zur Registrierung benötigt." })}
                                     id="birthday"
+                                    autoComplete="bday"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Geburtsdatum"
                                 />
@@ -92,6 +94,7 @@ const SignupPage = (props: any) => {
                                     type="email"
                                     {...register("email", { required: "Ihre Email-Adresse wird zur Registrierung benötigt. An diese wird nach erfolgreicher Buchung eine Bestätigungsmail gesendet." })}
                                     id="email"
+                                    autoComplete="email"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Email"
                                 />
@@ -103,6 +106,7 @@ const SignupPage = (props: any) => {
                                     type="password"
                                     {...register("password", { required: "Ihr Passwort wird zur Registrierung benötigt." })}
                                     id="password1"
+                                    autoComplete="new-password"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Passwort"
                                     onChange={e => setPassword(e.target.value)} />
@@ -114,6 +118,7 @@ const SignupPage = (props: any) => {
                                     type="password"
                                     {...register("password_confirm", { required: "Verify your password", })}
                                     id="password2"
+                                    autoComplete="new-password"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Passwort"
                                     onChange={e => setPasswordAgain(e.target.value)}
