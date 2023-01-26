@@ -401,7 +401,7 @@ export default function NewBooking() {
                                     </FormSection>
 
                                     <FormContainerEnd>
-                                        {payment ? <button className="button-primary w-full" onClick={sendBooking}>Jetzt bezahlen &rarr;</button> : ""}
+                                        {payment ? <button className="button-primary w-full" onClick={sendBooking}>Jetzt Buchung abschließen &rarr;</button> : ""}
                                     </FormContainerEnd>
                                 </FormContainer>
                             }

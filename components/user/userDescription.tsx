@@ -125,7 +125,7 @@ export default function UserDescription(props: any) {
                     <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
                         <dt className="text-sm font-medium text-gray-500">Buchungen</dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            <ul role="list" className="border border-gray-200 rounded-md divide-y divide-gray-200">
+                            <ul role="list" className="border border-gray-200 rounded-none divide-y divide-gray-200">
                                 {Array.isArray(userBookings)
                                     ? userBookings.map((item: any) =>
                                         <li key={item} className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
@@ -136,7 +136,7 @@ export default function UserDescription(props: any) {
                                             <div className="ml-4 flex-shrink-0 flex space-x-4">
                                                 <button
                                                     type="button"
-                                                    className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                    className="bg-white rounded-none font-medium text-green-600 hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                                     onClick={() => setOpen0(true)}
                                                 >
                                                     Anzeigen
@@ -147,7 +147,7 @@ export default function UserDescription(props: any) {
                                                 </span>
                                                 <button
                                                     type="button"
-                                                    className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                    className="bg-white rounded-none font-medium text-green-600 hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                                     onClick={() => setOpen1(true)}
                                                 >
                                                     Stornieren

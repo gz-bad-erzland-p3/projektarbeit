@@ -10,7 +10,7 @@ export default function MainContainer(props: { [x: string]: any; children: any; 
         <div className='sticky top-0 w-full z-50'>
           <Navbar />
         </div>
-        <div className='py-20'>
+        <div>
           {children}
         </div>
       </main>
