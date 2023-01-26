@@ -45,7 +45,7 @@ export const paymentMethods = [
   { id: '3', title: "Überweisung", description: "Vorkasse per Überweisung", }
 ]
 
-export const bookingTimes = getTimeInSteps(new Date("1970-01-01T07:00:00.00"), new Date("1970-01-01T20:00:00.00"), 15)
+export const bookingTimes = getTimeInSteps(new Date("1970-01-01T06:45:00.00"), new Date("1970-01-01T20:00:00.00"), 15)
 
 function getTimeInSteps(startTime: Date, endTime: Date, steps: number) {
 
@@ -55,7 +55,7 @@ function getTimeInSteps(startTime: Date, endTime: Date, steps: number) {
 
   for (let i = 0; i < (timeDiff / steps); i++) {
     finalTime = new Date(finalTime.getTime() + (steps * 60 * 1000));
-    times.push(finalTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    times.push(finalTime.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false }));
   }
 
   return times;

@@ -28,6 +28,7 @@ import { toast } from "react-toastify";
 import animationData from '../../lotties/check.json';
 import { send } from "@emailjs/browser";
 import Countdown from "react-countdown";
+import { useRouter } from "next/router";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -50,18 +51,30 @@ export default function NewBooking() {
     const [bs2, setBs2] = useState(null);
     const [payment, setPayment] = useState(null)
     const [dateIsValid, setDateIsValid] = useState(false)
+    const router = useRouter();
 
-    const Completionist = () => <span>You are good to go!</span>;
+    const [counter, setCounter] = useState(1200);
 
-    const renderer = (hours:any, minutes:any, seconds:any, completed:any) => {
-        if (completed) {
-          // Render a completed state
-          return <Completionist />;
-        } else {
-          // Render a countdown
-          return <span>{hours}:{minutes}:{seconds}</span>;
+    useEffect(() => {
+        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    }, [counter]);
+
+    function secondsToHms(d: number) {
+        d = Number(d);
+
+        if(d == 0) {
+            router.push("/")
+            return "Zeit abgelaufen"
         }
-      };
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+    
+        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+        var mDisplay = m > 0 ? m + ":" : "00 : ";
+        var sDisplay = s > 0 ? s + "" : "00";
+        return hDisplay + mDisplay + sDisplay; 
+    }
 
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
 
@@ -227,6 +240,9 @@ export default function NewBooking() {
                 <div className="flex justify-center mx-auto">
                     <div className="grow max-w-7xl px-4 sm:px-6 ">
                         <div>
+                            <div className="text-lg">
+                                Verbleibende Zeit für Buchung: <span className="font-bold">{secondsToHms(counter)}</span>
+                            </div>
                             <div className="py-4">
                                 {
                                     currentStep > 1 && currentStep < 6 ?
@@ -408,9 +424,6 @@ export default function NewBooking() {
                                 currentStep == 5 &&
                                 <FormContainer title="Zahlung">
                                     <FormSection>
-                                    <Countdown date={Date.now() + 500000000}>
-                                        <p>Huhu</p>
-                                    </Countdown>
                                         <FormItem title="Zahlungsmittel">
                                             <RadioButtons setValue={setPayment} items={paymentMethods} FirebaseKey="Bezahlmethode" />
                                         </FormItem>
