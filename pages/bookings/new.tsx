@@ -27,6 +27,7 @@ import { toast } from "react-toastify";
 //import Lottie from 'react-lottie';
 import animationData from '../../lotties/check.json';
 import { send } from "@emailjs/browser";
+import Countdown from "react-countdown";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -49,6 +50,18 @@ export default function NewBooking() {
     const [bs2, setBs2] = useState(null);
     const [payment, setPayment] = useState(null)
     const [dateIsValid, setDateIsValid] = useState(false)
+
+    const Completionist = () => <span>You are good to go!</span>;
+
+    const renderer = (hours:any, minutes:any, seconds:any, completed:any) => {
+        if (completed) {
+          // Render a completed state
+          return <Completionist />;
+        } else {
+          // Render a countdown
+          return <span>{hours}:{minutes}:{seconds}</span>;
+        }
+      };
 
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
 
@@ -395,6 +408,9 @@ export default function NewBooking() {
                                 currentStep == 5 &&
                                 <FormContainer title="Zahlung">
                                     <FormSection>
+                                    <Countdown date={Date.now() + 500000000} renderer={renderer}>
+                                        <p>Huhu</p>
+                                    </Countdown>
                                         <FormItem title="Zahlungsmittel">
                                             <RadioButtons setValue={setPayment} items={paymentMethods} FirebaseKey="Bezahlmethode" />
                                         </FormItem>
