@@ -71,9 +71,14 @@ const Login = (props: any) => {
                                 <button type="submit" id="btnLogin" className='button-primary'>
                                     Anmelden &rarr;
                                 </button>
-                                <button type="button" id="btnLogin" onClick={updateSignUp} className='button-secondary'>
+                                {props.notShowRegister ?
+                                    <div></div>
+                                    :
+                                    <button type="button" id="btnLogin" onClick={updateSignUp} className='button-secondary'>
                                     Registrieren &rarr;
-                                </button>
+                                    </button>
+                                }
+                                
                             </div>
                         </div>
                     </form>
