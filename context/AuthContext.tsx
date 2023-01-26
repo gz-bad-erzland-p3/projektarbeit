@@ -66,20 +66,15 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
 
   const deleteAccount = async (userr: any) => {
     //await reauthenticateWithCredential(userr,)
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log("huuh")
-      }).catch((error) => {
-        console.log("mähh")
-      });
+      await deleteUser(userr).then(() => {
+          toast.error("Ihr Benutzer wurde erfolgreich gelöscht")
+        }).catch((error) => {
+          toast.error("Ihr Benutzer konnte nicht gelöscht werden. Bitte melden Sie sich neu an und versuchen es erneut.")
+        });
+        
     set(ref(db, 'users/' + userr.uid), {});
 
-    await deleteUser(userr).then(() => {
-      toast.error("Ihr Benutzer wurde erfolgreich gelöscht")
-    }).catch((error) => {
-      toast.error("Ihr Benutzer konnte nicht gelöscht werden. Bitte melden Sie sich neu an und versuchen es erneut.")
-    });
-
+    
     //TODO: delete all bookings from this user
   }
 

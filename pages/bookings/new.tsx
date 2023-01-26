@@ -408,7 +408,7 @@ export default function NewBooking() {
                                 currentStep == 5 &&
                                 <FormContainer title="Zahlung">
                                     <FormSection>
-                                    <Countdown date={Date.now() + 500000000} renderer={renderer}>
+                                    <Countdown date={Date.now() + 500000000}>
                                         <p>Huhu</p>
                                     </Countdown>
                                         <FormItem title="Zahlungsmittel">

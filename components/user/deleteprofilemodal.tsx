@@ -7,6 +7,7 @@ import { db } from '../../config/firebase'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../context/AuthContext'
 import { getAuth } from 'firebase/auth'
+import Login from '../login'
 
 export default function DeleteProfileModal(props: any) {
   const router = useRouter()
@@ -65,6 +66,7 @@ export default function DeleteProfileModal(props: any) {
                     <p className="text-sm text-gray-500">
                       Möchten Sie wirklich Ihr Konto mit Ihren gesamten Buchungen löschen?
                     </p>
+                    <Login site={false}></Login>
                   </div>
                 </div>
               </div>
