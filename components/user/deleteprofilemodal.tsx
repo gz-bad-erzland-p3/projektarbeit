@@ -66,7 +66,7 @@ export default function DeleteProfileModal(props: any) {
                     <p className="text-sm text-gray-500">
                       Möchten Sie wirklich Ihr Konto mit Ihren gesamten Buchungen löschen?
                     </p>
-                    <Login site={false}></Login>
+                    <Login site={false} notShowRegister={true}></Login>
                   </div>
                 </div>
               </div>
