@@ -53,7 +53,7 @@ export default function NewBooking() {
     const [dateIsValid, setDateIsValid] = useState(false)
     const router = useRouter();
 
-    const [counter, setCounter] = useState(1200);
+    const [counter, setCounter] = useState(30);
 
     useEffect(() => {
         counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
@@ -63,6 +63,7 @@ export default function NewBooking() {
         d = Number(d);
 
         if(d == 0) {
+            set(ref(db, 'bookings/' + bookingId), {});
             router.push("/")
             return "Zeit abgelaufen"
         }
