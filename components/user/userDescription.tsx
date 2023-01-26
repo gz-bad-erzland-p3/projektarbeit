@@ -97,7 +97,7 @@ export default function UserDescription(props: any) {
                             <span className="ml-4 flex-shrink-0">
                                 <button
                                     type="button"
-                                    className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    className="link-main"
                                     onClick={() => setOpen3(true)}
                                 >
                                     Ändern
@@ -113,7 +113,7 @@ export default function UserDescription(props: any) {
                             <span className="ml-4 flex-shrink-0">
                                 <button
                                     type="button"
-                                    className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    className="link-main"
                                     onClick={() => setOpen4(true)}
                                 >
                                     Zurücksetzen
@@ -126,41 +126,41 @@ export default function UserDescription(props: any) {
                         <dt className="text-sm font-medium text-gray-500">Buchungen</dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             <ul role="list" className="border border-gray-200 rounded-md divide-y divide-gray-200">
-                                {Array.isArray(userBookings) 
+                                {Array.isArray(userBookings)
                                     ? userBookings.map((item: any) =>
-                                    <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                                        <div className="w-0 flex-1 flex items-center">
-                                            <CalendarDaysIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
-                                            <span className="ml-2 flex-1 w-0 truncate">Buchung vom {item.Startdatum} um {item.Startzeit} bis zum {item.Enddatum} um {item.Endzeit}</span>
-                                        </div>
-                                        <div className="ml-4 flex-shrink-0 flex space-x-4">
-                                            <button
-                                                type="button"
-                                                className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                onClick={() => setOpen0(true)}
-                                            >
-                                                Anzeigen
-                                            </button>
-                                            <ShowBookingModal open={open0} setOpen={setOpen0} booking={item}></ShowBookingModal>
-                                            <span className="text-gray-300" aria-hidden="true">
-                                                |
-                                            </span>
-                                            <button
-                                                type="button"
-                                                className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                onClick={() => setOpen1(true)}
-                                            >
-                                                Stornieren
-                                            </button>
-                                            <DeleteBookingModal open={open1} setOpen={setOpen1} booking={item}/>
-                                        </div>
-                                    </li>)
+                                        <li key={item} className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                            <div className="w-0 flex-1 flex items-center">
+                                                <CalendarDaysIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                <span className="ml-2 flex-1 w-0 truncate">Buchung vom {item.Startdatum} um {item.Startzeit} bis zum {item.Enddatum} um {item.Endzeit}</span>
+                                            </div>
+                                            <div className="ml-4 flex-shrink-0 flex space-x-4">
+                                                <button
+                                                    type="button"
+                                                    className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                    onClick={() => setOpen0(true)}
+                                                >
+                                                    Anzeigen
+                                                </button>
+                                                <ShowBookingModal open={open0} setOpen={setOpen0} booking={item}></ShowBookingModal>
+                                                <span className="text-gray-300" aria-hidden="true">
+                                                    |
+                                                </span>
+                                                <button
+                                                    type="button"
+                                                    className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                    onClick={() => setOpen1(true)}
+                                                >
+                                                    Stornieren
+                                                </button>
+                                                <DeleteBookingModal open={open1} setOpen={setOpen1} booking={item} />
+                                            </div>
+                                        </li>)
                                     : <p>Keine Buchungen</p>
                                 }
                             </ul>
                             <button
                                 type="button"
-                                className="mt-10 bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                className="link-main"
                                 onClick={() => setOpen2(true)}
                             >
                                 <br />Konto löschen

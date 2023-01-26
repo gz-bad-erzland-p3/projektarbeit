@@ -45,7 +45,7 @@ export const paymentMethods = [
   { id: '3', title: "Überweisung", description: "Vorkasse per Überweisung", }
 ]
 
-export const bookingTimes = getTimeInSteps(new Date("1970-01-01T08:00:00.00"), new Date("1970-01-01T20:00:00.00"), 15)
+export const bookingTimes = getTimeInSteps(new Date("1970-01-01T07:00:00.00"), new Date("1970-01-01T20:00:00.00"), 15)
 
 function getTimeInSteps(startTime: Date, endTime: Date, steps: number) {
 
