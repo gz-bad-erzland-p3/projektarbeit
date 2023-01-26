@@ -1,12 +1,4 @@
-/* This example requires Tailwind CSS v2.0+ */
-const people = [
-    { name: 'Arbeitsplatz', title: 'Front-end Developer' },
-    { name: 'Zahlungsmethode', title: 'Front-end Developer' },
-    { name: 'Lindsay Walton', title: 'Front-end DeveloperDeveloperDeveloperD' },
-    // More people...
-  ]
-  
-  export default function BookingList(props:any) {
+export default function BookingList(props:any) {
     const booking: Object[] = []
     Object.keys(props.booking).forEach(key => {
         const item = {name: key, value: props.booking[key]}

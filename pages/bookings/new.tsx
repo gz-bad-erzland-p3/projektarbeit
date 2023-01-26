@@ -39,6 +39,11 @@ export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
 }
 
+export const deleteBookingValue = (prop: any) => {
+    if (prop in booking) {
+        delete booking[prop]
+    }
+}
 
 export default function NewBooking() {
     const [allBookings, setAllBookings] = useState(Object);
@@ -65,7 +70,7 @@ export default function NewBooking() {
     function secondsToHms(d: number) {
         d = Number(d);
 
-        if(d == 0) {
+        if (d == 0) {
             set(ref(db, 'bookings/' + bookingId), {});
             router.push("/")
             return "Zeit abgelaufen"
@@ -73,11 +78,11 @@ export default function NewBooking() {
         var h = Math.floor(d / 3600);
         var m = Math.floor(d % 3600 / 60);
         var s = Math.floor(d % 3600 % 60);
-    
+
         var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
         var mDisplay = m > 0 ? m + ":" : "00 : ";
         var sDisplay = s > 0 ? s + "" : "00";
-        return hDisplay + mDisplay + sDisplay; 
+        return hDisplay + mDisplay + sDisplay;
     }
 
     const uid = auth.currentUser == null ? "" : auth.currentUser.uid;
@@ -112,7 +117,7 @@ export default function NewBooking() {
         if (workingPlaceType == 2) price = price + 18
         if (byod1 == true) price = price + 4.50
         if (byod2 == true) price = price + 4.50
-        setBookingValue(price,"Preis")
+        setBookingValue(price, "Preis")
         return price.toFixed(2);
     }
 
@@ -142,7 +147,19 @@ export default function NewBooking() {
         setWorkingPlaceType(type);
     }
 
+    function handleByodChange() {
+        if (booking.Byod1 == "false") {
+            deleteBookingValue("Byod1")
+            deleteBookingValue("Geraet1")
+            deleteBookingValue("Betriebssystem1")
+            deleteBookingValue("Browser1")
+            deleteBookingValue("Bemerkungen1")
+            deleteBookingValue("Kommunikationsapplikationen1")
+        }
+    }
+
     function sendBooking() {
+        setBookingValue("Zahlung erfolgreich", "Status")
         setCurrentStep(currentStep + 1)
         toast.success("Buchung erfolgreich ausgeführt!")
         set(ref(db, 'bookings/' + bookingId), booking);
@@ -191,10 +208,13 @@ export default function NewBooking() {
             if (allBookings.hasOwnProperty(key)) {
                 const startTime = convertDateAndTimeToUnix(allBookings[key]["Startdatum"], allBookings[key]["Startzeit"])
                 const endTime = convertDateAndTimeToUnix(allBookings[key]["Enddatum"], allBookings[key]["Endzeit"])
-                //Wenn die aktuelle auswahl in der Zeitspanne einer bereits gespeicherten Buchung liegt, ...
-                if (startTimeCurrent <= endTime && endTimeCurrent >= startTime) {
-                    //Sollen die Arbeitsplätze addiert werden
-                    numOfWorkingplaces = numOfWorkingplaces + Number(allBookings[key]["Arbeitsplatztyp"])
+                //Wenn die gespeicherte Buchung bezahlt ist
+                if (allBookings[key]["Status"] !== "Zahlung offen") {
+                    //Wenn die aktuelle auswahl in der Zeitspanne der bereits gespeicherten Buchung liegt, ...
+                    if (startTimeCurrent <= endTime && endTimeCurrent >= startTime) {
+                        //Sollen die Arbeitsplätze addiert werden
+                        numOfWorkingplaces = numOfWorkingplaces + Number(allBookings[key]["Arbeitsplatztyp"])
+                    }
                 }
             }
         }
@@ -219,6 +239,31 @@ export default function NewBooking() {
     }
 
     function reservate() {
+        //Wenn Byod ausgewählt alle gerätedaten löschen
+        if (Boolean(booking.Byod1) == true) {
+            deleteBookingValue("Geraet1")
+            deleteBookingValue("Betriebssystem1")
+            deleteBookingValue("Browser1")
+            deleteBookingValue("Bemerkungen1")
+            deleteBookingValue("Kommunikationsapplikationen1")
+        }
+        if (Boolean(booking.Byod2) == true) {
+            deleteBookingValue("Geraet2")
+            deleteBookingValue("Betriebssystem2")
+            deleteBookingValue("Browser2")
+            deleteBookingValue("Bemerkungen2")
+            deleteBookingValue("Kommunikationsapplikationen2")
+        }
+        //Wenn Einzelarbeitsplatz ausgewählt alle Daten vom zweiten Arbeistplatz löschen
+        if (Number(booking.Arbeitsplatztyp) == 1) {
+            deleteBookingValue("Byod2")
+            deleteBookingValue("Geraet2")
+            deleteBookingValue("Betriebssystem2")
+            deleteBookingValue("Browser2")
+            deleteBookingValue("Bemerkungen2")
+            deleteBookingValue("Kommunikationsapplikationen2")
+        }
+        setBookingValue("Zahlung offen", "Status")
         setCurrentStep(currentStep + 1)
         set(ref(db, 'bookings/' + bookingId), booking);
     }
@@ -226,7 +271,7 @@ export default function NewBooking() {
     function validateTime() {
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
-        setDiffrenceInMs(endTimeCurrent - startTimeCurrent) 
+        setDiffrenceInMs(endTimeCurrent - startTimeCurrent)
         if (endTimeCurrent - startTimeCurrent >= 7200000) {
             setCurrentStep(currentStep + 1)
         } else {
@@ -428,7 +473,9 @@ export default function NewBooking() {
                                 currentStep == 5 &&
                                 <FormContainer title="Zahlung">
                                     <FormSection>
-                                        <PriceTable pricePerHour={price()} diffrenceInMs={diffrenceInMs}></PriceTable>
+                                        <FormItem title="Preisberechnung">
+                                            <PriceTable pricePerHour={price()} diffrenceInMs={diffrenceInMs}></PriceTable>
+                                        </FormItem>
                                     </FormSection>
                                     <FormSection>
                                         <FormItem title="Zahlungsmittel">

@@ -19,6 +19,7 @@ export default function UserDescription(props: any) {
     const [open2, setOpen2] = useState(false);
     const [open3, setOpen3] = useState(false);
     const [open4, setOpen4] = useState(false);
+    const [modalData, setModalData] = useState({});
 
     //TODO: changeUserData(...) siehe AuthContext
 
@@ -127,35 +128,42 @@ export default function UserDescription(props: any) {
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             <ul role="list" className="border border-gray-200 rounded-none divide-y divide-gray-200">
                                 {Array.isArray(userBookings)
-                                    ? userBookings.map((item: any) =>
-                                        <li key={item} className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                                            <div className="w-0 flex-1 flex items-center">
-                                                <CalendarDaysIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                <span className="ml-2 flex-1 w-0 truncate">Buchung vom {item.Startdatum} um {item.Startzeit} bis zum {item.Enddatum} um {item.Endzeit}</span>
-                                            </div>
-                                            <div className="ml-4 flex-shrink-0 flex space-x-4">
-                                                <button
-                                                    type="button"
-                                                    className="bg-white rounded-none font-medium text-green-600 hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                                                    onClick={() => setOpen0(true)}
-                                                >
-                                                    Anzeigen
-                                                </button>
-                                                <ShowBookingModal open={open0} setOpen={setOpen0} booking={item}></ShowBookingModal>
-                                                <span className="text-gray-300" aria-hidden="true">
-                                                    |
-                                                </span>
-                                                <button
-                                                    type="button"
-                                                    className="bg-white rounded-none font-medium text-green-600 hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                                                    onClick={() => setOpen1(true)}
-                                                >
-                                                    Stornieren
-                                                </button>
-                                                <DeleteBookingModal open={open1} setOpen={setOpen1} booking={item} />
-                                            </div>
-                                        </li>)
-                                    : <p>Keine Buchungen</p>
+                                    ? userBookings.map((item: any) => {
+                                        return <li key={item} className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                        <div className="w-0 flex-1 flex items-center">
+                                            <CalendarDaysIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                            <span className="ml-2 flex-1 w-0 truncate">Buchung vom {item.Startdatum} um {item.Startzeit} bis zum {item.Enddatum} um {item.Endzeit}</span>
+                                        </div>
+                                        <div className="ml-4 flex-shrink-0 flex space-x-4">
+                                            <button
+                                                type="button"
+                                                className="bg-white rounded-none font-medium text-green-600 hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                                onClick={() => {
+                                                    setModalData(item);
+                                                    setOpen0(true)
+                                                }}
+                                            >
+                                                Anzeigen
+                                            </button>
+                                            <ShowBookingModal open={open0} setOpen={setOpen0} booking={modalData}></ShowBookingModal>
+                                            <span className="text-gray-300" aria-hidden="true">
+                                                |
+                                            </span>
+                                            <button
+                                                type="button"
+                                                className="bg-white rounded-none font-medium text-green-600 hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                                onClick={() => {
+                                                    setModalData(item);
+                                                    setOpen1(true)
+                                                }}
+                                            >
+                                                Stornieren
+                                            </button>
+                                            <DeleteBookingModal open={open1} setOpen={setOpen1} booking={modalData} />
+                                        </div>
+                                    </li>
+                                    }) :
+                                    <p>Keine Buchungen</p>
                                 }
                             </ul>
                             <button
