@@ -29,6 +29,7 @@ import animationData from '../../lotties/check.json';
 import { send } from "@emailjs/browser";
 import Countdown from "react-countdown";
 import { useRouter } from "next/router";
+import PriceTable from "../../components/bookings/pricetable";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -51,6 +52,8 @@ export default function NewBooking() {
     const [bs2, setBs2] = useState(null);
     const [payment, setPayment] = useState(null)
     const [dateIsValid, setDateIsValid] = useState(false)
+    const [diffrenceInMs, setDiffrenceInMs] = useState(0)
+
     const router = useRouter();
 
     const [counter, setCounter] = useState(1200);
@@ -109,7 +112,7 @@ export default function NewBooking() {
         if (workingPlaceType == 2) price = price + 18
         if (byod1 == true) price = price + 4.50
         if (byod2 == true) price = price + 4.50
-
+        setBookingValue(price,"Preis")
         return price.toFixed(2);
     }
 
@@ -223,7 +226,7 @@ export default function NewBooking() {
     function validateTime() {
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
-
+        setDiffrenceInMs(endTimeCurrent - startTimeCurrent) 
         if (endTimeCurrent - startTimeCurrent >= 7200000) {
             setCurrentStep(currentStep + 1)
         } else {
@@ -424,6 +427,9 @@ export default function NewBooking() {
                             {
                                 currentStep == 5 &&
                                 <FormContainer title="Zahlung">
+                                    <FormSection>
+                                        <PriceTable pricePerHour={price()} diffrenceInMs={diffrenceInMs}></PriceTable>
+                                    </FormSection>
                                     <FormSection>
                                         <FormItem title="Zahlungsmittel">
                                             <RadioButtons setValue={setPayment} items={paymentMethods} FirebaseKey="Bezahlmethode" />
