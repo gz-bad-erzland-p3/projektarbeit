@@ -53,7 +53,7 @@ export default function NewBooking() {
     const [dateIsValid, setDateIsValid] = useState(false)
     const router = useRouter();
 
-    const [counter, setCounter] = useState(30);
+    const [counter, setCounter] = useState(1200);
 
     useEffect(() => {
         counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
