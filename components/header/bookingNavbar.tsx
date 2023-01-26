@@ -17,7 +17,6 @@ export default function BookingNavbar() {
   useEffect(() => setMounted(true), []);
 
   const user = useAuth();
-  const { logOut } = useAuth();
 
   return (
     <Popover className="navbar">
