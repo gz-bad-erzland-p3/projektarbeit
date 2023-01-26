@@ -38,7 +38,7 @@ console.log(booking)
                         <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
                           {item.name}
                         </td>
-                        <td className="whitespace-nowrap p-4 text-sm text-gray-500">{String(item.value)}</td>
+                        <td className="whitespace-nowrap p-4 text-sm text-gray-500">{JSON.stringify(item.value)}</td>
                       </tr>
                     ))}
                   </tbody>

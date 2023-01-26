@@ -210,7 +210,7 @@ export default function NewBooking() {
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
 
-        if (endTimeCurrent - startTimeCurrent > 7200) {
+        if (endTimeCurrent - startTimeCurrent >= 7200000) {
             setCurrentStep(currentStep + 1)
         } else {
             toast.error("Die Mindestmietdauer beträgt 2h");
