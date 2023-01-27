@@ -29,6 +29,7 @@ import animationData from '../../lotties/check.json';
 import { send } from "@emailjs/browser";
 import Countdown from "react-countdown";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -303,7 +304,7 @@ export default function NewBooking() {
                                                             <FormItem title="Standardmäßig inbegriffen">
                                                                 {standard.map((item, index) => (
                                                                     <div key={index}>
-                                                                        {item}
+                                                                        <a className="link-main" href={item.href}>{item.name}</a>
                                                                     </div>
                                                                 ))}
 
