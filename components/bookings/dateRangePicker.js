@@ -25,7 +25,7 @@ export default function DateTimeRangePicker(props) {
     setIsValid(true)
     if (startDate < tomorrow || endDate < tomorrow) {
         setIsValid(false)
-        toast.error("Der Mietbeginn miss mindestens einen Tag im Vorraus liegen.")
+        toast.error("Der Mietbeginn muss mindestens einen Tag im Vorraus liegen.")
     }
 
     function handleValueChange(newValue) {

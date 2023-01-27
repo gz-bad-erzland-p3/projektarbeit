@@ -3,10 +3,8 @@ import React from "react";
 import Container from "../components/container/container";
 import { suffix } from "../components/data/data";
 import ForgotPassword from "../components/forgotpassword";
-import Login from "../components/login"
 
 const ForgotPasswordPage = () => {
-
   return (
     <div>
       <Head>

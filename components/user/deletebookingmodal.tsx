@@ -12,9 +12,7 @@ export default function DeleteBookingModal(props: any) {
 
   function cancelBooking(){
     props.setOpen(false)
-    set(ref(db, 'bookings/' + props.booking.BookingId), {
-        
-      });
+    set(ref(db, 'bookings/' + props.booking.BookingId), {});
       router.reload()
   }
 

@@ -5,28 +5,41 @@ import Autocomplete from "react-google-autocomplete";
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 
-export default function ChangeAddressModal(props:any) {
+export default function ChangeAddressModal(props: any) {
   const [formatted_address, setFormattedAddress] = useState("")
   const [place_id, setPlaceId] = useState("")
-  
+  const [addressError, setAddressError] = useState(false)
+  const [placeObj, setPlaceObj] = useState(Object)
+
   const cancelButtonRef = useRef(null)
   const { changeUserAddress } = useAuth();
   const router = useRouter()
 
   const onChange = async () => {
     try {
-      await changeUserAddress(formatted_address, place_id);
-      toast.success("Adresse erfolgreich geändert");
-  } catch (error: any) {
-      console.log(error.message);
-      toast.error("Fehler bei der Änderung. Bitte versuchen Sie es erneut.");
+      if (placeObj.address_components[0].types[0] == "street_number") {
+        setAddressError(false)
+        try {
+          await changeUserAddress(formatted_address, place_id);
+          router.reload()
+          toast.success("Adresse erfolgreich geändert");
+        } catch (error: any) {
+          console.log(error.message);
+          toast.error("Fehler bei der Änderung. Bitte versuchen Sie es erneut.");
+        }
+      } else {
+        setAddressError(true)
+      }
+    } catch (error) {
+      if (error instanceof TypeError) {
+        setAddressError(true)
+      }
+      console.log(error)
+    }
   }
-  props.setOpen(false)
-  router.reload()
 
-  }
-  
 
   return (
     <Transition.Root show={props.open} as={Fragment}>
@@ -59,28 +72,45 @@ export default function ChangeAddressModal(props:any) {
           >
             <div className="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
               <div>
-                
+
                 <div className="mt-3 text-center sm:mt-5">
                   <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
                     Adresse ändern
                   </Dialog.Title>
                   <div className="mt-2">
-                  <div className="relative mt-1 rounded-none shadow-sm">
-                                <Autocomplete apiKey={"AIzaSyCY17WLFDKPuYBIl3tzEQ0AWnQ9QFmEZwU"}
-                                    id="address"
-                                    onPlaceSelected={(place) => {
-                                        setFormattedAddress(place.formatted_address)
-                                        setPlaceId(place.place_id)
-                                    }}
-                                    options={{
-                                        types: ['street_address'],//oder "street_address" weil ist bis jetzt ohne nr siehe https://developers.google.com/maps/documentation/places/web-service/autocomplete
-                                        componentRestrictions: { country: "de" },
-                                    }}
-                                    className="block w-full ring-1 ring-gray-300 h-9 rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
-                                    placeholder="Adresse"
-                                />
-                            </div>
-                  </div>
+                    <div className="relative mt-1 rounded-none shadow-sm">
+                      <Autocomplete apiKey={"AIzaSyCY17WLFDKPuYBIl3tzEQ0AWnQ9QFmEZwU"}
+                        id="address"
+                        onPlaceSelected={(place) => {
+                          try {
+                            if (place.address_components[0].types[0] == "street_number") {
+                              setPlaceObj(place)
+                              setFormattedAddress(place.formatted_address)
+                              setPlaceId(place.place_id)
+                              setAddressError(false)
+                            } else {
+                              setAddressError(true)
+                            }
+                          } catch (error) {
+                            if (error instanceof TypeError) {
+                              setAddressError(true)
+                            }
+                            console.log(error)
+                          }
+                          
+                        }}
+                        options={{
+                          types: ['address'],//oder "street_address" weil ist bis jetzt ohne nr siehe https://developers.google.com/maps/documentation/places/web-service/autocomplete
+                          componentRestrictions: { country: "de" },
+                        }}
+                        className="block w-full ring-1 ring-gray-300 h-9 rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
+                        placeholder="Neue Adresse (Beispielstraße 12, Bonn, Deutschland)"
+                      />
+                      {addressError && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                      </div>}
+                    </div>
+                    {addressError && <p className="mt-2 text-sm text-red-600" id="email-error">Bitte geben Sie eine valide Adresse an</p>}                  </div>
                 </div>
               </div>
               <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">

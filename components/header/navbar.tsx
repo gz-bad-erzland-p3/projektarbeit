@@ -11,6 +11,7 @@ import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '../../context/AuthContext'
+import { useRouter } from 'next/router'
 
 const resources = [
   {
@@ -67,6 +68,7 @@ export default function Navbar() {
 
   const user = useAuth();
   const {logOut} = useAuth();
+  const router = useRouter();
 
   return (
     <Popover className={classNames(scrollY > 0 ? "navbar-sl" : "navbar-tr", "navbar")}>
@@ -92,7 +94,7 @@ export default function Navbar() {
               </button>
             </Link>
             }
-            {user.user.email && <div><Link href="/user" className='link-main'>{user.user.email}</Link><button className='button-secondary ml-2' onClick={logOut}>Logout</button></div>}
+            {user.user.email && <div><Link href="/user" className='link-main'>{user.user.email}</Link><button className='button-secondary ml-2' onClick={() => {logOut(); router.push("/")}}>Logout</button></div>}
             <Link href="/bookings/new">
               <button className='ml-2 text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
                 Jetzt buchen

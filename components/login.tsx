@@ -74,11 +74,18 @@ const Login = (props: any) => {
                                 {props.notShowRegister ?
                                     <div></div>
                                     :
-                                    <button type="button" id="btnLogin" onClick={updateSignUp} className='button-secondary'>
-                                    Registrieren &rarr;
-                                    </button>
+                                    <div>
+                                        <button type="button" id="btnSignup" onClick={updateSignUp} className='button-secondary'>
+                                            Registrieren &rarr;
+                                        </button>
+                                        <br /><br />
+                                        <button type="button" id="btnReset" className='link-main text-xs' onClick={() => router.push("/forgotpassword")}>
+                                            Passwort vergessen
+                                        </button>
+                                    </div>
+
                                 }
-                                
+
                             </div>
                         </div>
                     </form>
