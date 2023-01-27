@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext"
 import { useRouter } from "next/router";
 import Autocomplete from "react-google-autocomplete";
 import dynamic from 'next/dynamic';
 import { toast } from "react-toastify";
+import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
 const ReactPasswordChecklist = dynamic(() => import('react-password-checklist'), {
     ssr: false,
 });
@@ -23,12 +24,16 @@ const SignupPage = (props: any) => {
     const [passwordAgain, setPasswordAgain] = useState("")
     const [formatted_address, setFormattedAddress] = useState("")
     const [place_id, setPlaceId] = useState("")
+    const [addressError, setAddressError] = useState(false)
+    const [placeObj, setPlaceObj] = useState(Object)
+    const [birthdayNotValid, setBirthdayNotValid] = useState(false)
 
     const methods = useForm<SignupType>({ mode: "onBlur" });
 
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors },
     } = methods;
     const { signUp } = useAuth();
@@ -36,16 +41,37 @@ const SignupPage = (props: any) => {
 
     const onSubmit = async (data: SignupType) => {
         try {
-            await signUp(data.email, data.password, data.name, data.prename, data.birthday, formatted_address, place_id);
-            toast.success("Erfolgreich registriert");
-            if(props.site) {
-                router.push("/")
+            if (placeObj.address_components[0].types[0] == "street_number") {
+                setAddressError(false)
+                try {
+                    await signUp(data.email, data.password, data.name, data.prename, data.birthday, formatted_address, place_id);
+                    toast.success("Erfolgreich registriert");
+                    if (props.site) {
+                        router.push("/")
+                    }
+                } catch (error: any) {
+                    console.log(error.message);
+                    toast.error("Fehler bei der Registrierung");
+                }
+            } else {
+                setAddressError(true)
             }
-        } catch (error: any) {
-            console.log(error.message);
-            toast.error("Fehler bei der Registrierung");
+        } catch (error) {
+            if (error instanceof TypeError) {
+                setAddressError(true)
+            }
+            console.log(error)
         }
     };
+
+    function validateBirthday(event:any) {
+        const selectedDate = new Date(event.tartget?.value)
+        const today = new Date()
+        
+        if(selectedDate){
+            setBirthdayNotValid(true)
+        }
+    }
 
     return (
         <div className="grid justify-items-center items-center">
@@ -62,7 +88,12 @@ const SignupPage = (props: any) => {
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Name"
                                 />
+                                {errors.name && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                                </div>}
                             </div>
+                            {errors.name && <p className="mt-2 text-sm text-red-600" id="email-error">{errors.name.message}</p>}
+
                         </div>
                         <div>
                             <div className="relative mt-1 rounded-none shadow-sm">
@@ -74,20 +105,32 @@ const SignupPage = (props: any) => {
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Vorname"
                                 />
+                                {errors.prename && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                                </div>}
                             </div>
-                        </div>
+                            {errors.prename && <p className="mt-2 text-sm text-red-600" id="email-error">{errors.prename.message}</p>}                        </div>
                         <div>
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input
                                     type="date"
                                     {...register("birthday", { required: "Ihr Geburtsdatum wird zur Registrierung benötigt." })}
                                     id="birthday"
+                                    //min="2022-01-01" 
+                                    //max="2023-02-01"
                                     autoComplete="bday"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Geburtsdatum"
+                                    onChange={validateBirthday}
                                 />
+                                {birthdayNotValid && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                                </div>}
+                                {errors.birthday && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                                </div>}
                             </div>
-                        </div>
+                            {errors.birthday && <p className="mt-2 text-sm text-red-600" id="email-error">{errors.birthday.message}</p>}                        </div>
                         <div>
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input
@@ -98,8 +141,11 @@ const SignupPage = (props: any) => {
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Email"
                                 />
+                                {errors.email && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                                </div>}
                             </div>
-                        </div>
+                            {errors.email && <p className="mt-2 text-sm text-red-600" id="email-error">{errors.email.message}</p>}                        </div>
                         <div>
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input
@@ -146,18 +192,27 @@ const SignupPage = (props: any) => {
                                 <Autocomplete apiKey={"AIzaSyCY17WLFDKPuYBIl3tzEQ0AWnQ9QFmEZwU"}
                                     id="address"
                                     onPlaceSelected={(place) => {
-                                        setFormattedAddress(place.formatted_address)
-                                        setPlaceId(place.place_id)
+                                        if (place.address_components[0].types[0] == "street_number") {
+                                            setPlaceObj(place)
+                                            setFormattedAddress(place.formatted_address)
+                                            setPlaceId(place.place_id)
+                                            setAddressError(false)
+                                        } else {
+                                            setAddressError(true)
+                                        }
                                     }}
                                     options={{
-                                        types: ['street_address'],//oder "street_address" weil ist bis jetzt ohne nr siehe https://developers.google.com/maps/documentation/places/web-service/autocomplete
+                                        types: ['address'],//oder "street_address" weil ist bis jetzt ohne nr siehe https://developers.google.com/maps/documentation/places/web-service/autocomplete
                                         componentRestrictions: { country: "de" },
                                     }}
                                     className="block w-full ring-1 ring-gray-300 h-9 rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
-                                    placeholder="Adresse"
+                                    placeholder="Beispielstraße 12, Bonn, Deutschland"
                                 />
+                                {addressError && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                                </div>}
                             </div>
-                        </div>
+                            {addressError && <p className="mt-2 text-sm text-red-600" id="email-error">Bitte geben Sie eine valide Adresse an</p>}                        </div>
                     </div>
                     <div className="mt-2">
                         <button id="btnLogin" type="submit" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>

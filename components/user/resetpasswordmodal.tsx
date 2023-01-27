@@ -50,7 +50,7 @@ export default function ResetPasswordModal(props:any) {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Es wird ein Link mit einem neuen, generierten Passwort an Ihre E-Mail gesendet.
+                      Es wird ein Link an Ihre E-Mail gesendet, mit dem Sie ein neues Passwort vergeben können.
                     </p>
                   </div>
                 </div>
