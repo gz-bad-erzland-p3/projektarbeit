@@ -5,8 +5,8 @@ export default function SupportMainPage() {
   return (
     <MainContainer>
         <div className="w-full h-full">
-          <div className="flex justify-center mx-auto max-w-screen-xl mt-10 mb-10">
-            <div className={"bg-white p-5 rounded-2xl"}>
+          <div className="flex justify-center mx-auto max-w-screen-xl mb-10">
+            <div className={"bg-white px-5 rounded-2xl"}>
               <h1 className="text-3xl">Impressum</h1>
               <h2>Gesetzliche Anbieterkennung:</h2>
               <p>

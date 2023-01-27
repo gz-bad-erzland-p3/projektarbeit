@@ -6,11 +6,11 @@ export const suffix = "| Bad Erzland GZ"
 
 export const bookingSteps = [
   { id: '1', name: 'Zeitraum wählen', href: '#' },
-  { id: '2', name: 'Arbeitsplatztyp w#hlen', href: '#' },
-  { id: '3', name: 'Konfiguration', href: '#' },
-  { id: '4', name: 'Anmelden oder Registrieren', href: '#' },
-  { id: '5', name: 'Zahlung', href: '#' },
-  { id: '6', name: 'Bestätigung', href: '#' },
+  { id: '2', name: 'Arbeitsplatztyp wählen', href: '#' },
+  { id: '3', name: 'Konfiguration auswählen', href: '#' },
+  { id: '4', name: 'Benutzerdaten angeben', href: '#' },
+  { id: '5', name: 'Zahlung tätigen', href: '#' },
+  { id: '6', name: 'Bestätigung Ihrer Buchung', href: '#' },
 ]
 
 export const geraete = [
