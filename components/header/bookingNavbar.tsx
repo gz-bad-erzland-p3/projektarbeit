@@ -23,9 +23,9 @@ export default function BookingNavbar() {
       <div className="mx-auto px-4 sm:px-6 max-w-7xl">
         <div className="flex items-center justify-between py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
-            <Link href="/">
-              <span className="sr-only">Bad Erzlingen</span>
+            <Link href="/" className='flex space-x-2'>
               <Image src="/logo.svg" alt="" width={32} height={32} />
+              <div className='text-xl font-bold'>BAD ERZLAND</div>
             </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">

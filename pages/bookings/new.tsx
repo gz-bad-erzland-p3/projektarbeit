@@ -339,7 +339,7 @@ export default function NewBooking() {
                                 <div className="flex">
                                     <div className="flex flex-col w-full">
                                         <div>
-                                            <FormContainer title="Arbeitsplätze konfigurieren">
+                                            <FormContainer title={`${workingPlaceType == 1 ? "Arbeitsplatz konfigurieren" : "Arbeitsplätze konfigurieren"}`}>
                                                 <FormSection title="Arbeitsplatz 1">
                                                     <FormItem>
                                                         <BringYourOwnDevice byod={byod1} setByod={setByod1} FirebaseKey="Byod1" />
@@ -351,7 +351,7 @@ export default function NewBooking() {
                                                             <FormItem title="Standardmäßig inbegriffen">
                                                                 {standard.map((item, index) => (
                                                                     <div key={index}>
-                                                                        {item}
+                                                                        <a className="link-main" href={item.href}>{item.name}</a>
                                                                     </div>
                                                                 ))}
 
@@ -396,7 +396,7 @@ export default function NewBooking() {
                                                             <FormItem title="Standardmäßig inbegriffen">
                                                                 {standard.map((item, index) => (
                                                                     <div key={index}>
-                                                                        {item}
+                                                                        <a className="link-main" href={item.href}>{item.name}</a>
                                                                     </div>
                                                                 ))}
 
@@ -447,7 +447,7 @@ export default function NewBooking() {
                                                 }
                                             </div>
                                             <div className="py-2 mt-4">
-                                                <p className="font-medium text-lg py-2">{price()}€/Stunde</p>
+                                                <p className="font-medium text-lg py-2">{price()} €/Stunde</p>
                                                 <Transition show={showNextButton()} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
                                                     <button className="button-primary w-full" onClick={() => setCurrentStep(currentStep + 1)} >Weiter zum Login &rarr;</button>
                                                 </Transition>
@@ -460,6 +460,8 @@ export default function NewBooking() {
                             {
                                 currentStep == 4 &&
                                 <FormContainer title="Anmelden oder Registrieren">
+                                    <div><p>Zum Vollenden Ihrer Buchung melden Sie sich mit eibnem bestehenden Konto an, oder registrieren Sie sich erst in unserem System</p></div>
+
                                     <FormSection>
                                         {uid ? <p>Sie sind erfolgreich angemeldet</p> : <Login site={false} />}
                                     </FormSection>

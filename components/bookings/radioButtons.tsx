@@ -59,6 +59,10 @@ export default function RadioButtons(props: any) {
                                                 {item.description}
                                             </RadioGroup.Description>
                                         </div>
+                                        {item.href != null ? 
+                                        <div className='flex justify-start'>
+                                            <a className='link-main' href={item.href} target='blank'>Zum Datenblatt &rarr;</a>
+                                        </div> : ""}
                                     </div>
                                 </div>
                                 <CheckIcon
