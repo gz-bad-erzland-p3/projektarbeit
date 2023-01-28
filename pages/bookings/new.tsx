@@ -30,6 +30,8 @@ import { send } from "@emailjs/browser";
 import Countdown from "react-countdown";
 import { useRouter } from "next/router";
 import PriceTable from "../../components/bookings/pricetable";
+import BookingList from "../../components/user/bookinglist";
+import { renderToString } from 'react-dom/server'
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
@@ -155,17 +157,6 @@ export default function NewBooking() {
         setWorkingPlaceType(type);
     }
 
-    function handleByodChange() {
-        if (booking.Byod1 == "false") {
-            deleteBookingValue("Byod1")
-            deleteBookingValue("Geraet1")
-            deleteBookingValue("Betriebssystem1")
-            deleteBookingValue("Browser1")
-            deleteBookingValue("Bemerkungen1")
-            deleteBookingValue("Kommunikationsapplikationen1")
-        }
-    }
-
     function sendBooking() {
         setBookingValue("Zahlung erfolgreich", "Status")
         setCurrentStep(currentStep + 1)
@@ -179,7 +170,8 @@ export default function NewBooking() {
             Endzeit: booking.Endzeit,
             Name: "",
             Vorname: "",
-            Email: user.user.email
+            Email: user.user.email,
+            BuchungsinfosHtmlTabelle: renderToString(<BookingList booking={booking}></BookingList>)
         };
         get(ref(db, 'users/' + user.user.uid)).then((snapshot) => {
             if (snapshot.exists()) {

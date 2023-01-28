@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
 import { setBookingValue } from "../../pages/bookings/new";
 
+export const formatter = new Intl.NumberFormat('de-DE', {
+  style: 'currency',
+  currency: 'EUR',
+});
+
 export default function PriceTable(props: any) {
-  const formatter = new Intl.NumberFormat('de-DE', {
-    style: 'currency',
-    currency: 'EUR',
-  });
+  
 
   const fullHours = Math.trunc(props.hours)
   const sum = props.pricePerHour * props.hours
