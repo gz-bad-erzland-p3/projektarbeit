@@ -12,6 +12,31 @@ const people = [
     const minutes = String(hours).indexOf(".") !== -1 ? Number(String(hours).substring((hours.toString().indexOf("."))+1))/100*60 : 0
     const sum = props.pricePerHour * hours
     const sumWithoutTax = sum - (sum * 0.19)
+console.log(getBusinessDatesCount(props.startDate, props.endDate))
+
+    function convertStringToDate(stringDate: String){
+      const [day, month, year] = stringDate?.split('-');
+      const date = new Date(+year, Number(month) - 1, +day);
+      return date
+    }
+
+    function getBusinessDatesCount(startDate: any, endDate: any) {
+      let count = 0;
+      const curDate = convertStringToDate(startDate);
+      const expandDate = convertStringToDate(endDate);
+      curDate.setDate(curDate.getDate() + 1);
+      expandDate.setDate(expandDate.getDate() -1);
+
+      if(curDate >= expandDate){
+        while (curDate <= expandDate){
+            const dayOfWeek = curDate.getDay();
+            if(dayOfWeek !== 0 && dayOfWeek !== 6) count++;
+            curDate.setDate(curDate.getDate() + 1);
+        }
+        console.log(count);
+      }
+      return count; 
+  }
 
     return (
       

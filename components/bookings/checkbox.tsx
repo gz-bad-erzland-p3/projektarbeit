@@ -31,7 +31,7 @@ export default function Checkbox(props: any) {
                     type="checkbox"
                     onChange={e => handleChange(e)}
                     checked={value}
-                    disabled={true}
+                    disabled={false}
                     className="border-gray-200 h-5 w-5 text-green-600 rounded-none checkmark"
                 />
             </div>

@@ -45,6 +45,14 @@ export const deleteBookingValue = (prop: any) => {
     }
 }
 
+export function convertDateAndTimeToUnix(dateComponents: any, timeComponents: any) {
+    const [day, month, year] = dateComponents?.split('-');
+    const [hours, minutes] = timeComponents?.split(':');
+    const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
+    const timestamp = date.getTime();
+    return timestamp
+}
+
 export default function NewBooking() {
     const [allBookings, setAllBookings] = useState(Object);
     const [currentStep, setCurrentStep] = useState(1);
@@ -192,14 +200,6 @@ export default function NewBooking() {
         });
     }
 
-    function convertDateAndTimeToUnix(dateComponents: any, timeComponents: any) {
-        const [day, month, year] = dateComponents?.split('-');
-        const [hours, minutes] = timeComponents?.split(':');
-        const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
-        const timestamp = date.getTime();
-        return timestamp
-    }
-
     function validateWorkPlaceType(type: number) {
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
@@ -271,7 +271,6 @@ export default function NewBooking() {
     function validateTime() {
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
-        setDiffrenceInMs(endTimeCurrent - startTimeCurrent)
         if (endTimeCurrent - startTimeCurrent >= 7200000) {
             setCurrentStep(currentStep + 1)
         } else {
@@ -474,7 +473,7 @@ export default function NewBooking() {
                                 <FormContainer title="Zahlung">
                                     <FormSection>
                                         <FormItem title="Preisberechnung">
-                                            <PriceTable pricePerHour={price()} diffrenceInMs={diffrenceInMs}></PriceTable>
+                                            <PriceTable pricePerHour={price()} startDate={booking["Startdatum"]} endDate={booking["Enddatum"]} startTime={booking["Startzeit"]} endTime={booking["Endzeit"]}></PriceTable>
                                         </FormItem>
                                     </FormSection>
                                     <FormSection>
@@ -502,4 +501,3 @@ export default function NewBooking() {
 
     )
 }
-//                                    <Lottie options={defaultLottieOptions} height={400} width={400} />

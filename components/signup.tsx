@@ -64,12 +64,15 @@ const SignupPage = (props: any) => {
         }
     };
 
-    function validateBirthday(event:any) {
-        const selectedDate = new Date(event.tartget?.value)
+    function validateBirthday(value:any) {
+        const selectedDate = new Date(value)
         const today = new Date()
-        
-        if(selectedDate){
+        const diff = today.getTime() - selectedDate.getTime()
+        console.log(diff)
+        if(diff <= 568080000000 || diff >= 3124440000000){
             setBirthdayNotValid(true)
+        }else{
+            setBirthdayNotValid(false)
         }
     }
 
@@ -121,7 +124,7 @@ const SignupPage = (props: any) => {
                                     autoComplete="bday"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Geburtsdatum"
-                                    onChange={validateBirthday}
+                                    onChange={(e) => validateBirthday(e.target.value)}
                                 />
                                 {birthdayNotValid && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
@@ -130,7 +133,8 @@ const SignupPage = (props: any) => {
                                     <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                                 </div>}
                             </div>
-                            {errors.birthday && <p className="mt-2 text-sm text-red-600" id="email-error">{errors.birthday.message}</p>}                        </div>
+                            {errors.birthday && <p className="mt-2 text-sm text-red-600" id="email-error">{errors.birthday.message}</p>}
+                            {birthdayNotValid && <p className="mt-2 text-sm text-red-600" id="email-error">Ihr Alter muss zwischen 18 und 99 Jahren liegen</p>}                        </div>
                         <div>
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input

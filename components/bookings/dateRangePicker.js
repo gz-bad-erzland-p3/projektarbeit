@@ -14,27 +14,26 @@ export default function DateTimeRangePicker(props) {
         startDate: initialDate,
         endDate: initialDate
     });
-    const startDate = new Date(value["startDate"])
-    const endDate = new Date(value["endDate"])
-    setBookingValue(startDate.toLocaleDateString("es-CL"), "Startdatum")
-    setBookingValue(endDate.toLocaleDateString("es-CL"), "Enddatum")
-
-    //tomorrow.setDate(tomorrow.getDate() - 0.01)
-    today.setHours(0, 0, 0, 0);
-    const setIsValid = props.setIsValid;
-    setIsValid(true)
-    if (startDate < tomorrow || endDate < tomorrow) {
-        setIsValid(false)
-        toast.error("Der Mietbeginn muss mindestens einen Tag im Vorraus liegen.")
-    }
 
     function handleValueChange(newValue) {
         setValue(newValue);
+        const startDate = new Date(newValue["startDate"])
+        const endDate = new Date(newValue["endDate"])
+        setBookingValue(startDate.toLocaleDateString("es-CL"), "Startdatum")
+        setBookingValue(endDate.toLocaleDateString("es-CL"), "Enddatum")
+
+        today.setHours(0, 0, 0, 0);
+        const setIsValid = props.setIsValid;
+        setIsValid(true)
+        if (startDate < tomorrow || endDate < tomorrow) {
+            setIsValid(false)
+            toast.error("Der Mietbeginn muss mindestens einen Tag im Vorraus liegen.")
+        }
     }
 
     return (
         <div>
-            <Datepicker value={value} onChange={handleValueChange} primaryColor="green" />
+            <Datepicker separator="bis zum"  i18n="de" value={value} onChange={handleValueChange} primaryColor="green" startFrom={initialDate}/>
         </div>
     );
 }
