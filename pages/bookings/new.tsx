@@ -203,7 +203,7 @@ export default function NewBooking() {
                 //Wenn die gespeicherte Buchung bezahlt ist
                 if (allBookings[key]["Status"] !== "Zahlung offen") {
                     //Wenn die aktuelle auswahl in der Zeitspanne der bereits gespeicherten Buchung liegt, ...
-                    if (startTimeCurrent <= endTime && endTimeCurrent >= startTime) {
+                    if (endTimeCurrent <= startTime || endTime >= startTimeCurrent) {
                         //Sollen die Arbeitsplätze addiert werden
                         numOfWorkingplaces = numOfWorkingplaces + Number(allBookings[key]["Arbeitsplatztyp"])
                     }
