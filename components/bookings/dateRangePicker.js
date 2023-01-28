@@ -29,6 +29,7 @@ export default function DateTimeRangePicker(props) {
             setIsValid(false)
             toast.error("Der Mietbeginn muss mindestens einen Tag im Vorraus liegen.")
         }
+        //Todo: das ende darf kein Sonntag sein
     }
 
     return (
