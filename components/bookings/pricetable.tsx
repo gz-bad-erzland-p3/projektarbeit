@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { setBookingValue } from "../../pages/bookings/new";
 
 export default function PriceTable(props: any) {
   const [finalminutes, setFinalMinutes] = useState(0)
@@ -21,6 +22,9 @@ export default function PriceTable(props: any) {
 
   useEffect(()=>{
     setSum(props.pricePerHour * hours)
+    setBookingValue(props.pricePerHour * hours, "Summe")
+    setBookingValue(hours, "StundenDezimal")
+
     setFullHours(Math.trunc(hours))
     const hoursString = String(hours.toFixed(2))
     setFinalMinutes(hoursString.indexOf(".") !== -1 ? Number(hoursString.substring((hoursString.indexOf("."))+1))/100*60 : 0)
