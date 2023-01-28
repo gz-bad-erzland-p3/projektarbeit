@@ -269,14 +269,51 @@ export default function NewBooking() {
     }
 
     function validateTime() {
-        const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
-        const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
-        if (endTimeCurrent - startTimeCurrent >= 7200000) {
+        let hours = 0
+        console.log(booking["startDate"])
+        const businessDays = getBusinessDatesCount(String(booking["Startdatum"]), String(booking["Enddatum"]))
+        if (businessDays == 1) {
+            hours = convertTimeToDecimal(String(booking["Endzeit"])) - convertTimeToDecimal(String(booking["Startzeit"]))
+        } else {
+            const hoursStartDay = 20 - convertTimeToDecimal(String(booking["Startzeit"]))
+            const hoursEndDay = convertTimeToDecimal(String(booking["Endzeit"])) - 7
+            hours = hoursStartDay + hoursEndDay + ((businessDays - 2) * 13)
+        }
+
+        if (hours >= 2) {
+            setBookingValue(hours, "StundenDezimal")
             setCurrentStep(currentStep + 1)
         } else {
             toast.error("Die Mindestmietdauer beträgt 2h");
         }
     }
+
+    function convertTimeToDecimal(t: String) {
+        const time = t.split(':');
+        return parseInt(time[0], 10) * 1 + parseInt(time[1], 10) / 60;
+      }
+    
+      function convertStringToDate(stringDate: String) {
+        const [day, month, year] = stringDate?.split('-');
+        const date = new Date(+year, Number(month) - 1, +day);
+        return date
+      }
+    
+      function getBusinessDatesCount(startDate: String, endDate: String) {
+        let count = 0;
+        const curDate = convertStringToDate(startDate);
+        const expandDate = convertStringToDate(endDate);
+    
+        curDate.setDate(curDate.getDate());
+        expandDate.setDate(expandDate.getDate());
+        console.log(curDate, expandDate)
+        while (curDate <= expandDate) {
+          const dayOfWeek = curDate.getDay();
+          if (dayOfWeek !== 0 && dayOfWeek !== 6) count++;
+          curDate.setDate(curDate.getDate() + 1);
+        }
+        return count;
+      }
 
     return (
         <div>
