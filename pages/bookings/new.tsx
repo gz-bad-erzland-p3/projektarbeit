@@ -318,7 +318,7 @@ export default function NewBooking() {
                     <div className="grow max-w-7xl px-4 sm:px-6 ">
                         <div>
                             <div className="text-lg">
-                                Verbleibende Zeit für Buchung: <span className="font-bold">{secondsToHms(counter)}</span>
+                                Verbleibende Zeit für Ihre Buchung: <span className="font-bold">{secondsToHms(counter)}</span>
                             </div>
                             <div className="py-4">
                                 {
