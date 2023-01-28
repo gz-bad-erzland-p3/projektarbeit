@@ -28,8 +28,13 @@ export default function DateTimeRangePicker(props) {
         if (startDate < tomorrow || endDate < tomorrow) {
             setIsValid(false)
             toast.error("Der Mietbeginn muss mindestens einen Tag im Vorraus liegen.")
+        }if(endDate.getDay() == 6 || endDate.getDay() == 0){
+            setIsValid(false)
+            toast.error("Das Mietende darf nicht an einem Wochenende liegen.")
+        }if(startDate.getDay() == 6 || startDate.getDay() == 0){
+            setIsValid(false)
+            toast.error("Der Mietbeginn darf nicht an einem Wochenende liegen.")
         }
-        //Todo: das ende darf kein Sonntag sein
     }
 
     return (

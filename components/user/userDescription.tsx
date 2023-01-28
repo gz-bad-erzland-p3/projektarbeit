@@ -20,7 +20,6 @@ export default function UserDescription(props: any) {
     const [open3, setOpen3] = useState(false);
     const [open4, setOpen4] = useState(false);
     const [modalData, setModalData] = useState({});
-    //TODO: changeUserData(...) siehe AuthContext
 
     //get userdata and bookings
     const auth = useAuth()
