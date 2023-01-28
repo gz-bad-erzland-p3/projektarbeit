@@ -512,7 +512,7 @@ export default function NewBooking() {
                                 <FormContainer title="Zahlung">
                                     <FormSection>
                                         <FormItem title="Preisberechnung">
-                                            <PriceTable pricePerHour={price()} startDate={booking["Startdatum"]} endDate={booking["Enddatum"]} startTime={booking["Startzeit"]} endTime={booking["Endzeit"]}></PriceTable>
+                                            <PriceTable pricePerHour={price()} hours={booking["StundenDezimal"]} startDate={booking["Startdatum"]} endDate={booking["Enddatum"]} startTime={booking["Startzeit"]} endTime={booking["Endzeit"]}></PriceTable>
                                         </FormItem>
                                     </FormSection>
                                     <FormSection>
