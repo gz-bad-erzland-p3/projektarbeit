@@ -19,7 +19,7 @@ export const geraete = [
   { id: '3', title: "Barebone", href: 'https://sp.ts.fujitsu.com/dmsp/Publications/public/ds-ESPRIMO-Q5562-de.pdf', specifications: ["Intel® Pentium G4400T", "Intel UHD 610", "8GB DDR4", "256GB SSD", "VGA, HDMI, DP, USB 3.0 (3x) usb 2.0 (3X)", "Audio In / Out",], price: "4,50", icon: faServer }
 ]
 export const standard = [
-  { id: '1', name: '1 GB LAN oder WLAN 6.0', href: 'https://www.dslweb.de/wifi-6.php' },
+  { id: '1', name: '1 GB LAN oder WLAN 6.0 kompatibel', href: 'https://www.dslweb.de/wifi-6.php' },
   { id: '2', name: 'Fujitsu Bildschirm', href: 'https://sp.ts.fujitsu.com/dmsp/Publications/public/ds-display-b24-8-ts-pro-de.pdf' },
   { id: '3', name: 'Fujitsu Maus', href: 'https://www.fujitsu.com/de/products/computing/peripheral/accessories/input-devices/mice/mouse-m520-black.html' },
   { id: '4', name: 'Fujitsu Tastatur', href: 'https://www.fujitsu.com/de/products/computing/peripheral/accessories/input-devices/keyboards/keyboard-kb521.html' },
@@ -32,15 +32,15 @@ export const betriebssysteme = [
 ]
 
 export const browser = [
-  "Chrome",
-  "Firefox",
-  "Edge"
+  "Google Chrome (Version 110.0.5481.181)",
+  "Mozilla Firefox (Version 110.0)",
+  "Microsoft Edge (Version 110.0.1587.50)"
 ]
 
 export const kommunikationsapplikationen = [
-  "Teams",
-  "Discord",
-  "Slack"
+  "Microsoft Teams (Version 1.6.00.1159)",
+  "Discord Messenger (Version 1.0.9011)",
+  "Slack Messenger (Version 4.29.149)"
 ]
 
 export const paymentMethods = [

@@ -377,7 +377,7 @@ export default function NewBooking() {
                                                 <Transition show={byod1 == true} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
                                                     <div>
                                                         <FormSection>
-                                                            <FormItem title="Standardmäßig inbegriffen">
+                                                            <FormItem title="Jeder Arbeitsplatz umfasst">
                                                                 {standard.map((item, index) => (
                                                                     <div key={index}>
                                                                         <a className="link-main" href={item.href}>{item.name}</a>
@@ -422,7 +422,7 @@ export default function NewBooking() {
                                                     <Transition show={byod2 == true} enter="transition-opacity duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
 
                                                         <FormSection>
-                                                            <FormItem title="Standardmäßig inbegriffen">
+                                                            <FormItem title="Jeder Arbeitsplatz umfasst">
                                                                 {standard.map((item, index) => (
                                                                     <div key={index}>
                                                                         <a className="link-main" href={item.href}>{item.name}</a>
@@ -465,13 +465,13 @@ export default function NewBooking() {
                                             <hr />
                                             <div className="flex flex-col space-y-2 py-2 text-sm">
                                                 <div className="font-bold">{workingPlaceType == 1 ? "Einzelarbeitsplatz" : "Doppelarbeitsplatz"}</div>
-                                                <div>Start: {booking.Startdatum} {booking.Startzeit}</div>
-                                                <div>Ende: {booking.Enddatum} {booking.Endzeit}</div>
+                                                <div>Start: {booking.Startdatum} um {booking.Startzeit} Uhr</div>
+                                                <div>Ende: {booking.Enddatum} um {booking.Endzeit} Uhr</div>
                                                 <hr />
-                                                <div className="flex items-start space-x-2">1. {byod1 == false ? <div>Eigenes Gerät</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{geraet1}</div>{bs1}<div></div></div>}</div>
+                                                <div className="flex items-start space-x-2">Arbeitsplatz 1:&nbsp;  {byod1 == false ? <div>Gerät mitbringen</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{geraet1}</div>{bs1}<div></div></div>}</div>
                                                 {workingPlaceType == 2 ?
                                                     <div>
-                                                        <div className="flex items-start space-x-2">2. {byod2 == false ? <div>Eigenes Gerät</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{geraet2}</div>{bs2}<div></div></div>}</div>
+                                                        <div className="flex items-start space-x-2">Arbeitsplatz 2:&nbsp;   {byod2 == false ? <div>Gerät mitbringen</div> : <div className="flex flex-col space-y-1">Gerät leihen <div>{geraet2}</div>{bs2}<div></div></div>}</div>
                                                     </div> : ""
                                                 }
                                             </div>
@@ -489,7 +489,7 @@ export default function NewBooking() {
                             {
                                 currentStep == 4 &&
                                 <FormContainer title="Anmelden oder Registrieren">
-                                    <div><p>Zum Vollenden Ihrer Buchung melden Sie sich mit eibnem bestehenden Konto an, oder registrieren Sie sich erst in unserem System</p></div>
+                                    <div><p>Zum Beenden Ihrer Buchung melden Sie sich mit einem bestehenden Konto an oder registrieren sich in unserem System.</p></div>
 
                                     <FormSection>
                                         {uid ? <p>Sie sind erfolgreich angemeldet</p> : <Login site={false} />}

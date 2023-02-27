@@ -11,36 +11,31 @@ export default function SupportMainPage() {
               <h2>Gesetzliche Anbieterkennung</h2><br />
               <p>
                 <b>Herausgeber:</b><br />
-
                 Gemeindezentrum Bad Erzland<br />
-                Vertreter: Herr Holger Hoburg<br />
                 Waldorfstraße 2<br />
                 01023 Dresden<br />
-                Germany
-              </p>
-              <p>
+                Vertreter: Herr Holger Hoburg<br />
                 Telefon: 03708/123679<br />
                 E‑Mail: support@gz-bad-erzland-P3.de<br />
                 USt-IdNr.: DE 123456789
+              </p><br /><p>
+                Das Gemeindezentrum Bad Erzland ist eine Körperschaft des öffentlichen Rechts. Sie wird vertreten durch Herrn Holger Hoburg.
               </p><p>
-                Das Gemeindezentrum Bad Erzland ist eine Körperschaft des öffentlichen Rechts. Sie wird vertreten durch Herrn Sven Gutfried .
-              </p><p>
-                Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für die Inhalte der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
+                Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für die Inhalte der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
               </p>
-
-              <h2>Inhaltlich verantwortlich:</h2>
+              <br />
+              <p><b>Inhaltlich verantwortlich:</b></p>
               <p>
-                Bürgerservice / Wirtschaft – Herrn Sven Gutfried<br />
+              Gemeindezentrum Bad Erzland<br />
+                Bürgerservice / Wirtschaft – Herr Holger Hoburg<br />
                 Telefon: +49 157 70601204
-              </p>
-              <h2>
-                Technische Umsetzung & Betreuung:
-              </h2><p>
+              </p><br />
+              <p><b>Technische Umsetzung & Betreuung:</b></p><p>
                 SecNet IT GmbH<br />
                 Dr.-Külz-Ring 19<br />
                 01067 Dresden<br />
                 Telefon: +49 157 70601204<br />
-                Email: wir haben keine<br /><br />
+                Email: support@gz-bad-erzland-P3.de<br /><br />
               </p><p>
                 <b>Haftungsausschluss</b><br />
                 Die Autoren übernehmen keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen die Autoren, die sich auf Schäden materieller oder ideeller Art beziehen, welche durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden sind grundsätzlich ausgeschlossen, sofern seitens der Autoren kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt.

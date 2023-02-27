@@ -39,7 +39,7 @@ export default function DateTimeRangePicker(props) {
 
     return (
         <div>
-            <Datepicker separator="bis zum"  i18n="de" value={value} onChange={handleValueChange} primaryColor="green" startFrom={initialDate}/>
+            <Datepicker separator={"bis zum"}  i18n="de" value={value} onChange={handleValueChange} primaryColor="green" startFrom={initialDate}/>
         </div>
     );
 }
