@@ -55,6 +55,7 @@ export function convertDateAndTimeToUnix(dateComponents: any, timeComponents: an
     return timestamp
 }
 
+
 export default function NewBooking() {
     const [allBookings, setAllBookings] = useState(Object);
     const [currentStep, setCurrentStep] = useState(1);
@@ -67,6 +68,7 @@ export default function NewBooking() {
     const [bs2, setBs2] = useState(null);
     const [payment, setPayment] = useState(null);
     const [dateIsValid, setDateIsValid] = useState(false);
+    const [isShown, setIsShown] = useState(false);
 
     const router = useRouter();
 
@@ -215,16 +217,20 @@ export default function NewBooking() {
             } else {
                 return false
             }
-        }
-        if (type == 1) {
+        } else if (type == 1) {
             //Wenn alle Arbeitsplätze ausgebucht sind, ...
             if (numOfWorkingplaces >= 8) {
                 //Sollen beide buttons disabled sein
                 return true
             } else {
+                if(!isShown){
+                    toast.success("Zu Ihrem ausgewählten Zeitpunkt ist noch min. ein Arbeitsplatz verfügbar.");
+                    setIsShown(true)
+                }
                 return false
             }
         }
+        
     }
 
     function reservate() {
@@ -259,6 +265,7 @@ export default function NewBooking() {
     }
 
     function validateTime() {
+        setIsShown(false)
         let hours = 0
         const businessDays = getBusinessDatesCount(String(booking["Startdatum"]), String(booking["Enddatum"]))
         if (businessDays == 1) {
