@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Autocomplete from "react-google-autocomplete";
@@ -36,6 +35,22 @@ export default function ChangeAddressModal(props: any) {
       if (error instanceof TypeError) {
         setAddressError(true)
       }
+      console.log(error)
+    }
+  }
+
+  function validatePlace(place: any) {
+    try {
+      if (place.address_components[0].types[0] == "street_number") {
+        setPlaceObj(place)
+        setFormattedAddress(place.formatted_address)
+        setPlaceId(place.place_id)
+        setAddressError(false)
+      } else {
+        setAddressError(true)
+      }
+    } catch (error) {
+      setAddressError(true)
       console.log(error)
     }
   }
@@ -81,24 +96,8 @@ export default function ChangeAddressModal(props: any) {
                     <div className="relative mt-1 rounded-none shadow-sm">
                       <Autocomplete apiKey={"AIzaSyCY17WLFDKPuYBIl3tzEQ0AWnQ9QFmEZwU"}
                         id="address"
-                        onPlaceSelected={(place) => {
-                          try {
-                            if (place.address_components[0].types[0] == "street_number") {
-                              setPlaceObj(place)
-                              setFormattedAddress(place.formatted_address)
-                              setPlaceId(place.place_id)
-                              setAddressError(false)
-                            } else {
-                              setAddressError(true)
-                            }
-                          } catch (error) {
-                            if (error instanceof TypeError) {
-                              setAddressError(true)
-                            }
-                            console.log(error)
-                          }
-                          
-                        }}
+                        onPlaceSelected={(place) => { validatePlace(place) }}
+                        onChange={(event) => { validatePlace(event) }}
                         options={{
                           types: ['address'],//oder "street_address" weil ist bis jetzt ohne nr siehe https://developers.google.com/maps/documentation/places/web-service/autocomplete
                           componentRestrictions: { country: "de" },
@@ -110,7 +109,7 @@ export default function ChangeAddressModal(props: any) {
                         <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                       </div>}
                     </div>
-                    {addressError && <p className="mt-2 text-sm text-red-600" id="email-error">Bitte geben Sie eine valide Adresse an</p>}                  </div>
+                    {addressError && <p className="mt-2 text-sm text-red-600" id="email-error">Bitte wählen Sie eine valide Adresse aus (bestehend aus Straße, Hausnummer, Stadt und Land).</p>}                  </div>
                 </div>
               </div>
               <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">

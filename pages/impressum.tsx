@@ -35,7 +35,7 @@ export default function SupportMainPage() {
                 Dr.-Külz-Ring 19<br />
                 01067 Dresden<br />
                 Telefon: +49 157 70601204<br />
-                Email: support@gz-bad-erzland-P3.de<br /><br />
+                E-Mail: support@gz-bad-erzland-P3.de<br /><br />
               </p><p>
                 <b>Haftungsausschluss</b><br />
                 Die Autoren übernehmen keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen die Autoren, die sich auf Schäden materieller oder ideeller Art beziehen, welche durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden sind grundsätzlich ausgeschlossen, sofern seitens der Autoren kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt.

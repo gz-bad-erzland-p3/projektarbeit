@@ -7,24 +7,11 @@ export const formatter = new Intl.NumberFormat('de-DE', {
 });
 
 export default function PriceTable(props: any) {
-  
-
   const fullHours = Math.trunc(props.hours)
   const sum = props.pricePerHour * props.hours
   setBookingValue(props.pricePerHour * props.hours, "Summe")
   const hoursString = String(props.hours.toFixed(2))
   const minutes = hoursString.indexOf(".") !== -1 ? Number(hoursString.substring((hoursString.indexOf("."))+1))/100*60 : 0  
-
-  function convertStringToDate(stringDate: String) {
-    const [day, month, year] = stringDate?.split('-');
-    const date = new Date(+year, Number(month) - 1, +day);
-    return date
-  }
-
-  function formatDate(dateString: string){
-    const date = convertStringToDate(dateString);
-    return date.getDate() + "." +  (date.getMonth() + 1) + "." + date.getFullYear()
-  }
 
   return (
 

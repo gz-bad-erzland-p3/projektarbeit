@@ -35,7 +35,7 @@ import { renderToString } from 'react-dom/server'
 
 type Obj = { [key: string]: [key: [key: string] | string] | string }
 const booking: Obj = {}
-const bookingId = uuidv4()
+var bookingId = uuidv4()
 
 export const setBookingValue = (value: any, prop: any) => {
     booking[prop] = value
@@ -46,6 +46,13 @@ export const deleteBookingValue = (prop: any) => {
         delete booking[prop]
     }
 }
+
+export function convertStringToDate(stringDate: String) {
+    const [day, month, year] = stringDate?.split('.');
+    console.log(stringDate)
+    const date = new Date(+year, Number(month) - 1, +day);
+    return date
+  }
 
 export function convertDateAndTimeToUnix(dateComponents: any, timeComponents: any) {
     const [day, month, year] = dateComponents?.split('.');
@@ -149,6 +156,9 @@ export default function NewBooking() {
         if (operator == "+")
             setCurrentStep(currentStep + 1)
         else {
+            if (currentStep == 2) {
+                setDateIsValid(false)
+            }
             if (currentStep > 1) setCurrentStep(currentStep - 1);
         }
     }
@@ -189,6 +199,7 @@ export default function NewBooking() {
         }).catch((error) => {
             console.error(error);
         });
+    bookingId = uuidv4()
     }
 
     function validateWorkPlaceType(type: number) {
@@ -209,6 +220,7 @@ export default function NewBooking() {
                 }
             }
         }
+        console.log(numOfWorkingplaces)
         if (type == 2) {
             //Wenn alle Doppelarbeitsplätze ausgebucht sind, ...
             if ((numOfWorkingplaces >= 7)) {
@@ -287,12 +299,6 @@ export default function NewBooking() {
     function convertTimeToDecimal(t: String) {
         const time = t.split(':');
         return parseInt(time[0], 10) * 1 + parseInt(time[1], 10) / 60;
-      }
-    
-      function convertStringToDate(stringDate: String) {
-        const [day, month, year] = stringDate?.split('.');
-        const date = new Date(+year, Number(month) - 1, +day);
-        return date
       }
     
       function getBusinessDatesCount(startDate: String, endDate: String) {

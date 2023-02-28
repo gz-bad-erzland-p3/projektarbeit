@@ -37,7 +37,7 @@ const Login = (props: any) => {
             }
         } catch (error: any) {
             console.log(error.message);
-            toast.error("Fehler beim Login");
+            toast.error("Fehler beim Login. Die eingegebene E-Mail oder das Passwort ist nicht korrekt.");
         }
     };
     return (
@@ -53,7 +53,7 @@ const Login = (props: any) => {
                                         {...register("email", { required: "Email is required" })}
                                         id="email"
                                         className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
-                                        placeholder="Email"
+                                        placeholder="E-Mail"
                                     />
                                 </div>
                             </div>

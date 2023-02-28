@@ -11,8 +11,8 @@ export default function DateTimeRangePicker(props) {
     const initialDate = new Date(today)
     initialDate.setDate(initialDate.getDate() + 1)
     const [value, setValue] = useState({
-        startDate: initialDate,
-        endDate:  initialDate
+        startDate: null,
+        endDate:  null
     });
 
     function handleValueChange(newValue) {

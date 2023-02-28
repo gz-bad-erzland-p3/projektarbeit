@@ -41,7 +41,7 @@ const ForgotPassword = (props: any) => {
                                     id="email"
                                     autoComplete="username"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
-                                    placeholder="Email"
+                                    placeholder="E-Mail"
                                 />
                             </div>
                         </div>

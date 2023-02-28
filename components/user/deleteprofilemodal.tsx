@@ -63,7 +63,7 @@ export default function DeleteProfileModal(props: any) {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Möchten Sie wirklich Ihr Konto mit Ihren gesamten Buchungen löschen?
+                      Bitte melden Sie sich ggf. erneut an, um Ihre Identität zu bestätigen.
                     </p>
                     <Login site={false} notShowRegister={true}></Login>
                   </div>

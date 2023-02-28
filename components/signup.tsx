@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext"
 import { useRouter } from "next/router";
@@ -17,8 +17,8 @@ interface SignupType {
     birthday: string;
     password: string;
     password_confirm: string;
-
 }
+
 const SignupPage = (props: any) => {
     const [password, setPassword] = useState("")
     const [passwordAgain, setPasswordAgain] = useState("")
@@ -33,46 +33,71 @@ const SignupPage = (props: any) => {
     const {
         register,
         handleSubmit,
-        setError,
-        formState: { errors },
+        formState: { errors }
     } = methods;
     const { signUp } = useAuth();
     const router = useRouter();
 
+    function convertStringToDate(stringDate: String) {
+        const [year, month, day] = stringDate?.split('-');
+        console.log(stringDate)
+        const date = new Date(+year, Number(month), +day);
+        return date
+      }
+
     const onSubmit = async (data: SignupType) => {
+        console.log(data)
         try {
             if (placeObj.address_components[0].types[0] == "street_number") {
                 setAddressError(false)
                 try {
-                    await signUp(data.email, data.password, data.name, data.prename, data.birthday, formatted_address, place_id);
+                    var birthday = convertStringToDate(data.birthday)
+                    console.log(birthday)
+                    const formatted_birthday = birthday.getDate().toString() + "." + birthday.getMonth() + "." + birthday.getFullYear();
+                    console.log(formatted_birthday)
+                    ///TODOdata.birthday
+                    await signUp(data.email, data.password, data.name, data.prename, formatted_birthday, formatted_address, place_id);
                     toast.success("Erfolgreich registriert");
                     if (props.site) {
                         router.push("/")
                     }
                 } catch (error: any) {
-                    console.log(error.message);
+                    console.log(error);
                     toast.error("Fehler bei der Registrierung");
                 }
             } else {
                 setAddressError(true)
             }
         } catch (error) {
-            if (error instanceof TypeError) {
-                setAddressError(true)
-            }
+            setAddressError(true)
             console.log(error)
         }
     };
 
-    function validateBirthday(value:any) {
+    function validateBirthday(value: any) {
         const selectedDate = new Date(value)
         const today = new Date()
         const diff = today.getTime() - selectedDate.getTime()
-        console.log(diff)
-        if(diff <= 568080000000 || diff >= 3124440000000){
+        if (diff <= 568080000000 || diff >= 3124440000000) {
             setBirthdayNotValid(true)
-        }else{
+        } else {
             setBirthdayNotValid(false)
+        }
+    }
+
+    function validatePlace(place: any) {
+        try {
+            if (place.address_components[0].types[0] == "street_number") {
+                setPlaceObj(place)
+                setFormattedAddress(place.formatted_address)
+                setPlaceId(place.place_id)
+                setAddressError(false)
+            } else {
+                setAddressError(true)
+            }
+        } catch (error) {
+            setAddressError(true)
+            console.log(error)
         }
     }
 
@@ -119,8 +144,6 @@ const SignupPage = (props: any) => {
                                     type="date"
                                     {...register("birthday", { required: "Ihr Geburtsdatum wird zur Registrierung benötigt." })}
                                     id="birthday"
-                                    //min="2022-01-01" 
-                                    //max="2023-02-01"
                                     autoComplete="bday"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
                                     placeholder="Geburtsdatum"
@@ -139,11 +162,11 @@ const SignupPage = (props: any) => {
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <input
                                     type="email"
-                                    {...register("email", { required: "Ihre Email-Adresse wird zur Registrierung benötigt. An diese wird nach erfolgreicher Buchung eine Bestätigungsmail gesendet." })}
+                                    {...register("email", { required: "Ihre E-Mail wird zur Registrierung benötigt. An diese wird nach erfolgreicher Buchung eine Bestätigungsmail gesendet." })}
                                     id="email"
                                     autoComplete="email"
                                     className="block w-full rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
-                                    placeholder="Email"
+                                    placeholder="E-Mail"
                                 />
                                 {errors.email && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
@@ -195,28 +218,20 @@ const SignupPage = (props: any) => {
                             <div className="relative mt-1 rounded-none shadow-sm">
                                 <Autocomplete apiKey={"AIzaSyCY17WLFDKPuYBIl3tzEQ0AWnQ9QFmEZwU"}
                                     id="address"
-                                    onPlaceSelected={(place) => {
-                                        if (place.address_components[0].types[0] == "street_number") {
-                                            setPlaceObj(place)
-                                            setFormattedAddress(place.formatted_address)
-                                            setPlaceId(place.place_id)
-                                            setAddressError(false)
-                                        } else {
-                                            setAddressError(true)
-                                        }
-                                    }}
+                                    onPlaceSelected={(place) => validatePlace(place)}
+                                    onChange={(event) => validatePlace(event)}
                                     options={{
                                         types: ['address'],//oder "street_address" weil ist bis jetzt ohne nr siehe https://developers.google.com/maps/documentation/places/web-service/autocomplete
                                         componentRestrictions: { country: "de" },
                                     }}
                                     className="block w-full ring-1 ring-gray-300 h-9 rounded-none border-gray-300 pl-2 pr-12 focus:border-green-600 focus:ring-green-600 sm:text-sm transition"
-                                    placeholder="Beispielstraße 12, Bonn, Deutschland"
+                                    placeholder="Adresse suchen"
                                 />
                                 {addressError && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                                 </div>}
                             </div>
-                            {addressError && <p className="mt-2 text-sm text-red-600" id="email-error">Bitte geben Sie eine valide Adresse an</p>}                        </div>
+                            {addressError && <p className="mt-2 text-sm text-red-600" id="email-error">Bitte wählen Sie eine valide Adresse aus (bestehend aus Straße, Hausnummer, Stadt und Land).</p>}                        </div>
                     </div>
                     <div className="mt-2">
                         <button id="btnLogin" type="submit" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
