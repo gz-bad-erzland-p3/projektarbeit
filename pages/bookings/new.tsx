@@ -52,7 +52,7 @@ export function convertStringToDate(stringDate: String) {
     console.log(stringDate)
     const date = new Date(+year, Number(month) - 1, +day);
     return date
-  }
+}
 
 export function convertDateAndTimeToUnix(dateComponents: any, timeComponents: any) {
     const [day, month, year] = dateComponents?.split('.');
@@ -199,10 +199,10 @@ export default function NewBooking() {
         }).catch((error) => {
             console.error(error);
         });
-    bookingId = uuidv4()
+        bookingId = uuidv4()
     }
 
-    function validateWorkPlaceType(type: number) {
+    function validateWorkPlaceType(type: Number) {
         const startTimeCurrent = convertDateAndTimeToUnix(booking["Startdatum"], booking["Startzeit"])
         const endTimeCurrent = convertDateAndTimeToUnix(booking["Enddatum"], booking["Endzeit"])
         let numOfWorkingplaces = 0
@@ -220,7 +220,6 @@ export default function NewBooking() {
                 }
             }
         }
-        console.log(numOfWorkingplaces)
         if (type == 2) {
             //Wenn alle Doppelarbeitsplätze ausgebucht sind, ...
             if ((numOfWorkingplaces >= 7)) {
@@ -233,16 +232,20 @@ export default function NewBooking() {
             //Wenn alle Arbeitsplätze ausgebucht sind, ...
             if (numOfWorkingplaces >= 8) {
                 //Sollen beide buttons disabled sein
+                if (!isShown) {
+                    toast.error("Zu Ihrem ausgewählten Zeitpunkt ist leider kein Arbeitsplatz mehr verfügbar.");
+                    setIsShown(true)
+                }
                 return true
             } else {
-                if(!isShown){
+                if (!isShown) {
                     toast.success("Zu Ihrem ausgewählten Zeitpunkt ist noch min. ein Arbeitsplatz verfügbar.");
                     setIsShown(true)
                 }
                 return false
             }
         }
-        
+
     }
 
     function reservate() {
@@ -299,21 +302,21 @@ export default function NewBooking() {
     function convertTimeToDecimal(t: String) {
         const time = t.split(':');
         return parseInt(time[0], 10) * 1 + parseInt(time[1], 10) / 60;
-      }
-    
-      function getBusinessDatesCount(startDate: String, endDate: String) {
+    }
+
+    function getBusinessDatesCount(startDate: String, endDate: String) {
         let count = 0;
         const curDate = convertStringToDate(startDate);
         const expandDate = convertStringToDate(endDate);
         curDate.setDate(curDate.getDate());
         expandDate.setDate(expandDate.getDate());
         while (curDate <= expandDate) {
-          const dayOfWeek = curDate.getDay();
-          if (dayOfWeek !== 0 && dayOfWeek !== 6) count++;
-          curDate.setDate(curDate.getDate() + 1);
+            const dayOfWeek = curDate.getDay();
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) count++;
+            curDate.setDate(curDate.getDate() + 1);
         }
         return count;
-      }
+    }
 
     return (
         <div>
@@ -342,10 +345,10 @@ export default function NewBooking() {
                                         <FormItem width="1/2" title="Zeitraum" icon={faCalendarWeek}>
                                             <DateTimeRangePicker setIsValid={setDateIsValid} classNames="rounded-none border border-gray-300 bg-white" />
                                         </FormItem>
-                                        <FormItem width="1/4" title="Zeit von" icon={faClock}>
+                                        <FormItem width="1/4" title="Beginn" icon={faClock}>
                                             <DropDown title="Startzeit" items={bookingTimes} FirebaseKey="Startzeit" />
                                         </FormItem>
-                                        <FormItem width="1/4" title="Zeit bis" icon={faClock}>
+                                        <FormItem width="1/4" title="Ende" icon={faClock}>
                                             <DropDown title="Endzeit" items={bookingTimes} FirebaseKey="Endzeit" />
                                         </FormItem>
                                         <FormItem width="1/4">

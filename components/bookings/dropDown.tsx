@@ -11,7 +11,7 @@ export default function Example(props: any) {
 
     const items: string[] = props.items;
     const [selected, setSelected] = useState(items[0])
-    setBookingValue(selected, props.FirebaseKey)
+    setBookingValue(selected.replace(" Uhr", ""), props.FirebaseKey)
 
     return (
         <Listbox value={selected} onChange={setSelected}>

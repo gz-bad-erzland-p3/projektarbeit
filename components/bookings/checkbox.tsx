@@ -6,8 +6,7 @@ let valueObj: Obj = {};
 export default function Checkbox(props: any) {
     const [value, setValue] = useState(false)
 
-    valueObj[props.FirebaseKey] = { ...valueObj[props.FirebaseKey], [props.title.replace(/([^\w]+|\s+)/g, '')]: value };
-    
+    valueObj[props.FirebaseKey] = { ...valueObj[props.FirebaseKey], [props.title.replace(/([^\w]+|\s+|[0-9]|Version|Messenger|Microsoft|Google|Mozilla)/g, '')]: value };
     setBookingValue(valueObj[props.FirebaseKey], props.FirebaseKey)
 
     function classNames(...classes: string[]) {

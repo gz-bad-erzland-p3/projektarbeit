@@ -59,7 +59,7 @@ function getTimeInSteps(startTime: Date, endTime: Date, steps: number) {
 
   for (let i = 0; i < (timeDiff / steps); i++) {
     finalTime = new Date(finalTime.getTime() + (steps * 60 * 1000));
-    times.push(finalTime.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false }));
+    times.push(finalTime.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false }) + " Uhr");
   }
 
   return times;
