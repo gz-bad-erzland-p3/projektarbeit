@@ -41,11 +41,11 @@ export default function PriceTable(props: any) {
                 </tr>
                 <tr key="l1" className="divide-x divide-gray-200">
                   <td className="whitespace-nowrap pl-4 text-sm font-medium text-gray-900 ">Beginn der Miete</td>
-                  <td className="whitespace-nowrap p-4 text-sm text-gray-500">{formatDate(props.startDate)} um {props.startTime} Uhr</td>
+                  <td className="whitespace-nowrap p-4 text-sm text-gray-500">{props.startDate} um {props.startTime} Uhr</td>
                 </tr>
                 <tr key="l1" className="divide-x divide-gray-200">
                   <td className="whitespace-nowrap pl-4 text-sm font-medium text-gray-900 ">Ende der Miete</td>
-                  <td className="whitespace-nowrap p-4 text-sm text-gray-500">{formatDate(props.endDate)} um {props.endTime} Uhr</td>
+                  <td className="whitespace-nowrap p-4 text-sm text-gray-500">{props.endDate} um {props.endTime} Uhr</td>
                 </tr>
                 <tr key="l1" className="divide-x divide-gray-200">
                   <td className="whitespace-nowrap pl-4 text-sm font-medium text-gray-900 ">Buchungszeit insgesamt</td>
