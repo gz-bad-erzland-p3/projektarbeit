@@ -7,7 +7,7 @@ export default function Checkbox(props: any) {
     const [value, setValue] = useState(false)
 
     valueObj[props.FirebaseKey] = { ...valueObj[props.FirebaseKey], [props.title.replace(/([^\w]+|\s+)/g, '')]: value };
-    console.log(props.title.replace(/([^\w]+|\s+)/g, ''));
+    console.log(props.title.replace(/([^\w]+|\s+|Version|[0-9])/g, ''));
     
     setBookingValue(valueObj[props.FirebaseKey], props.FirebaseKey)
 
