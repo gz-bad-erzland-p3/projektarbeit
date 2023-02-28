@@ -22,7 +22,7 @@ export default function Index() {
           declineButtonText="Ablehnen"
           cookieName="Cookie"
           style={{ background: "#2B373B" }}
-          buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+          buttonStyle={{ color: "white", backgroundColor: "green", fontSize: "13px" }}
           expires={150}
         >
           This website uses cookies to enhance the user experience.{" "}
