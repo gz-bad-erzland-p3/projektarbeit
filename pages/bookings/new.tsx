@@ -48,7 +48,7 @@ export const deleteBookingValue = (prop: any) => {
 }
 
 export function convertDateAndTimeToUnix(dateComponents: any, timeComponents: any) {
-    const [day, month, year] = dateComponents?.split('-');
+    const [day, month, year] = dateComponents?.split('.');
     const [hours, minutes] = timeComponents?.split(':');
     const date = new Date(+year, Number(month) - 1, +day, +hours, +minutes);
     const timestamp = date.getTime();
@@ -65,9 +65,8 @@ export default function NewBooking() {
     const [geraet2, setGeraet2] = useState(null);
     const [bs1, setBs1] = useState(null);
     const [bs2, setBs2] = useState(null);
-    const [payment, setPayment] = useState(null)
-    const [dateIsValid, setDateIsValid] = useState(false)
-    const [diffrenceInMs, setDiffrenceInMs] = useState(0)
+    const [payment, setPayment] = useState(null);
+    const [dateIsValid, setDateIsValid] = useState(false);
 
     const router = useRouter();
 
@@ -112,7 +111,6 @@ export default function NewBooking() {
 
     //Frontend Logik
     const showNextButton = () => {
-        console.log(booking["Geraet1"])
         if (workingPlaceType == 1 && !byod1) return true;
         else if (workingPlaceType == 2 && !byod1 && !byod2) return true;
         else if (workingPlaceType == 1 && byod1 && geraet1 && bs1) return true
@@ -175,7 +173,6 @@ export default function NewBooking() {
         };
         get(ref(db, 'users/' + user.user.uid)).then((snapshot) => {
             if (snapshot.exists()) {
-                console.log(snapshot.val())
                 templateParams.Name = (snapshot.val().Name);
                 templateParams.Vorname = (snapshot.val().Vorname);
                 send('service_hs19w57', 'template_xl148t9', templateParams, '5fMJGYQBc902cFst3')
@@ -257,12 +254,12 @@ export default function NewBooking() {
         }
         setBookingValue("Zahlung offen", "Status")
         setCurrentStep(currentStep + 1)
+        console.log(booking)
         set(ref(db, 'bookings/' + bookingId), booking);
     }
 
     function validateTime() {
         let hours = 0
-        console.log(booking["startDate"])
         const businessDays = getBusinessDatesCount(String(booking["Startdatum"]), String(booking["Enddatum"]))
         if (businessDays == 1) {
             hours = convertTimeToDecimal(String(booking["Endzeit"])) - convertTimeToDecimal(String(booking["Startzeit"]))
@@ -286,7 +283,7 @@ export default function NewBooking() {
       }
     
       function convertStringToDate(stringDate: String) {
-        const [day, month, year] = stringDate?.split('-');
+        const [day, month, year] = stringDate?.split('.');
         const date = new Date(+year, Number(month) - 1, +day);
         return date
       }
@@ -295,10 +292,8 @@ export default function NewBooking() {
         let count = 0;
         const curDate = convertStringToDate(startDate);
         const expandDate = convertStringToDate(endDate);
-    
         curDate.setDate(curDate.getDate());
         expandDate.setDate(expandDate.getDate());
-        console.log(curDate, expandDate)
         while (curDate <= expandDate) {
           const dayOfWeek = curDate.getDay();
           if (dayOfWeek !== 0 && dayOfWeek !== 6) count++;
@@ -318,7 +313,7 @@ export default function NewBooking() {
                     <div className="grow max-w-7xl px-4 sm:px-6 ">
                         <div>
                             <div className="text-lg">
-                                Verbleibende Zeit für Ihre Buchung: <span className="font-bold">{secondsToHms(counter)}</span>
+                                Verbleibende Zeit für Ihre Buchung: <span className="font-bold">{secondsToHms(counter)}</span> Minuten
                             </div>
                             <div className="py-4">
                                 {
@@ -332,7 +327,7 @@ export default function NewBooking() {
                                 <FormContainer title="Zeitraum wählen">
                                     <FormSection>
                                         <FormItem width="1/2" title="Zeitraum" icon={faCalendarWeek}>
-                                            <DateTimeRangePicker setIsValid={setDateIsValid} />
+                                            <DateTimeRangePicker setIsValid={setDateIsValid} classNames="rounded-none border border-gray-300 bg-white" />
                                         </FormItem>
                                         <FormItem width="1/4" title="Zeit von" icon={faClock}>
                                             <DropDown title="Startzeit" items={bookingTimes} FirebaseKey="Startzeit" />

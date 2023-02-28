@@ -17,7 +17,6 @@ export default function DeleteProfileModal(props: any) {
 
   async function deleteProfile(){
     props.setOpen(false)
-    console.log(user.user.uid)
     const auth = getAuth();
     const userr = auth.currentUser;
     await deleteAccount(userr);

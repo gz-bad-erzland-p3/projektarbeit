@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Datepicker from '@nichtmetall/react-tailwindcss-datepicker'
+import Datepicker from 'react-tailwindcss-datepicker'
 import { setBookingValue } from "../../pages/bookings/new";
 import { toast } from "react-toastify";
 
@@ -12,15 +12,15 @@ export default function DateTimeRangePicker(props) {
     initialDate.setDate(initialDate.getDate() + 1)
     const [value, setValue] = useState({
         startDate: initialDate,
-        endDate: initialDate
+        endDate:  initialDate
     });
 
     function handleValueChange(newValue) {
         setValue(newValue);
         const startDate = new Date(newValue["startDate"])
         const endDate = new Date(newValue["endDate"])
-        setBookingValue(startDate.toLocaleDateString("es-CL"), "Startdatum")
-        setBookingValue(endDate.toLocaleDateString("es-CL"), "Enddatum")
+        setBookingValue(startDate.toLocaleDateString("de-DE"), "Startdatum")
+        setBookingValue(endDate.toLocaleDateString("de-DE"), "Enddatum")
 
         today.setHours(0, 0, 0, 0);
         const setIsValid = props.setIsValid;
@@ -39,7 +39,7 @@ export default function DateTimeRangePicker(props) {
 
     return (
         <div>
-            <Datepicker separator={"bis zum"}  i18n="de" value={value} onChange={handleValueChange} primaryColor="green" startFrom={initialDate}/>
+            <Datepicker inputClassName={"relative w-full cursor-default rounded-none border border-gray-300 bg-white text-left outline-none form-dropdown form-input"} separator={"bis zum"}  i18n="de" value={value} onChange={handleValueChange} primaryColor="green" displayFormat={"DD.MM.YYYY"} />
         </div>
     );
 }
