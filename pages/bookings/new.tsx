@@ -170,8 +170,8 @@ export default function NewBooking() {
     function sendBooking() {
         setBookingValue("Zahlung erfolgreich", "Status")
         setCurrentStep(currentStep + 1)
-        toast.success("Buchung erfolgreich ausgeführt!")
         set(ref(db, 'bookings/' + bookingId), booking);
+        toast.success("Buchung erfolgreich ausgeführt!")
         //userdaten auslesen und bestätigungsmail senden
         var templateParams = {
             Startdatum: booking.Startdatum,
@@ -245,10 +245,10 @@ export default function NewBooking() {
                 return false
             }
         }
-
     }
 
     function reservate() {
+        bookingId = uuidv4()
         //Wenn Byod ausgewählt alle gerätedaten löschen
         if (Boolean(booking.Byod1) == true) {
             deleteBookingValue("Geraet1")
@@ -525,7 +525,7 @@ export default function NewBooking() {
                                     </FormSection>
 
                                     <FormContainerEnd>
-                                        {payment ? <button className="button-primary w-full" onClick={sendBooking}>Jetzt Buchung abschließen &rarr;</button> : ""}
+                                        {payment ? <button className="button-primary w-full" onClick={sendBooking}>Buchung zahlungspflichtig abschließen &rarr;</button> : ""}
                                     </FormContainerEnd>
                                 </FormContainer>
                             }
