@@ -61,7 +61,7 @@ export default function UserDescription(props: any) {
         <>
             <div>
                 <h3 className="text-lg leading-6 font-medium text-gray-900">Ihre Benutzerdaten</h3>
-                <p className="mt-1 max-w-3xl text-sm text-gray-500">Hier kannst du deine Benutzer- und Buchungsdaten sehen, deine Adresse ändern und dein Passwort zurücksetzen</p>
+                <p className="mt-1 max-w-3xl text-sm text-gray-500">Hier können Sie Ihre Benutzer- und Buchungsdaten sehen, die Rechnungsadresse ändern und Ihr Passwort zurücksetzen</p>
             </div>
             <div className="mt-5 border-t border-gray-200">
                 <dl className="divide-y divide-gray-200">
@@ -90,7 +90,7 @@ export default function UserDescription(props: any) {
                         </dd>
                     </div>
                     <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
-                        <dt className="text-sm font-medium text-gray-500">Ihre Adresse</dt>
+                        <dt className="text-sm font-medium text-gray-500">Rechnungsadresse</dt>
                         <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             <span className="flex-grow">{userdata.Adresse_Formatiert}</span>
                             <span className="ml-4 flex-shrink-0">

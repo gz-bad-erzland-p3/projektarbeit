@@ -58,8 +58,6 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
       }, (error: any) => {
         console.log(error.text);
       });
-
-
     return;
   };
 

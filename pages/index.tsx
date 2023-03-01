@@ -18,14 +18,14 @@ export default function Index() {
       <Container>
         <CookieConsent
           location="bottom"
-          buttonText="Akzeptieren"
+          buttonText="Alles klar!"
           declineButtonText="Ablehnen"
           cookieName="Cookie"
           style={{ background: "#2B373B" }}
           buttonStyle={{ color: "white", backgroundColor: "green", fontSize: "13px" }}
           expires={150}
         >
-          This website uses cookies to enhance the user experience.{" "}
+          Wir verwenden ausschließlich funktionale Cookies, sodass Ihre Anmeldedaten gespeichert werden können und beim Neuladen der Seite keine erneute Anmeldung benötigt wird.{" "}
         </CookieConsent>
         <div className="my-48">
           <HeroSection />
