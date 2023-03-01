@@ -52,7 +52,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
       Vorname: prename,
       Email: email
     };
-    send('service_hs19w57', 'template_p3z83mn', templateParams, '5fMJGYQBc902cFst3')
+    send('gmail', 'signup_confirmation', templateParams, '_ylT6KpgGA4Yo8iq5')
       .then((result: any) => {
         console.log(result.text);
       }, (error: any) => {

@@ -187,7 +187,7 @@ export default function NewBooking() {
             if (snapshot.exists()) {
                 templateParams.Name = (snapshot.val().Name);
                 templateParams.Vorname = (snapshot.val().Vorname);
-                send('service_hs19w57', 'template_xl148t9', templateParams, '5fMJGYQBc902cFst3')
+                send('gmail', 'booking_confirmation', templateParams, '_ylT6KpgGA4Yo8iq5')
                     .then((result: any) => {
                         console.log(result.text);
                     }, (error: any) => {
