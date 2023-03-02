@@ -6,6 +6,7 @@ import Autocomplete from "react-google-autocomplete";
 import dynamic from 'next/dynamic';
 import { toast } from "react-toastify";
 import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
+import Link from "next/link";
 const ReactPasswordChecklist = dynamic(() => import('react-password-checklist'), {
     ssr: false,
 });
@@ -234,6 +235,9 @@ const SignupPage = (props: any) => {
                             {addressError && <p className="mt-2 text-sm text-red-600" id="email-error">Bitte wählen Sie eine valide Adresse aus (bestehend aus Straße, Hausnummer, Stadt und Land).</p>}                        </div>
                     </div>
                     <div className="mt-2">
+                        <div className="text-sm py-3 text-start">
+                            Beim registieren stimmen Sie unserer <Link href={"Impressum"} className="link-main">Datenschutzbestimmung</Link> zu.
+                        </div>
                         <button id="btnLogin" type="submit" className='w-full text-white px-4 py-2 text-base font-medium rounded-none bg-green-600 hover:bg-green-500 transition'>
                             Registrieren &rarr;
                         </button>
